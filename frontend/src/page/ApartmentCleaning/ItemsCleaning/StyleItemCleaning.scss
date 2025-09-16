@@ -1,0 +1,74 @@
+@use '../../../styles/config/color' as CS;
+
+@mixin SettingContent {
+	section {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		row-gap: 150px;
+		.ModalContentUL {
+			display: flex;
+			flex-direction: column;
+			row-gap: 15px;
+			&-Icon {
+				font-size: 20px;
+			}
+			li {
+				display: flex;
+				flex-direction: row;
+				justify-content: flex-start;
+				align-items: center;
+				column-gap: 10px;
+				color: CS.$ColorBrown;
+			}
+		}
+		.ModalDopServices {
+			&--title {
+				font-size: 30px;
+				color: CS.$ColorBrown;
+				border-bottom: 2px solid CS.$ColorBrown;
+			}
+			&--content {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+				column-gap: 20px;
+				row-gap: 20px;
+				padding: 10px;
+				&--informBlock:nth-child(odd) {
+					background-color: #d8d8c5;
+				}
+				&--informBlock:nth-child(even) {
+					background-color: #ecdecb;
+				}
+				&--informBlock {
+					flex: 1 0 300px;
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					align-items: center;
+					row-gap: 10px;
+					height: 100px;
+					padding: 10px;
+					font-size: 19px;
+					border-radius: 10px;
+					text-align: center;
+					&--text {
+					}
+					&--price {
+					}
+				}
+			}
+		}
+	}
+}
+
+.Basic {
+	@include SettingContent();
+}
+.General {
+	@include SettingContent();
+}
+.Repair {
+	@include SettingContent();
+}

@@ -1,0 +1,130 @@
+@use '../config/color' as CS;
+
+@mixin TitleText {
+	color: CS.$ColorFonDark;
+	font-family: Unbounded;
+	font-weight: bold;
+	font-size: 50px;
+	margin-bottom: 20px;
+	text-transform: uppercase;
+}
+
+@mixin GlassBackground {
+	background-color: rgba($color: #ffffff, $alpha: 0.3);
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px);
+}
+@mixin GlassBackgroundBlack {
+	background-color: rgba($color: #4c4c4c, $alpha: 0.4);
+	backdrop-filter: blur(6px);
+	-webkit-backdrop-filter: blur(6px);
+}
+
+@mixin SettingFonServices($IMG) {
+	background: url($IMG);
+	background-blend-mode: multiply;
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	border-radius: 15px;
+	padding: 20px;
+	transition: all 0.3s ease;
+}
+
+@mixin SettingButtonServices($Float) {
+	float: $Float;
+	font-family: Gabriela;
+	font-size: 19px;
+	padding: 15px 57px;
+	border-radius: 5px;
+	border: none;
+	color: CS.$ColorBrown;
+	transition: all 0.3s ease;
+	background-color: #fff;
+	cursor: pointer;
+	&:hover {
+		background-color: CS.$ColorAccent;
+	}
+}
+
+@mixin SettingNumberAdvantages($Left, $Right) {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	right: $Right;
+	left: $Left;
+	top: 0;
+	height: 100%;
+	font-family: EmblemaOne;
+	font-size: clamp(300px, 23vw, 450px);
+	color: CS.$ColorFon;
+	text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.35);
+}
+
+@mixin SettingBlockAdvantages($Left, $Right, $deg) {
+	background: linear-gradient($deg, #ffffff, CS.$ColorFon);
+	position: relative;
+	width: 100%;
+	border-radius: 15px;
+	h2 {
+		position: absolute;
+		top: 0;
+		left: $Left;
+		right: $Right;
+		background-color: CS.$ColorFon;
+		font-family: Gabriela;
+		font-size: 35px;
+		padding: 17px 50px;
+		border-radius: 0 0 15px 15px;
+	}
+	&-text {
+		margin: 120px 30px 100px 30px;
+		font-family: Kurale;
+		max-width: 70%;
+		h3 {
+			font-size: 30px;
+			margin-top: 40px;
+		}
+
+		p {
+			font-size: 25px;
+			color: #333;
+		}
+	}
+}
+@mixin SettingInputFeedback {
+	border: none;
+	background-color: CS.$ColorFon;
+	width: 100%;
+	height: 100%;
+	box-shadow: inset 0 4px 4px rgba($color: #000000, $alpha: 0.25);
+	border-radius: 10px;
+	font-size: 23px;
+	color: #434343;
+	padding: 0 10px;
+	border: 3px solid transparent;
+	&:focus {
+		outline: 0;
+		border: 3px solid CS.$ColorAccent;
+	}
+}
+
+@mixin SettingLabelFeedback {
+	position: absolute;
+	top: 20px;
+	left: 20px;
+	font-size: 23px;
+	color: #949494;
+	transition: all 0.3s ease;
+}
+
+@mixin SettingLabelActiveFeedback {
+	input:focus ~ label,
+	input:not(:placeholder-shown) ~ label {
+		top: -32px;
+		font-size: 22px;
+		color: CS.$ColorAccent;
+	}
+}

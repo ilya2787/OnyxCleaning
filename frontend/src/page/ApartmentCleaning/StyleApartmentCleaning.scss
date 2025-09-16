@@ -1,0 +1,95 @@
+@use '../../styles/config/color' as CS;
+@use '../../styles/config/mixin' as MX;
+.ApartmentCleaning {
+	&-LinkBack {
+		display: flex;
+		flex-direction: row;
+		justify-content: flex-start;
+		align-items: center;
+		background-color: #fff;
+		column-gap: 20px;
+		width: max-content;
+		padding: 10px 40px;
+		border-radius: 5px;
+		font-size: 20px;
+		color: CS.$ColorBrown;
+		transition: all 0.3s ease;
+		margin: 30px 0;
+		span {
+			display: flex;
+			flex-direction: row;
+			justify-content: flex-start;
+			align-items: center;
+			font-size: 30px;
+		}
+		&:hover {
+			background-color: CS.$ColorAccent;
+			padding: 10px 40px 10px 10px;
+		}
+	}
+	&-header {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-around;
+		align-items: center;
+		row-gap: 100px;
+		background: url('../../../public/img/poster/Apartment/Main.jpg');
+		background-color: rgba($color: #291f14, $alpha: 0.7);
+		background-blend-mode: multiply;
+		background-repeat: no-repeat;
+		background-position: 50% 50%;
+		background-size: cover;
+		border-radius: 20px;
+		padding: 30px 20px 5px 20px;
+		min-height: 30vw;
+		h1 {
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-start;
+			color: CS.$ColorFon;
+			font-family: Gabriela;
+			font-size: 80px;
+			width: 100%;
+			margin-left: 100px;
+			letter-spacing: 4px;
+		}
+		&-TextAndBtn {
+			display: flex;
+			flex-direction: row;
+			justify-content: center;
+			align-items: center;
+			flex-wrap: wrap;
+			width: 100%;
+			&--text {
+				flex: 1 1 450px;
+				ul {
+					li {
+						display: flex;
+						flex-direction: row;
+						justify-content: flex-start;
+						align-items: center;
+						column-gap: 20px;
+						color: #fff;
+						font-size: 23px;
+						margin-top: 20px;
+						span {
+							display: flex;
+							flex-direction: column;
+							justify-content: center;
+							align-items: center;
+							color: CS.$ColorAccent;
+							font-size: 35px;
+							width: max-content;
+						}
+					}
+				}
+			}
+		}
+	}
+	&-content {
+		margin: 100px 0;
+		&--h1 {
+			@include MX.TitleText;
+		}
+	}
+}

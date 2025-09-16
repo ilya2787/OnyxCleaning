@@ -1,0 +1,188 @@
+@forward '../../styles/fonts/fonts';
+@use '../../styles/config/color' as CS;
+@use '../../styles/config/mixin' as MX;
+
+.nav {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: flex-start;
+	background-color: CS.$ColorFonDark;
+	padding: 0 20px 40px 20px;
+	border-radius: 15px;
+	position: relative;
+	&_logo {
+		width: 150px;
+		background-color: CS.$ColorFon;
+		padding: 10px 10px 0 10px;
+		border-radius: 0 0 20px 20px;
+		img {
+			width: 100%;
+		}
+	}
+	&_Btn {
+		border: none;
+		cursor: pointer;
+		background-color: CS.$ColorTransparency;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		position: relative;
+		z-index: 10;
+		&_text {
+			font-family: Gabriela;
+			font-size: 23px;
+			color: CS.$ColorBrown;
+			margin: 0;
+			width: max-content;
+			padding: 10px 30px 5px 30px;
+			border-bottom: 2px solid CS.$ColorBrown;
+			border-radius: 15px;
+		}
+		&_Icon {
+			color: CS.$ColorBrown;
+			font-size: 30px;
+			&.Active {
+				animation: OpenBTNMenu 1s forwards;
+			}
+			&.Close {
+				animation: CloseBTNMenu 1s forwards;
+			}
+		}
+	}
+	&_contact {
+		color: CS.$ColorBrown;
+		margin-top: 5px;
+		&_location {
+			display: flex;
+			flex-direction: row;
+			justify-content: flex-start;
+			align-items: center;
+			column-gap: 10px;
+			margin-bottom: 5px;
+			span {
+				font-size: 22px;
+			}
+			p {
+				font-size: 18px;
+				letter-spacing: 2px;
+				margin: 0;
+			}
+		}
+		&_tel {
+			letter-spacing: 1px;
+			font-size: 18px;
+			margin: 0;
+		}
+		&_social {
+			background-color: CS.$ColorFon;
+			position: absolute;
+			right: 0;
+			padding: 8px 20px;
+			margin-top: 20px;
+			border-radius: 10px 0 0 10px;
+			display: flex;
+			flex-direction: row;
+			column-gap: 20px;
+			justify-content: space-around;
+			align-items: center;
+			z-index: 9;
+			a {
+				display: flex;
+				flex-direction: row;
+				justify-content: center;
+				align-items: center;
+				font-size: 28px;
+				color: CS.$ColorBrown;
+				transition: all 0.3s ease;
+				&:hover {
+					color: CS.$ColorAccent;
+				}
+			}
+		}
+	}
+	&_BlockMenu {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		row-gap: 10px;
+		position: absolute;
+		top: 5%;
+		left: 0;
+		right: 0;
+		margin: 0 auto;
+		width: 400px;
+		padding: 20px 10px;
+		border-radius: 15px;
+		z-index: -1;
+		@include MX.GlassBackground;
+		&-link {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			width: 100%;
+			font-size: 20px;
+			color: #272727;
+			background-color: rgba($color: #c7c7c7, $alpha: 0.3);
+			border-radius: 10px;
+			height: 50px;
+			transition: all 0.3s ease;
+			&:hover {
+				filter: brightness(70%);
+				-webkit-filter: brightness(70%);
+			}
+		}
+		&.Active {
+			animation: OpenBlockMenu 1s forwards;
+		}
+		&.Close {
+			animation: CloseBlockMenu 1s forwards;
+		}
+	}
+}
+
+@keyframes OpenBTNMenu {
+	0% {
+		transform: rotate(0);
+	}
+	100% {
+		transform: rotate(180deg);
+	}
+}
+@keyframes CloseBTNMenu {
+	0% {
+		transform: rotate(-180deg);
+	}
+	100% {
+		transform: rotate(0);
+	}
+}
+@keyframes OpenBlockMenu {
+	0% {
+		top: -5%;
+		opacity: 0;
+		z-index: -1;
+	}
+
+	100% {
+		opacity: 1;
+		top: 70%;
+		z-index: 9;
+	}
+}
+@keyframes CloseBlockMenu {
+	0% {
+		opacity: 1;
+		top: 70%;
+		z-index: 9;
+	}
+	100% {
+		top: -5%;
+		opacity: 0;
+		z-index: -1;
+	}
+}

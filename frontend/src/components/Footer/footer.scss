@@ -1,0 +1,94 @@
+@use '../../styles/config/color' as CS;
+footer {
+	background-color: CS.$ColorFonDark;
+	position: relative;
+	padding: 0 30px 10px 30px;
+	border-radius: 20px 20px 0 0;
+	.content {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		&-contact {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			row-gap: 10px;
+			a {
+				color: CS.$ColorBrown;
+			}
+			&-tel {
+				font-size: 23px;
+				letter-spacing: 2px;
+			}
+			&-social {
+				display: flex;
+				flex-direction: row;
+				justify-content: center;
+				align-items: center;
+				column-gap: 20px;
+				a {
+					font-size: 28px;
+					transition: all 0.3s ease;
+					&:hover {
+						color: CS.$ColorAccent;
+						filter: brightness(90%);
+						-webkit-filter: brightness(90%);
+					}
+				}
+			}
+		}
+		&-menu {
+			ul {
+				display: flex;
+				flex-direction: column;
+				justify-content: flex-start;
+				flex-wrap: wrap;
+				column-gap: clamp(20px, 5.5vw, 100px);
+				row-gap: 13px;
+				max-height: 120px;
+				li {
+					.content-menu--Link {
+						font-family: Gabriela;
+						font-size: 18px;
+						text-transform: uppercase;
+						letter-spacing: 2px;
+						transition: all 0.2s ease;
+						cursor: pointer;
+						color: CS.$ColorBrown;
+						&:hover {
+							color: CS.$ColorAccent;
+							filter: brightness(80%);
+						}
+					}
+				}
+			}
+		}
+		&-LogoAndCopyright {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			row-gap: 30px;
+			&-logo {
+				width: 200px;
+				padding: 5px 0;
+				background-color: CS.$ColorFon;
+				border-radius: 0 0 20px 20px;
+				img {
+					width: 100%;
+				}
+			}
+			&-copyright {
+				display: flex;
+				flex-direction: row;
+				justify-content: center;
+				align-items: center;
+				column-gap: 10px;
+				font-size: 18px;
+				text-transform: uppercase;
+			}
+		}
+	}
+}

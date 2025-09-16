@@ -1,0 +1,12 @@
+@forward './fonts/fonts';
+@use './config/color' as CS;
+@forward './config/_reset';
+
+body {
+	background-color: CS.$ColorFon;
+	font-family: Kurale;
+	overflow-x: hidden;
+	.MainBlock {
+		padding: 15px 15px 0 15px;
+	}
+}

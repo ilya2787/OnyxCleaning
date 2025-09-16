@@ -1,0 +1,52 @@
+@use '../../../styles/config/color' as CS;
+@mixin SettingInputRadio {
+	input[type='radio'] {
+		display: none;
+		&:checked + label {
+			width: 100%;
+			background-color: #fff;
+		}
+	}
+	label {
+		display: inline-block;
+		width: 100%;
+		padding: 20px 0;
+		border-radius: 10px;
+		color: CS.$ColorBrown;
+		transition: all 0.3s ease;
+		font-size: 20px;
+		&:hover {
+			background-color: rgba($color: #555555, $alpha: 0.2);
+		}
+	}
+}
+
+@mixin SettingBlockRadio {
+	width: 100%;
+	flex: 1 1 300px;
+	text-align: center;
+}
+
+.CategoryCleaning {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	flex-wrap: wrap;
+	column-gap: 20px;
+	row-gap: 20px;
+	background-color: CS.$ColorFonDark;
+	padding: 2px 5px;
+	border-radius: 10px;
+	margin: 50px 0;
+	@include SettingInputRadio();
+	&--Basic {
+		@include SettingBlockRadio();
+	}
+	&--General {
+		@include SettingBlockRadio();
+	}
+	&--Repair {
+		@include SettingBlockRadio();
+	}
+}
