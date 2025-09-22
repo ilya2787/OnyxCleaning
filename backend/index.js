@@ -16,7 +16,8 @@ const PORT = 5000 || 3000
 
 const DB = mysql.createConnection({
 	host: 'localhost',
-	user: 'root',
+	port: '3307',
+	user: 'Ilya',
 	password: 'Admin1994@!',
 	database: 'onyxcleaning',
 })
