@@ -1,7 +1,17 @@
 @use '../../styles/config/color' as CS;
 @use '../../styles/config/mixin' as MX;
-.ApartmentCleaning {
+
+.OfficesCleaning {
 	&--Header--text {
+		p {
+			color: #fff;
+			font-size: 25px;
+			letter-spacing: 2px;
+			span {
+				color: CS.$ColorAccent;
+				font-size: 30px;
+			}
+		}
 		ul {
 			li {
 				display: flex;
@@ -24,10 +34,13 @@
 			}
 		}
 	}
-	&-content {
+	&--content {
 		margin: 100px 0;
 		&--h1 {
 			@include MX.TitleText;
 		}
 	}
+
+	@include MX.ModalContentUL;
+	@include MX.ModalDopServices;
 }

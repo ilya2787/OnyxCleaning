@@ -3,6 +3,7 @@ import 'react-router-dom'
 export const ROUTES = {
 	HOME: '/',
 	ApartmentCleaning: '/ApartmentCleaning',
+	OfficesCleaning: '/OfficesCleaning',
 	SERVICE: '/services/:nameServices',
 } as const
 

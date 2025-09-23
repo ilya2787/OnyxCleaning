@@ -9,7 +9,7 @@ export const ItemsMenu = [
 	{
 		id: 2,
 		name: 'Уборка офисов',
-		link: '',
+		link: ROUTES.OfficesCleaning,
 	},
 	{
 		id: 3,
