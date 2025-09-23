@@ -1,12 +1,12 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
+import { TypeBdCat } from '../../components/ListDataCleaning/ListDataCleaning'
 import BackBTN from '../../components/ui/BackBTN/BackBTN'
 import HeaderServices from '../../components/ui/HeaderServices/HeaderServices'
 import { IconList } from '../../components/ui/IconList'
 import CategoryCleaning from './CategoryCleaning/CategoryCleaning'
 import Basic from './ItemsCleaning/Basic'
 import General from './ItemsCleaning/General'
-import { TypeBdCat } from './ItemsCleaning/ListDataCleaning/ListDataCleaning'
 import Repair from './ItemsCleaning/Repair'
 import './StyleApartmentCleaning.scss'
 

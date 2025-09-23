@@ -30,6 +30,22 @@ app.get('/DopCleaningApartment', (req, res) => {
 	})
 })
 
+app.get('/DopCleaningOffice', (req, res) => {
+	const sql = 'SELECT * FROM DopServicesOffices'
+	DB.query(sql, (err, data) => {
+		if (err) return res.json(err)
+		return res.json(data)
+	})
+})
+
+app.get('/DopCleaningWindows', (req, res) => {
+	const sql = 'SELECT * FROM DopServicesWindows'
+	DB.query(sql, (err, data) => {
+		if (err) return res.json(err)
+		return res.json(data)
+	})
+})
+
 app.listen(PORT, () => {
 	console.log(`Server is running on port ${PORT}`)
 })

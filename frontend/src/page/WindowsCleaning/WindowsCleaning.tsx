@@ -1,9 +1,9 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import {
-	OfficeList,
 	TypeBdCat,
 	TypeListServices,
+	WindowsList,
 } from '../../components/ListDataCleaning/ListDataCleaning'
 import BackBTN from '../../components/ui/BackBTN/BackBTN'
 import BlockInformText from '../../components/ui/BlockInfoServices/BlockInformText'
@@ -11,9 +11,9 @@ import HeaderServices from '../../components/ui/HeaderServices/HeaderServices'
 import { IconList } from '../../components/ui/IconList'
 import ModalWindows from '../../components/ui/ModalWindows/ModalWindows'
 import { PriceFormat } from '../../components/ui/PriceFormat/PriceFormat'
-import './StyleOfficesCleaning.scss'
+import './StyleWindowsCleaning.scss'
 
-const OfficesCleaning = () => {
+const WindowsCleaning = () => {
 	const [ArrayData, setArrayData] = useState<TypeListServices[]>([])
 	const [OpenModal, setOpenModal] = useState<boolean>(false)
 	const [OpenModalDop, setOpenModalDop] = useState<boolean>(false)
@@ -24,7 +24,7 @@ const OfficesCleaning = () => {
 	useEffect(() => {
 		async function ListBD() {
 			axios
-				.get<TypeBdCat[]>('/DopCleaningOffice')
+				.get<TypeBdCat[]>('/DopCleaningWindows')
 				.then(res => {
 					setArrayFullListDop(res.data)
 				})
@@ -34,45 +34,40 @@ const OfficesCleaning = () => {
 	}, [setArrayFullListDop])
 
 	return (
-		<div className='OfficesCleaning'>
+		<div className='WindowsCleaning'>
 			<BackBTN />
 			<HeaderServices
-				title='Уборка офисов'
-				BackgroundUrl='./img/poster/Office/Header.jpg'
+				title='Мойка окон'
+				BackgroundUrl='./img/poster/Windows/Header.jpg'
 				Tp={0.5}
 			>
-				<div className='OfficesCleaning--Header--text'>
+				<div className='WindowsCleaning--headerText'>
 					<p>
-						От <span>{PriceFormat(90)}</span> /m <sup>2</sup>
+						От <span>{PriceFormat(350)}</span> / створка
 					</p>
 					<p>
-						Минимальный заказ <span>от {PriceFormat(3500)}</span>
+						Минимальный заказ <span>от {PriceFormat(2500)}</span>
 					</p>
 					<ul>
 						<li>
-							<span>{IconList.Check}</span>В стоимость входит использование
-							гипоаллергенных, профессиональных средств
+							<span>{IconList.Check}</span>Используем только специализированные
+							профессиональные средства
 						</li>
 						<li>
 							<span>{IconList.Check}</span>
-							Работа с максимально деликатным отношением к интерьеру, технике,
-							отделке и конфиденциальности
-						</li>
-						<li>
-							<span>{IconList.Check}</span>
-							Подходит для офисов, бутиков, салонов, шоу-румов
+							Обеспечиваем бережную работу с остеклением любой сложности
 						</li>
 					</ul>
 				</div>
 			</HeaderServices>
-			<div className='OfficesCleaning--content'>
-				<h1 className='OfficesCleaning--content--h1'> что входит в уборку</h1>
+			<div className='WindowsCleaning--content'>
+				<h1 className='WindowsCleaning--content--h1'>Что входит</h1>
 				<BlockInformText
 					positions='row-reverse'
 					deg={-90}
 					Title=''
-					LinkImg='./img/poster/Office/OfficeList.jpg'
-					ArrayDataCleaning={OfficeList}
+					LinkImg='./img/poster/Windows/WindowsList.jpg'
+					ArrayDataCleaning={WindowsList}
 					setArrayData={setArrayData}
 					setOpenModal={setOpenModal}
 					setOpenModalDop={setOpenModalDop}
@@ -126,4 +121,4 @@ const OfficesCleaning = () => {
 	)
 }
 
-export default OfficesCleaning
+export default WindowsCleaning

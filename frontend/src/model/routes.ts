@@ -4,6 +4,7 @@ export const ROUTES = {
 	HOME: '/',
 	ApartmentCleaning: '/ApartmentCleaning',
 	OfficesCleaning: '/OfficesCleaning',
+	WindowsCleaning: '/WindowsCleaning',
 	SERVICE: '/services/:nameServices',
 } as const
 

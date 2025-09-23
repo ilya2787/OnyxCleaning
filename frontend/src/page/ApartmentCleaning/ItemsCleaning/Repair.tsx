@@ -1,13 +1,13 @@
 import { FC, useEffect, useState } from 'react'
-import BlockInformText from '../../../components/ui/BlockInfoServices/BlockInformText'
-import { IconList } from '../../../components/ui/IconList'
-import ModalWindows from '../../../components/ui/ModalWindows/ModalWindows'
-import { PriceFormat } from '../../../components/ui/PriceFormat/PriceFormat'
 import {
 	RepairList,
 	TypeBdCat,
 	TypeListServices,
-} from './ListDataCleaning/ListDataCleaning'
+} from '../../../components/ListDataCleaning/ListDataCleaning'
+import BlockInformText from '../../../components/ui/BlockInfoServices/BlockInformText'
+import { IconList } from '../../../components/ui/IconList'
+import ModalWindows from '../../../components/ui/ModalWindows/ModalWindows'
+import { PriceFormat } from '../../../components/ui/PriceFormat/PriceFormat'
 import './StyleItemCleaning.scss'
 interface TypeProps {
 	ArrayDopRepair: TypeBdCat[]
@@ -110,7 +110,10 @@ const Repair: FC<TypeProps> = ({ ArrayDopRepair }) => {
 											{data.text}
 										</p>
 										<p className='ModalDopServices--content--informBlock--price'>
-											от {PriceFormat(data.price ? data.price : 0)}
+											{data.price &&
+												` от ${PriceFormat(data.price ? data.price : 0)} `}
+											{!data.price ? ` ` : data.unit && '/ '}
+											{data.unit && `${data.unit}`}
 										</p>
 									</div>
 								))}

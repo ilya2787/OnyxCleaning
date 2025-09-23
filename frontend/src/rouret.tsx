@@ -5,6 +5,7 @@ import ApartmentCleaning from './page/ApartmentCleaning/ApartmentCleaning'
 import Home from './page/home/home'
 import OfficesCleaning from './page/OfficesCleanning/officesCleaning'
 import ServicesPage from './page/services/ServicesPage'
+import WindowsCleaning from './page/WindowsCleaning/WindowsCleaning'
 
 export const router = createBrowserRouter([
 	{
@@ -21,6 +22,10 @@ export const router = createBrowserRouter([
 			{
 				path: ROUTES.OfficesCleaning,
 				element: <OfficesCleaning />,
+			},
+			{
+				path: ROUTES.WindowsCleaning,
+				element: <WindowsCleaning />,
 			},
 			{
 				path: ROUTES.SERVICE,

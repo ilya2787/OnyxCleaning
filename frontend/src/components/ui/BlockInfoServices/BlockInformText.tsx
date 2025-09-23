@@ -2,7 +2,7 @@ import React, { Dispatch, FC, SetStateAction } from 'react'
 import {
 	TypeBdCat,
 	TypeListServices,
-} from '../../../page/ApartmentCleaning/ItemsCleaning/ListDataCleaning/ListDataCleaning'
+} from '../../ListDataCleaning/ListDataCleaning'
 import { IconList } from '../IconList'
 
 import './Style.scss'
@@ -45,7 +45,7 @@ const BlockInformText: FC<TypeProps> = ({
 	return (
 		<div className='BlockInformText' style={StyleBlock}>
 			<div className='BlockInformText--img'>
-				<h2>{Title}</h2>
+				{Title != '' && <h2>{Title}</h2>}
 				<img src={LinkImg} alt='' />
 			</div>
 			<div className='BlockInformText--text' style={StyleTextBlock}>

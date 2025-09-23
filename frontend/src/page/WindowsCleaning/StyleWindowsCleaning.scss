@@ -1,0 +1,46 @@
+@use '../../styles/config/color' as CS;
+@use '../../styles/config/mixin' as MX;
+
+.WindowsCleaning {
+	&--headerText {
+		p {
+			color: #fff;
+			font-size: 25px;
+			letter-spacing: 2px;
+			span {
+				color: CS.$ColorAccent;
+				font-size: 30px;
+			}
+		}
+		ul {
+			li {
+				display: flex;
+				flex-direction: row;
+				justify-content: flex-start;
+				align-items: center;
+				column-gap: 20px;
+				color: #fff;
+				font-size: 23px;
+				margin-top: 20px;
+				span {
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					align-items: center;
+					color: CS.$ColorAccent;
+					font-size: 35px;
+					width: max-content;
+				}
+			}
+		}
+	}
+	&--content {
+		margin: 100px 0;
+		&--h1 {
+			@include MX.TitleText;
+		}
+	}
+
+	@include MX.ModalContentUL;
+	@include MX.ModalDopServices;
+}

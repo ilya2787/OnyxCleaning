@@ -14,7 +14,7 @@ export const ItemsMenu = [
 	{
 		id: 3,
 		name: 'Мойка окон',
-		link: '',
+		link: ROUTES.WindowsCleaning,
 	},
 	{
 		id: 4,
