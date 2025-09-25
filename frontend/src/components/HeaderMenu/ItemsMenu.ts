@@ -24,7 +24,7 @@ export const ItemsMenu = [
 	{
 		id: 5,
 		name: 'Рассчитать стоимость',
-		link: '',
+		link: ROUTES.Calculator,
 	},
 	{
 		id: 6,

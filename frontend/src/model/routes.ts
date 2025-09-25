@@ -5,6 +5,7 @@ export const ROUTES = {
 	ApartmentCleaning: '/ApartmentCleaning',
 	OfficesCleaning: '/OfficesCleaning',
 	WindowsCleaning: '/WindowsCleaning',
+	Calculator: '/Calculator',
 	SERVICE: '/services/:nameServices',
 } as const
 

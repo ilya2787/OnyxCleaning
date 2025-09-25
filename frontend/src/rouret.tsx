@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router-dom'
 import App from './App'
 import { ROUTES } from './model/routes'
 import ApartmentCleaning from './page/ApartmentCleaning/ApartmentCleaning'
+import Calculator from './page/Calculator/Calculator'
 import Home from './page/home/home'
 import OfficesCleaning from './page/OfficesCleanning/officesCleaning'
 import ServicesPage from './page/services/ServicesPage'
@@ -26,6 +27,10 @@ export const router = createBrowserRouter([
 			{
 				path: ROUTES.WindowsCleaning,
 				element: <WindowsCleaning />,
+			},
+			{
+				path: ROUTES.Calculator,
+				element: <Calculator />,
 			},
 			{
 				path: ROUTES.SERVICE,
