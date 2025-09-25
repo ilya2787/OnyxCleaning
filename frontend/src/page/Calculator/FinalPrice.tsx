@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { PriceFormat } from '../../components/ui/PriceFormat/PriceFormat'
 
 interface TypeProps {
@@ -16,6 +16,13 @@ const FinalPrice: FC<TypeProps> = ({
 	PriceQuadrature,
 	TitleWindows,
 }) => {
+	const [PriceQuadratureNew, setPriceQuadratureNew] = useState<number>(0)
+	useEffect(() => {
+		NumberArea > 30
+			? setPriceQuadratureNew((NumberArea - 29) * PriceQuadrature)
+			: setPriceQuadratureNew(PriceQuadrature)
+	}, [NumberArea, PriceQuadrature])
+
 	return (
 		<div className='Calculator--content--BlockResult'>
 			{PriceQuadrature ? (
@@ -31,13 +38,11 @@ const FinalPrice: FC<TypeProps> = ({
 						)}
 					</p>
 					<span></span>
-					<p>{PriceFormat(NumberArea * PriceQuadrature)}</p>
+					<p>{PriceFormat(PriceQuadratureNew)}</p>
 				</div>
 			) : null}
 			<div className='Calculator--content--BlockResult--FinalPrice'>
-				{CurrentPrice < minPrice
-					? PriceFormat(minPrice)
-					: PriceFormat(CurrentPrice)}
+				{PriceFormat(NumberArea > 30 ? CurrentPrice + minPrice : minPrice)}
 			</div>
 		</div>
 	)

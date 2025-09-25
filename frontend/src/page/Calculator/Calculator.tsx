@@ -13,6 +13,7 @@ const Calculator = () => {
 	const [CurrentServicesSingle, setCurrentServicesSingle] = useState<string>('')
 	const [CurrentCatCleaning, setCurrentCatCleaning] = useState<string>('')
 	const [NumberArea, setNumberArea] = useState<number>(0)
+
 	const [TitleWindows, setTitleWindows] = useState<string>('')
 
 	const [CurrentPrice, setCurrentPrice] = useState<number>(0)
@@ -86,15 +87,23 @@ const Calculator = () => {
 		NumberArea == 1 && setTitleWindows('створка')
 		NumberArea > 1 && setTitleWindows('створки')
 		NumberArea >= 5 && setTitleWindows('створок')
+	}, [NumberArea])
 
+	useEffect(() => {
 		CurrentServicesSingle == 'CleaningOffice' &&
-			setCurrentPrice(NumberArea * PriceQuadratureOffice)
+			setCurrentPrice(
+				NumberArea > 30
+					? (NumberArea - 29) * PriceQuadratureOffice
+					: PriceQuadratureOffice
+			)
 		CurrentServicesSingle == 'CleaningWindows' &&
 			setCurrentPrice(NumberArea * DoorPriceWindows)
 		CurrentServicesSingle == 'CleaningApartment' &&
 			PriceCleaningApartment_DOP.map(data => {
 				data.Name == CurrentCatCleaning &&
-					setCurrentPrice(NumberArea * data.price)
+					setCurrentPrice(
+						NumberArea > 30 ? (NumberArea - 29) * data.price : data.price
+					)
 			})
 	}, [NumberArea, CurrentServicesSingle, CurrentCatCleaning])
 
@@ -103,7 +112,6 @@ const Calculator = () => {
 			data.Name == CurrentCatCleaning && setPriceRootApartment(data.price)
 		})
 	}, [PriceCleaningApartment_DOP, CurrentCatCleaning])
-
 	return (
 		<div className='Calculator'>
 			<h1>Рассчитать стоимость уборки</h1>
