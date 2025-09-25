@@ -1,2 +1,118 @@
+@use '../../styles/config/color' as CS;
+
+@mixin H2Style {
+	h2 {
+		font-size: 19px;
+		color: CS.$ColorBrown;
+		margin-bottom: 10px;
+	}
+}
+
+@mixin BTNCalc {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 0;
+	height: 15px;
+	width: 12%;
+	font-size: 28px;
+	transition: all 0.3s ease;
+	&:hover {
+		color: #6c6c6c;
+	}
+}
+
 .Calculator {
+	margin: 100px 0;
+	padding: 0 10px 50px 10px;
+	border-radius: 15px;
+	background-color: CS.$ColorFonDark;
+	h1 {
+		display: inline-block;
+		margin: 0 0 30px 30px;
+		background-color: CS.$ColorFon;
+		font-size: 28px;
+		padding: 5px 30px;
+		border-radius: 0 0 10px 10px;
+	}
+	&--content {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: flex-start;
+		flex-wrap: wrap;
+		row-gap: 30px;
+		column-gap: 30px;
+		&--BlockPosition {
+			flex: 1 1 550px;
+			display: flex;
+			flex-direction: column;
+			row-gap: 20px;
+			background-color: #fff;
+			padding: 10px 20px 0 20px;
+			border-radius: 10px;
+			&--Services {
+				@include H2Style;
+			}
+			&--CatServices {
+				@include H2Style;
+			}
+			&--quadrature {
+				@include H2Style();
+				&--content {
+					display: flex;
+					flex-direction: row;
+					justify-content: space-between;
+					align-items: center;
+					background: CS.$ColorFon;
+					padding: 5px 10px;
+					border-radius: 10px;
+					border: 1px solid hsl(0, 0%, 80%);
+					&:hover {
+						border: 1px solid hsl(0, 0%, 70%);
+					}
+					&--BTNMinus {
+						@include BTNCalc;
+						&:active {
+							.Calculator--content--BlockPosition--quadrature--number {
+								p {
+									color: red;
+								}
+							}
+						}
+					}
+					&--number {
+						display: flex;
+						flex-direction: row;
+						justify-content: center;
+						align-items: center;
+						font-family: Gabriela;
+						font-size: 18px;
+						input::-webkit-outer-spin-button,
+						input::-webkit-inner-spin-button {
+							-webkit-appearance: none;
+							margin: 0;
+						}
+						input[type='number'] {
+							text-align: right;
+							width: 50px;
+							margin-right: 10px;
+						}
+						p {
+						}
+					}
+					&--BTNPlus {
+						@include BTNCalc;
+					}
+				}
+			}
+			&--structure {
+			}
+		}
+		&--BlockResult {
+			flex: 1 1 400px;
+			background-color: #fff;
+			border-radius: 10px;
+		}
+	}
 }

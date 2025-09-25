@@ -43,7 +43,7 @@ const OfficesCleaning = () => {
 			>
 				<div className='OfficesCleaning--Header--text'>
 					<p>
-						От <span>{PriceFormat(90)}</span> /m <sup>2</sup>
+						От <span>{PriceFormat(120)}</span> /m <sup>2</sup>
 					</p>
 					<p>
 						Минимальный заказ <span>от {PriceFormat(3500)}</span>

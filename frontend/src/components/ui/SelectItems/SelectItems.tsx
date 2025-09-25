@@ -1,5 +1,6 @@
 import { Dispatch, FC, SetStateAction } from 'react'
 import Select, { MultiValue, SingleValue } from 'react-select'
+import './StyleSelect.scss'
 import { IOption } from './TypeSelect'
 
 interface TypeProps {
@@ -57,6 +58,7 @@ const SelectItems: FC<TypeProps> = ({
 				/>
 			) : (
 				<Select
+					classNamePrefix='custom-select'
 					onChange={onChangeServiceSingle}
 					value={getSingle()}
 					options={options}
