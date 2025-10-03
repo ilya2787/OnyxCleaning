@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
+import NumberPlusMinus from '../../components/ui/NumberPlusMinus/NumberPlusMinus'
 import {
 	CatCleaning,
 	Services,
@@ -7,16 +8,21 @@ import {
 import SelectItems from '../../components/ui/SelectItems/SelectItems'
 import FinalPrice from './FinalPrice'
 import './StyleCalculator.scss'
-import { TypePriceBD, TypeRootPrice } from './TypePrice'
+import { InitialQuadrature, TypePriceBD, TypeRootPrice } from './TypePrice'
 
 const Calculator = () => {
+	//Состояния текущий значений
 	const [CurrentServicesSingle, setCurrentServicesSingle] = useState<string>('')
 	const [CurrentCatCleaning, setCurrentCatCleaning] = useState<string>('')
 	const [NumberArea, setNumberArea] = useState<number>(0)
-
+	//Наименование "Створок"
 	const [TitleWindows, setTitleWindows] = useState<string>('')
+	const [DopClearWindowsSost, setDopClearWindowsSost] = useState<boolean>(false)
+	const [NumWindowsDop, setNumWindowsDop] = useState<number>(0)
 
+	//Текущий прайс по выбранным категориям
 	const [CurrentPrice, setCurrentPrice] = useState<number>(0)
+	//Прайс из БД по позициям сервиса
 	const [Price, setPrice] = useState<TypePriceBD[]>([])
 	const [MinPriceCleaningApartment, setMinPriceCleaningApartment] =
 		useState<number>(0)
@@ -24,19 +30,12 @@ const Calculator = () => {
 		TypeRootPrice[]
 	>([])
 	const [PriceRootApartment, setPriceRootApartment] = useState<number>(0)
-
 	const [MinPriceOffice, setMinPriceOffice] = useState<number>(0)
 	const [PriceQuadratureOffice, setPriceQuadratureOffice] = useState<number>(0)
 	const [MinPriceWindows, setMinPriceWindows] = useState<number>(0)
 	const [DoorPriceWindows, setDoorPriceWindows] = useState<number>(0)
 
-	const PlusNumberArea = () => {
-		setNumberArea(NumberArea + 1)
-	}
-	const MinusNumberArea = () => {
-		setNumberArea(NumberArea - 1)
-	}
-
+	//Выгрузка прайса из БД
 	useEffect(() => {
 		async function BdPrice() {
 			axios
@@ -46,7 +45,7 @@ const Calculator = () => {
 		}
 		BdPrice()
 	}, [setPrice])
-
+	//Распредиление цен по позициям сервиса
 	useEffect(() => {
 		Price.map(data => {
 			data.Name === 'CleaningApartment' &&
@@ -73,40 +72,65 @@ const Calculator = () => {
 		})
 	}, [Price])
 
-	useEffect(() => {
-		NumberArea == 0 && setNumberArea(1)
-	}, [NumberArea])
-
+	//Отчистка позиций
 	useEffect(() => {
 		CurrentServicesSingle != 'CleaningApartment' && setCurrentCatCleaning('')
 		setPriceRootApartment(0)
 		CurrentServicesSingle == 'CleaningWindows' && setNumberArea(1)
+		setNumWindowsDop(1)
+		CurrentServicesSingle != 'CleaningWindows' && setTitleWindows('')
 	}, [CurrentServicesSingle])
-
+	//Склонение наименования створка
 	useEffect(() => {
 		NumberArea == 1 && setTitleWindows('створка')
 		NumberArea > 1 && setTitleWindows('створки')
 		NumberArea >= 5 && setTitleWindows('створок')
-	}, [NumberArea])
+	}, [NumberArea, CurrentServicesSingle])
+	const OnClickInputWindows = () => {
+		if (DopClearWindowsSost === false) {
+			setDopClearWindowsSost(true)
+		} else {
+			setDopClearWindowsSost(false)
+		}
+	}
 
+	//Производимые расчеты количества на сумму из БД
 	useEffect(() => {
-		CurrentServicesSingle == 'CleaningOffice' &&
-			setCurrentPrice(
-				NumberArea > 30
-					? (NumberArea - 29) * PriceQuadratureOffice
-					: PriceQuadratureOffice
-			)
-		CurrentServicesSingle == 'CleaningWindows' &&
-			setCurrentPrice(NumberArea * DoorPriceWindows)
-		CurrentServicesSingle == 'CleaningApartment' &&
-			PriceCleaningApartment_DOP.map(data => {
-				data.Name == CurrentCatCleaning &&
-					setCurrentPrice(
-						NumberArea > 30 ? (NumberArea - 29) * data.price : data.price
-					)
-			})
+		if (NumberArea > InitialQuadrature.Quantity) {
+			if (CurrentServicesSingle == 'CleaningOffice') {
+				setCurrentPrice(
+					(NumberArea - InitialQuadrature.Quantity) * PriceQuadratureOffice +
+						MinPriceOffice
+				)
+			}
+			if (CurrentServicesSingle == 'CleaningApartment') {
+				PriceCleaningApartment_DOP.map(data => {
+					data.Name == CurrentCatCleaning &&
+						setCurrentPrice(
+							(NumberArea - InitialQuadrature.Quantity) * data.price +
+								MinPriceCleaningApartment
+						)
+				})
+			}
+		} else {
+			if (CurrentServicesSingle == 'CleaningOffice') {
+				setCurrentPrice(MinPriceOffice)
+			}
+			if (CurrentServicesSingle == 'CleaningApartment') {
+				setCurrentPrice(MinPriceCleaningApartment)
+			}
+		}
+
+		if (CurrentServicesSingle == 'CleaningWindows') {
+			if (NumberArea > 1) {
+				setCurrentPrice((NumberArea - 1) * DoorPriceWindows + MinPriceWindows)
+			} else {
+				setCurrentPrice(MinPriceWindows)
+			}
+		}
 	}, [NumberArea, CurrentServicesSingle, CurrentCatCleaning])
 
+	//Присвоение цены за квадратный метр (Категория уборки квартир)
 	useEffect(() => {
 		PriceCleaningApartment_DOP.map(data => {
 			data.Name == CurrentCatCleaning && setPriceRootApartment(data.price)
@@ -145,40 +169,36 @@ const Calculator = () => {
 								? 'Квадратура помещения'
 								: 'Количество створок'}
 						</h2>
-						<div className='Calculator--content--BlockPosition--quadrature--content'>
-							<button
-								className='Calculator--content--BlockPosition--quadrature--content--BTNMinus'
-								onClick={() => MinusNumberArea()}
-							>
-								-
-							</button>
-							<div className='Calculator--content--BlockPosition--quadrature--content--number'>
-								<input
-									onChange={event => {
-										setNumberArea(Number(event.target.value))
-									}}
-									value={NumberArea}
-									type='number'
-									name=''
-									id=''
-								/>
-
-								{CurrentServicesSingle != 'CleaningWindows' ? (
-									<p>
-										m<sup>2</sup>
-									</p>
-								) : (
-									<p>{TitleWindows}</p>
-								)}
-							</div>
-							<button
-								className='Calculator--content--BlockPosition--quadrature--content--BTNPlus'
-								onClick={() => PlusNumberArea()}
-							>
-								+
-							</button>
-						</div>
+						<NumberPlusMinus
+							CurrentServicesSingle={CurrentServicesSingle}
+							TitleWindows={TitleWindows}
+							Num={NumberArea}
+							setNum={setNumberArea}
+						/>
 					</div>
+
+					{CurrentServicesSingle != 'CleaningWindows' && (
+						<div className='Calculator--content--BlockPosition--CleaningWinDop'>
+							<div className='Calculator--content--BlockPosition--CleaningWinDop--checkbox'>
+								<input
+									type='checkbox'
+									name=''
+									id='CheckboxWindows'
+									onChange={() => OnClickInputWindows()}
+									checked={DopClearWindowsSost}
+								/>
+								<label htmlFor='CheckboxWindows'>Необходима мойка окон</label>
+							</div>
+							{DopClearWindowsSost && (
+								<NumberPlusMinus
+									CurrentServicesSingle='CleaningWindows'
+									TitleWindows={TitleWindows}
+									Num={NumWindowsDop}
+									setNum={setNumWindowsDop}
+								/>
+							)}
+						</div>
+					)}
 
 					<button className='Calculator--content--BlockPosition--structure'>
 						Что входит в уборку ?
@@ -188,7 +208,6 @@ const Calculator = () => {
 					<FinalPrice
 						NumberArea={NumberArea}
 						CurrentPrice={CurrentPrice}
-						minPrice={MinPriceCleaningApartment}
 						PriceQuadrature={PriceRootApartment}
 					/>
 				)}
@@ -196,7 +215,6 @@ const Calculator = () => {
 					<FinalPrice
 						NumberArea={NumberArea}
 						CurrentPrice={CurrentPrice}
-						minPrice={MinPriceOffice}
 						PriceQuadrature={PriceQuadratureOffice}
 					/>
 				)}
@@ -204,7 +222,6 @@ const Calculator = () => {
 					<FinalPrice
 						NumberArea={NumberArea}
 						CurrentPrice={CurrentPrice}
-						minPrice={MinPriceWindows}
 						PriceQuadrature={DoorPriceWindows}
 						TitleWindows={TitleWindows}
 					/>

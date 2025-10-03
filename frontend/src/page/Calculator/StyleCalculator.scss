@@ -22,6 +22,19 @@
 	}
 }
 
+@mixin H2StyleFinalPrice($BR, $BC) {
+	h2 {
+		background: $BC;
+		text-align: center;
+		padding: 10px 0;
+		font-size: 20px;
+		border-radius: $BR;
+		margin-left: -20px;
+		font-family: Gabriela;
+		color: CS.$ColorBrown;
+	}
+}
+
 .Calculator {
 	margin: 100px 0;
 	padding: 0 10px 50px 10px;
@@ -106,6 +119,49 @@
 					}
 				}
 			}
+			&--CleaningWinDop {
+				&--checkbox {
+					input[type='checkbox'] {
+						position: absolute;
+						z-index: -1;
+						opacity: 0;
+					}
+					input[type='checkbox'] + label {
+						display: inline-flex;
+						align-items: center;
+						user-select: none;
+						font-size: 19px;
+						color: CS.$ColorBrown;
+						&:before {
+							content: '';
+							border: 2px solid CS.$ColorFonDark;
+							height: 22px;
+							width: 22px;
+							margin-right: 15px;
+							border-radius: 5px;
+							position: relative;
+						}
+						&:after {
+							content: ' ';
+							font-size: 20px;
+							width: 12px;
+							height: 12px;
+							position: absolute;
+							background: transparent;
+							margin: 5px;
+							border-radius: 0 50% 50% 50%;
+							transform: rotate(45deg);
+							transition: all 0.3s ease;
+						}
+					}
+					input[type='checkbox']:checked + label {
+						&:after {
+							background: CS.$ColorAccent;
+						}
+					}
+				}
+			}
+
 			&--structure {
 			}
 		}
@@ -113,6 +169,35 @@
 			flex: 1 1 400px;
 			background-color: #fff;
 			border-radius: 10px;
+			padding: 0 20px;
+			&--quadrature {
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+				align-items: center;
+				p {
+					font-size: 19px;
+					color: #484848;
+					span {
+						margin-left: 10px;
+					}
+				}
+				&--price {
+					width: 150px;
+					text-align: right;
+					padding: 15px 0 15px 20px;
+					border-left: 2px dotted #5f5f5f;
+				}
+			}
+			&--FinalPrice {
+				@include H2StyleFinalPrice(0 10px 10px 0, CS.$ColorFonDark);
+				p {
+					text-align: center;
+					font-size: 28px;
+					color: CS.$ColorBrown;
+					padding: 15px 0;
+				}
+			}
 		}
 	}
 }
