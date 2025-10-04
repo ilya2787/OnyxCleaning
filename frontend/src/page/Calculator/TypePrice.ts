@@ -12,3 +12,13 @@ export interface TypeRootPrice {
 export const InitialQuadrature = {
 	Quantity: 30,
 }
+
+export interface TypeDopPrice {
+	id: number
+	title: string
+	value: string
+	quantity: number
+	unit: string
+	price: number
+	minPrice: number
+}
