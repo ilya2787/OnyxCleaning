@@ -57,7 +57,7 @@
 	padding: 0 10px 50px 10px;
 	border-radius: 15px;
 	background-color: CS.$ColorFonDark;
-	h1 {
+	&--h1 {
 		display: inline-block;
 		margin: 0 0 30px 30px;
 		background-color: CS.$ColorFon;
@@ -81,6 +81,7 @@
 			background-color: #fff;
 			padding: 10px 20px 0 20px;
 			border-radius: 10px;
+
 			&--Services {
 				@include H2Style;
 			}
@@ -180,6 +181,18 @@
 			}
 
 			&--structure {
+				background-color: CS.$ColorAccent;
+				margin-right: -20px;
+				border-radius: 8px 0 0 8px;
+				color: CS.$ColorBrown;
+				font-size: 20px;
+				padding: 5px 0;
+				transition: all 0.3s ease;
+				cursor: pointer;
+				&:hover {
+					filter: brightness(90%);
+					-webkit-filter: brightness(90%);
+				}
 			}
 		}
 		&--BlockResult {

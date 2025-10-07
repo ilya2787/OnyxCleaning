@@ -7,6 +7,7 @@ import {
 } from '../../components/ui/SelectItems/ListSelectCleaning'
 import SelectItems from '../../components/ui/SelectItems/SelectItems'
 import FinalPrice from './FinalPrice'
+import ModalWindowsListCleaning from './ModalWindows/ModalWindowsListCleaning'
 import './StyleCalculator.scss'
 import {
 	InitialQuadrature,
@@ -16,6 +17,9 @@ import {
 } from './TypePrice'
 
 const Calculator = () => {
+	//Модальное окно
+	const [OpenModalListCleaning, setOpenModalListCleaning] =
+		useState<boolean>(false)
 	//Состояния текущий значений
 	const [CurrentServicesSingle, setCurrentServicesSingle] = useState<string>('')
 	const [CurrentCatCleaning, setCurrentCatCleaning] = useState<string>('')
@@ -81,11 +85,11 @@ const Calculator = () => {
 
 	//Отчистка позиций
 	useEffect(() => {
-		if (CurrentServicesSingle != 'CleaningApartment') {
+		if (CurrentServicesSingle !== 'CleaningApartment') {
 			setCurrentCatCleaning('')
 			setPriceRootApartment(0)
 		}
-		if (CurrentServicesSingle == 'CleaningWindows') {
+		if (CurrentServicesSingle === 'CleaningWindows') {
 			setNumberArea(1)
 			setNumWindowsDop(1)
 			setC_Windows(true)
@@ -126,15 +130,15 @@ const Calculator = () => {
 	//Производимые расчеты количества на сумму из БД
 	useEffect(() => {
 		if (NumberArea > InitialQuadrature.Quantity) {
-			if (CurrentServicesSingle == 'CleaningOffice') {
+			if (CurrentServicesSingle === 'CleaningOffice') {
 				setCurrentPrice(
 					(NumberArea - InitialQuadrature.Quantity) * PriceQuadratureOffice +
 						MinPriceOffice
 				)
 			}
-			if (CurrentServicesSingle == 'CleaningApartment') {
+			if (CurrentServicesSingle === 'CleaningApartment') {
 				PriceCleaningApartment_DOP.map(data => {
-					data.Name == CurrentCatCleaning &&
+					data.Name === CurrentCatCleaning &&
 						setCurrentPrice(
 							(NumberArea - InitialQuadrature.Quantity) * data.price +
 								MinPriceCleaningApartment
@@ -142,15 +146,15 @@ const Calculator = () => {
 				})
 			}
 		} else {
-			if (CurrentServicesSingle == 'CleaningOffice') {
+			if (CurrentServicesSingle === 'CleaningOffice') {
 				setCurrentPrice(MinPriceOffice)
 			}
-			if (CurrentServicesSingle == 'CleaningApartment') {
+			if (CurrentServicesSingle === 'CleaningApartment') {
 				setCurrentPrice(MinPriceCleaningApartment)
 			}
 		}
 
-		if (CurrentServicesSingle == 'CleaningWindows') {
+		if (CurrentServicesSingle === 'CleaningWindows') {
 			if (NumberArea > 1) {
 				setCurrentPrice((NumberArea - 1) * DoorPriceWindows + MinPriceWindows)
 			} else {
@@ -162,13 +166,13 @@ const Calculator = () => {
 	//Присвоение цены за квадратный метр (Категория уборки квартир)
 	useEffect(() => {
 		PriceCleaningApartment_DOP.map(data => {
-			data.Name == CurrentCatCleaning && setPriceRootApartment(data.price)
+			data.Name === CurrentCatCleaning && setPriceRootApartment(data.price)
 		})
 	}, [PriceCleaningApartment_DOP, CurrentCatCleaning])
 
 	return (
 		<div className='Calculator'>
-			<h1>Рассчитать стоимость уборки</h1>
+			<h1 className='Calculator--h1'>Рассчитать стоимость уборки</h1>
 			<div className='Calculator--content'>
 				<div className='Calculator--content--BlockPosition'>
 					<div className='Calculator--content--BlockPosition--Services'>
@@ -181,7 +185,7 @@ const Calculator = () => {
 							isMulti={false}
 						/>
 					</div>
-					{CurrentServicesSingle == 'CleaningApartment' && (
+					{CurrentServicesSingle === 'CleaningApartment' && (
 						<div className='Calculator--content--BlockPosition--CatServices'>
 							<h2>Вид уборки</h2>
 							<SelectItems
@@ -195,7 +199,7 @@ const Calculator = () => {
 					)}
 					<div className='Calculator--content--BlockPosition--quadrature'>
 						<h2>
-							{CurrentServicesSingle != 'CleaningWindows'
+							{CurrentServicesSingle !== 'CleaningWindows'
 								? 'Квадратура помещения'
 								: 'Количество створок'}
 						</h2>
@@ -206,7 +210,7 @@ const Calculator = () => {
 						/>
 					</div>
 
-					{CurrentServicesSingle != 'CleaningWindows' && (
+					{CurrentServicesSingle !== 'CleaningWindows' && (
 						<div className='Calculator--content--BlockPosition--CleaningWinDop'>
 							<div className='Calculator--content--BlockPosition--CleaningWinDop--checkbox'>
 								<input
@@ -232,11 +236,16 @@ const Calculator = () => {
 						</div>
 					)}
 
-					<button className='Calculator--content--BlockPosition--structure'>
+					<button
+						className='Calculator--content--BlockPosition--structure'
+						onClick={() => {
+							setOpenModalListCleaning(true)
+						}}
+					>
 						Что входит в уборку ?
 					</button>
 				</div>
-				{CurrentServicesSingle == 'CleaningApartment' && (
+				{CurrentServicesSingle === 'CleaningApartment' && (
 					<FinalPrice
 						NumberArea={NumberArea}
 						CurrentPrice={CurrentPrice}
@@ -246,7 +255,7 @@ const Calculator = () => {
 						C_Windows={C_Windows}
 					/>
 				)}
-				{CurrentServicesSingle == 'CleaningOffice' && (
+				{CurrentServicesSingle === 'CleaningOffice' && (
 					<FinalPrice
 						NumberArea={NumberArea}
 						CurrentPrice={CurrentPrice}
@@ -256,7 +265,7 @@ const Calculator = () => {
 						C_Windows={C_Windows}
 					/>
 				)}
-				{CurrentServicesSingle == 'CleaningWindows' && (
+				{CurrentServicesSingle === 'CleaningWindows' && (
 					<FinalPrice
 						NumberArea={NumberArea}
 						CurrentPrice={CurrentPrice}
@@ -266,6 +275,13 @@ const Calculator = () => {
 					/>
 				)}
 			</div>
+
+			<ModalWindowsListCleaning
+				OpenModalListCleaning={OpenModalListCleaning}
+				setOpenModalListCleaning={setOpenModalListCleaning}
+				CurrentServicesSingle={CurrentServicesSingle}
+				CurrentCatCleaning={CurrentCatCleaning}
+			/>
 		</div>
 	)
 }
