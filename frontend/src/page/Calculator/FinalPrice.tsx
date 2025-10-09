@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react'
+import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react'
 import { PriceFormat } from '../../components/ui/PriceFormat/PriceFormat'
 import { InitialQuadrature, TypeDopPrice } from './TypePrice'
 
@@ -8,6 +8,7 @@ interface TypeProps {
 	PriceQuadrature: number
 	C_Windows?: boolean
 	DopCurrentPrice?: TypeDopPrice[]
+	setDopCurrentPrice?: Dispatch<SetStateAction<TypeDopPrice[]>>
 	MinemumPrice: number
 }
 
@@ -22,8 +23,6 @@ const FinalPrice: FC<TypeProps> = ({
 	const [PriceQuadratureNew, setPriceQuadratureNew] = useState<number>(0)
 	const [FinalPrice, setFinalPrice] = useState<number>(CurrentPrice)
 	const [TitleWindows, setTitleWindows] = useState<string>('')
-
-	const [FinalDopPrice, setFinalDopPrice] = useState<number>(0)
 
 	useEffect(() => {
 		if (C_Windows == false) {
@@ -42,15 +41,8 @@ const FinalPrice: FC<TypeProps> = ({
 			}
 		}
 	}, [NumberArea, PriceQuadrature])
-
 	useEffect(() => {
 		if (DopCurrentPrice) {
-			setFinalDopPrice(
-				DopCurrentPrice?.reduce(
-					(a, v) => a + (v.quantity - 1) * v.price + v.minPrice,
-					0
-				)
-			)
 			setFinalPrice(
 				CurrentPrice +
 					DopCurrentPrice?.reduce(
@@ -106,12 +98,12 @@ const FinalPrice: FC<TypeProps> = ({
 						>
 							<div className='Calculator--content--BlockResult--DopServices--item--text'>
 								<p>{data.value}</p>
-								<p>
-									{data.unit} x {data.quantity}
-								</p>
+								<p>{data.unit && `${data.unit} x ${data.quantity}`}</p>
 							</div>
 							<div className='Calculator--content--BlockResult--DopServices--item--price'>
-								{PriceFormat(FinalDopPrice)}
+								{PriceFormat(
+									data.FinalPriceDop ? data.FinalPriceDop : data.minPrice
+								)}
 							</div>
 						</div>
 					))}

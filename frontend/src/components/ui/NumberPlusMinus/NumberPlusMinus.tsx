@@ -41,6 +41,7 @@ const NumberPlusMinus: FC<TypeProps> = ({
 			const newCard = DopCurrentPrice.slice()
 			newCard.splice(itemsIndex, 1, NewItem)
 			setDopCurrentPrice(newCard)
+			UpdateFinalPriceDop(newCard)
 		}
 	}
 
@@ -58,6 +59,7 @@ const NumberPlusMinus: FC<TypeProps> = ({
 				const newCard = DopCurrentPrice.slice()
 				newCard.splice(itemsIndex, 1, NewItem)
 				setDopCurrentPrice(newCard)
+				UpdateFinalPriceDop(newCard)
 			}
 		}
 	}
@@ -73,10 +75,24 @@ const NumberPlusMinus: FC<TypeProps> = ({
 				const newCard = DopCurrentPrice.slice()
 				newCard.splice(itemsIndex, 1, NewItem)
 				setDopCurrentPrice(newCard)
+				UpdateFinalPriceDop(newCard)
 			}
 		}
 	}
-
+	const UpdateFinalPriceDop = (UpdateCart: TypeDopPrice[]) => {
+		if (setDopCurrentPrice) {
+			const itemsIndex = UpdateCart.findIndex(value => value.id === id)
+			const NewItem = {
+				...UpdateCart[itemsIndex],
+				FinalPriceDop:
+					(UpdateCart[itemsIndex].quantity - 1) * UpdateCart[itemsIndex].price +
+					UpdateCart[itemsIndex].minPrice,
+			}
+			const newCard = UpdateCart.slice()
+			newCard.splice(itemsIndex, 1, NewItem)
+			setDopCurrentPrice(newCard)
+		}
+	}
 	//Выставления в количестве не ниже 1
 	useEffect(() => {
 		Num == 0 && setNum(1)

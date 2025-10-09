@@ -41,6 +41,7 @@
 	justify-content: space-between;
 	align-items: center;
 	p {
+		max-width: 380px;
 		font-size: 19px;
 		color: #484848;
 	}
@@ -49,6 +50,19 @@
 		text-align: right;
 		padding: 15px 0 15px 20px;
 		border-left: 2px dotted #5f5f5f;
+	}
+}
+
+@mixin SettingInputRadio {
+	input[type='radio'] {
+		display: none;
+	}
+	label {
+		padding: 5px 10px;
+		border-radius: 5px;
+	}
+	input[type='radio']:checked + label {
+		background-color: CS.$ColorAccent;
 	}
 }
 
@@ -186,12 +200,93 @@
 				border-radius: 8px 0 0 8px;
 				color: CS.$ColorBrown;
 				font-size: 20px;
-				padding: 5px 0;
+				padding: 5px 0 5px 10px;
 				transition: all 0.3s ease;
 				cursor: pointer;
+				text-align: left;
 				&:hover {
 					filter: brightness(90%);
 					-webkit-filter: brightness(90%);
+				}
+			}
+			&--h2 {
+				background-color: CS.$ColorFonDark;
+				margin-left: -20px;
+				border-radius: 0 8px 8px 0;
+				color: CS.$ColorBrown;
+				font-size: 20px;
+				padding: 5px 0;
+				text-align: center;
+			}
+			&--DopServices {
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+				align-items: flex-start;
+				flex-wrap: wrap;
+				row-gap: 20px;
+				column-gap: 20px;
+				padding-bottom: 50px;
+				&--item {
+					flex: 1 1 250px;
+					background-color: #ecdecb;
+					border-radius: 10px;
+					padding: 30px 10px 40px 10px;
+					min-height: 200px;
+					position: relative;
+					p {
+						position: absolute;
+						right: 0;
+						top: 0;
+						padding: 3px 5px;
+						border-radius: 0 10px 0 5px;
+						color: #fff;
+						background-color: #6c6c6c;
+						width: max-content;
+					}
+					h3 {
+						font-size: 20px;
+						color: CS.$ColorBrown;
+					}
+					&--Quantity {
+						position: absolute;
+						right: 10px;
+						bottom: 10px;
+						display: flex;
+						flex-direction: row;
+						justify-content: space-between;
+						align-items: center;
+						width: 100px;
+						padding: 3px 10px;
+						background-color: CS.$ColorFon;
+						border-radius: 10px;
+						&--BTNMinus {
+							font-size: 25px;
+							color: #6c6c6c;
+						}
+						&--BTNPlus {
+							font-size: 25px;
+							color: #6c6c6c;
+						}
+						p {
+						}
+					}
+					&--BTNYesNo {
+						display: flex;
+						flex-direction: row;
+						justify-content: space-between;
+						align-items: center;
+						width: 200px;
+						position: absolute;
+						right: 10px;
+						bottom: 10px;
+						&--Yes {
+							@include SettingInputRadio();
+						}
+						&--No {
+							@include SettingInputRadio();
+						}
+					}
 				}
 			}
 		}
@@ -202,6 +297,7 @@
 			padding: 0 20px;
 			&--MimimunPrice {
 				@include SettingLinkFinalPrice();
+				border-bottom: 3px dotted #eae7db;
 			}
 			&--quadrature {
 				@include SettingLinkFinalPrice();
@@ -214,7 +310,12 @@
 			&--DopServices {
 				@include H2StyleFinalPrice(0 10px 10px 0, CS.$ColorFonDark);
 				&--item {
+					border-bottom: 3px dotted #eae7db;
+					margin: 0 0 10px 0;
 					@include SettingLinkFinalPrice();
+					&:last-child {
+						border-bottom: none;
+					}
 				}
 			}
 			&--FinalPrice {

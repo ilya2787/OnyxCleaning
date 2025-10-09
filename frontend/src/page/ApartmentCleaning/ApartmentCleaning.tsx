@@ -43,7 +43,6 @@ const ApartmentCleaning = () => {
 		}
 		ListDop()
 	}, [ArrayBD])
-
 	return (
 		<div className='ApartmentCleaning'>
 			<BackBTN />

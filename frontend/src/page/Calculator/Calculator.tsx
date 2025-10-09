@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
+import { TypeBdCat } from '../../components/ListDataCleaning/ListDataCleaning'
 import NumberPlusMinus from '../../components/ui/NumberPlusMinus/NumberPlusMinus'
 import {
 	CatCleaning,
@@ -7,6 +8,7 @@ import {
 } from '../../components/ui/SelectItems/ListSelectCleaning'
 import SelectItems from '../../components/ui/SelectItems/SelectItems'
 import FinalPrice from './FinalPrice'
+import ItemDop from './ItemDop/ItemDop'
 import ModalWindowsListCleaning from './ModalWindows/ModalWindowsListCleaning'
 import './StyleCalculator.scss'
 import {
@@ -24,6 +26,7 @@ const Calculator = () => {
 	const [CurrentServicesSingle, setCurrentServicesSingle] = useState<string>('')
 	const [CurrentCatCleaning, setCurrentCatCleaning] = useState<string>('')
 	const [NumberArea, setNumberArea] = useState<number>(0)
+
 	//Наименование "Створок"
 	const [DopClearWindowsSost, setDopClearWindowsSost] = useState<boolean>(false)
 	const [NumWindowsDop, setNumWindowsDop] = useState<number>(0)
@@ -45,6 +48,12 @@ const Calculator = () => {
 	const [PriceQuadratureOffice, setPriceQuadratureOffice] = useState<number>(0)
 	const [MinPriceWindows, setMinPriceWindows] = useState<number>(0)
 	const [DoorPriceWindows, setDoorPriceWindows] = useState<number>(0)
+
+	//Переменный по доп услугам из БД
+	const [ArrayBDApartment, setArrayBDApartment] = useState<TypeBdCat[]>([])
+	const [ArrayDopBasic, setArrayDopBasic] = useState<TypeBdCat[]>([])
+	const [ArrayDopGeneral, setArrayDopGeneral] = useState<TypeBdCat[]>([])
+	const [ArrayDopRepair, setArrayDopRepair] = useState<TypeBdCat[]>([])
 
 	//Выгрузка прайса из БД
 	useEffect(() => {
@@ -170,6 +179,33 @@ const Calculator = () => {
 		})
 	}, [PriceCleaningApartment_DOP, CurrentCatCleaning])
 
+	//Выгрузка доп услуг из БД
+	useEffect(() => {
+		async function ArrayBD() {
+			axios
+				.get<TypeBdCat[]>('/DopCleaningApartment')
+				.then(res => {
+					setArrayBDApartment(res.data)
+				})
+				.catch(err => console.log(err))
+		}
+		ArrayBD()
+	}, [setArrayBDApartment])
+
+	useEffect(() => {
+		async function DataBD() {
+			ArrayBDApartment.map(data => {
+				data.NameCatCleaning === 'Basic' &&
+					setArrayDopBasic(ArrayDopBasic => [...ArrayDopBasic, data])
+				data.NameCatCleaning === 'General' &&
+					setArrayDopGeneral(ArrayDopGeneral => [...ArrayDopGeneral, data])
+				data.NameCatCleaning === 'Repair' &&
+					setArrayDopRepair(ArrayDopRepair => [...ArrayDopRepair, data])
+			})
+		}
+		DataBD()
+	}, [ArrayBDApartment])
+
 	return (
 		<div className='Calculator'>
 			<h1 className='Calculator--h1'>Рассчитать стоимость уборки</h1>
@@ -244,6 +280,25 @@ const Calculator = () => {
 					>
 						Что входит в уборку ?
 					</button>
+
+					<h2 className='Calculator--content--BlockPosition--h2'>
+						Выбор дополнительных опций
+					</h2>
+					<div className='Calculator--content--BlockPosition--DopServices'>
+						{CurrentServicesSingle === 'CleaningApartment' &&
+							CurrentCatCleaning === 'Basic' &&
+							ArrayDopBasic.map(data => (
+								<ItemDop
+									Text={data.text}
+									id={data.id}
+									DopCurrentPrice={DopCurrentPrice}
+									setDopCurrentPrice={setDopCurrentPrice}
+									BTN={true}
+									price={data.price}
+									unit={data.unit}
+								/>
+							))}
+					</div>
 				</div>
 				{CurrentServicesSingle === 'CleaningApartment' && (
 					<FinalPrice
@@ -251,6 +306,7 @@ const Calculator = () => {
 						CurrentPrice={CurrentPrice}
 						PriceQuadrature={PriceRootApartment}
 						DopCurrentPrice={DopCurrentPrice}
+						setDopCurrentPrice={setDopCurrentPrice}
 						MinemumPrice={MinPriceCleaningApartment}
 						C_Windows={C_Windows}
 					/>
@@ -261,6 +317,7 @@ const Calculator = () => {
 						CurrentPrice={CurrentPrice}
 						PriceQuadrature={PriceQuadratureOffice}
 						DopCurrentPrice={DopCurrentPrice}
+						setDopCurrentPrice={setDopCurrentPrice}
 						MinemumPrice={MinPriceOffice}
 						C_Windows={C_Windows}
 					/>

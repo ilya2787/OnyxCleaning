@@ -21,4 +21,5 @@ export interface TypeDopPrice {
 	unit: string
 	price: number
 	minPrice: number
+	FinalPriceDop?: number
 }
