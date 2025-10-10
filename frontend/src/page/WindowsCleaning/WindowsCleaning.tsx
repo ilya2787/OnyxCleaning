@@ -1,10 +1,7 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import {
-	TypeBdCat,
-	TypeListServices,
-	WindowsList,
-} from '../../components/ListDataCleaning/ListDataCleaning'
+import { WindowsList } from '../../components/ListDataCleaning/ListDataCleaning'
+import { TCategories, TListServices } from '../../components/type/Services.type'
 import BackBTN from '../../components/ui/BackBTN/BackBTN'
 import BlockInformText from '../../components/ui/BlockInfoServices/BlockInformText'
 import HeaderServices from '../../components/ui/HeaderServices/HeaderServices'
@@ -14,17 +11,17 @@ import { PriceFormat } from '../../components/ui/PriceFormat/PriceFormat'
 import './StyleWindowsCleaning.scss'
 
 const WindowsCleaning = () => {
-	const [ArrayData, setArrayData] = useState<TypeListServices[]>([])
+	const [ArrayData, setArrayData] = useState<TListServices[]>([])
 	const [OpenModal, setOpenModal] = useState<boolean>(false)
 	const [OpenModalDop, setOpenModalDop] = useState<boolean>(false)
 	const [TitleModalDop, setTitleModalDop] = useState<string>('')
-	const [ArrayDataDop, setArrayDataDop] = useState<TypeBdCat[]>([])
-	const [ArrayFullListDop, setArrayFullListDop] = useState<TypeBdCat[]>([])
+	const [ArrayDataDop, setArrayDataDop] = useState<TCategories[]>([])
+	const [ArrayFullListDop, setArrayFullListDop] = useState<TCategories[]>([])
 
 	useEffect(() => {
 		async function ListBD() {
 			axios
-				.get<TypeBdCat[]>('/DopCleaningWindows')
+				.get<TCategories[]>('/DopCleaningWindows')
 				.then(res => {
 					setArrayFullListDop(res.data)
 				})
@@ -85,7 +82,7 @@ const WindowsCleaning = () => {
 					{ArrayData.map(data => (
 						<li key={data.id}>
 							<span className='ModalContentUL-Icon'>{IconList.Check}</span>
-							<p>{data.Text}</p>
+							<p>{data.text}</p>
 						</li>
 					))}
 				</ul>

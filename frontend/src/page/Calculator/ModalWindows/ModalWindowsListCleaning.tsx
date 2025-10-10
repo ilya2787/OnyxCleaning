@@ -37,15 +37,15 @@ const ModalWindowsListCleaning: FC<TypeProps> = ({
 									<section key={i}>
 										<h2>Комнаты</h2>
 										{data.AllRoom.List.map(List => (
-											<li key={List.id}>{List.Text}</li>
+											<li key={List.id}>{List.text}</li>
 										))}
 										<h2>Кухня</h2>
 										{data.Food.List.map(List => (
-											<li key={List.id}>{List.Text}</li>
+											<li key={List.id}>{List.text}</li>
 										))}
 										<h2>Санузел</h2>
 										{data.WC.List.map(List => (
-											<li key={List.id}>{List.Text}</li>
+											<li key={List.id}>{List.text}</li>
 										))}
 									</section>
 								))}
@@ -55,15 +55,15 @@ const ModalWindowsListCleaning: FC<TypeProps> = ({
 									<section key={i}>
 										<h2>Комнаты</h2>
 										{data.AllRoom.List.map(List => (
-											<li key={List.id}>{List.Text}</li>
+											<li key={List.id}>{List.text}</li>
 										))}
 										<h2>Кухня</h2>
 										{data.Food.List.map(List => (
-											<li key={List.id}>{List.Text}</li>
+											<li key={List.id}>{List.text}</li>
 										))}
 										<h2>Санузел</h2>
 										{data.WC.List.map(List => (
-											<li key={List.id}>{List.Text}</li>
+											<li key={List.id}>{List.text}</li>
 										))}
 									</section>
 								))}
@@ -73,15 +73,15 @@ const ModalWindowsListCleaning: FC<TypeProps> = ({
 									<section key={i}>
 										<h2>Комнаты</h2>
 										{data.AllRoom.List.map(List => (
-											<li key={List.id}>{List.Text}</li>
+											<li key={List.id}>{List.text}</li>
 										))}
 										<h2>Кухня</h2>
 										{data.Food.List.map(List => (
-											<li key={List.id}>{List.Text}</li>
+											<li key={List.id}>{List.text}</li>
 										))}
 										<h2>Санузел</h2>
 										{data.WC.List.map(List => (
-											<li key={List.id}>{List.Text}</li>
+											<li key={List.id}>{List.text}</li>
 										))}
 									</section>
 								))}
@@ -93,7 +93,7 @@ const ModalWindowsListCleaning: FC<TypeProps> = ({
 						<>
 							<h2>Уборка офисных помещений</h2>
 							{OfficeList.map(data => (
-								<li key={data.id}>{data.Text}</li>
+								<li key={data.id}>{data.text}</li>
 							))}
 						</>
 					)}
@@ -102,7 +102,7 @@ const ModalWindowsListCleaning: FC<TypeProps> = ({
 						<>
 							<h2>Мойка окон</h2>
 							{WindowsList.map(data => (
-								<li key={data.id}>{data.Text}</li>
+								<li key={data.id}>{data.text}</li>
 							))}
 						</>
 					)}

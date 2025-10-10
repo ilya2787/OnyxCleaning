@@ -1,27 +1,27 @@
 import { FC, useEffect, useState } from 'react'
+import { GeneralList } from '../../../components/ListDataCleaning/ListDataCleaning'
 import {
-	GeneralList,
-	TypeBdCat,
-	TypeListServices,
-} from '../../../components/ListDataCleaning/ListDataCleaning'
+	TCategories,
+	TListServices,
+} from '../../../components/type/Services.type'
 import BlockInformText from '../../../components/ui/BlockInfoServices/BlockInformText'
 import { IconList } from '../../../components/ui/IconList'
 import ModalWindows from '../../../components/ui/ModalWindows/ModalWindows'
 import { PriceFormat } from '../../../components/ui/PriceFormat/PriceFormat'
 import './StyleItemCleaning.scss'
 interface TypeProps {
-	ArrayDopGeneral: TypeBdCat[]
+	ArrayDopGeneral: TCategories[]
 }
 
 const General: FC<TypeProps> = ({ ArrayDopGeneral }) => {
 	const [OpenModal, setOpenModal] = useState<boolean>(false)
 	const [OpenModalDop, setOpenModalDop] = useState<boolean>(false)
 	const [TitleModalDop, setTitleModalDop] = useState<string>('')
-	const [ArrayData, setArrayData] = useState<TypeListServices[]>([])
-	const [ArrayDataDop, setArrayDataDop] = useState<TypeBdCat[]>([])
-	const [ArrayBasicAllRoom, setArrayBasicAllRoom] = useState<TypeBdCat[]>([])
-	const [ArrayBasicFood, setArrayBasicFood] = useState<TypeBdCat[]>([])
-	const [ArrayBasicWC, setArrayBasicWC] = useState<TypeBdCat[]>([])
+	const [ArrayData, setArrayData] = useState<TListServices[]>([])
+	const [ArrayDataDop, setArrayDataDop] = useState<TCategories[]>([])
+	const [ArrayBasicAllRoom, setArrayBasicAllRoom] = useState<TCategories[]>([])
+	const [ArrayBasicFood, setArrayBasicFood] = useState<TCategories[]>([])
+	const [ArrayBasicWC, setArrayBasicWC] = useState<TCategories[]>([])
 
 	useEffect(() => {
 		ArrayDopGeneral.map(data => {
@@ -88,7 +88,7 @@ const General: FC<TypeProps> = ({ ArrayDopGeneral }) => {
 							{ArrayData.map(data => (
 								<li key={data.id}>
 									<span className='ModalContentUL-Icon'>{IconList.Check}</span>
-									<p>{data.Text}</p>
+									<p>{data.text}</p>
 								</li>
 							))}
 						</ul>

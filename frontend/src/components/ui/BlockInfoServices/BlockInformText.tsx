@@ -1,19 +1,16 @@
 import React, { Dispatch, FC, SetStateAction } from 'react'
-import {
-	TypeBdCat,
-	TypeListServices,
-} from '../../ListDataCleaning/ListDataCleaning'
 import { IconList } from '../IconList'
 
+import { TCategories, TListServices } from '../../type/Services.type'
 import './Style.scss'
 
 interface TypeProps {
 	Title: string
 	LinkImg: string
-	ArrayDataCleaning: TypeListServices[]
-	ArrayDopServices: TypeBdCat[]
-	setArrayDataDop: Dispatch<SetStateAction<TypeBdCat[]>>
-	setArrayData: Dispatch<SetStateAction<TypeListServices[]>>
+	ArrayDataCleaning: TListServices[]
+	ArrayDopServices: TCategories[]
+	setArrayDataDop: Dispatch<SetStateAction<TCategories[]>>
+	setArrayData: Dispatch<SetStateAction<TListServices[]>>
 	setOpenModal: Dispatch<SetStateAction<boolean>>
 	setOpenModalDop: Dispatch<SetStateAction<boolean>>
 	setTitleModalDop: Dispatch<SetStateAction<string>>
@@ -53,7 +50,7 @@ const BlockInformText: FC<TypeProps> = ({
 					{ArrayDataCleaning.slice(0, 5).map(data => (
 						<li key={data.id}>
 							<span className='Icon'>{IconList.Check}</span>
-							<p>{data.Text}</p>
+							<p>{data.text}</p>
 						</li>
 					))}
 					<div className='BlockInformText--text--BTN'>

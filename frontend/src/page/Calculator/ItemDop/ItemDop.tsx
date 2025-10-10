@@ -1,15 +1,17 @@
 import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react'
+import { TDopCurrent } from '../../../components/type/Services.type'
+import { UpdateFinalPriceDop } from '../../../components/ui/Function/function'
 import { PriceFormat } from '../../../components/ui/PriceFormat/PriceFormat'
-import { TypeDopPrice } from '../TypePrice'
 
 interface TypeProps {
-	DopCurrentPrice: TypeDopPrice[]
-	setDopCurrentPrice: Dispatch<SetStateAction<TypeDopPrice[]>>
+	DopCurrentPrice: TDopCurrent[]
+	setDopCurrentPrice: Dispatch<SetStateAction<TDopCurrent[]>>
 	Text: string
 	id: number
-	BTN: boolean
 	unit: string | undefined
 	price: number
+	minW: number
+	fsH3: number
 }
 
 const ItemDop: FC<TypeProps> = ({
@@ -17,9 +19,10 @@ const ItemDop: FC<TypeProps> = ({
 	setDopCurrentPrice,
 	Text,
 	id,
-	BTN,
 	unit,
 	price,
+	minW,
+	fsH3,
 }) => {
 	const [QuantityDop, setQuantityDop] = useState<number>(0)
 	const [ActiveBlockDop, setActiveBlockDop] = useState<boolean>(false)
@@ -38,7 +41,7 @@ const ItemDop: FC<TypeProps> = ({
 			const newCard = DopCurrentPrice.slice()
 			newCard.splice(itemsIndex, 1, NewItem)
 			setDopCurrentPrice(newCard)
-			UpdateFinalPriceDop(newCard)
+			UpdateFinalPriceDop(newCard, id, setDopCurrentPrice)
 		} else {
 			setDopCurrentPrice(DopCurrentPrice => [
 				...DopCurrentPrice,
@@ -49,7 +52,7 @@ const ItemDop: FC<TypeProps> = ({
 					quantity: 1,
 					unit: unit ? unit : '',
 					price: price,
-					minPrice: price,
+					MinPrice: price,
 				},
 			])
 		}
@@ -68,7 +71,7 @@ const ItemDop: FC<TypeProps> = ({
 			const newCard = DopCurrentPrice.slice()
 			newCard.splice(itemsIndex, 1, NewItem)
 			setDopCurrentPrice(newCard)
-			UpdateFinalPriceDop(newCard)
+			UpdateFinalPriceDop(newCard, id, setDopCurrentPrice)
 		} else {
 			setQuantityDop(0)
 			MinusListDop(id)
@@ -86,7 +89,7 @@ const ItemDop: FC<TypeProps> = ({
 					quantity: 1,
 					unit: unit ? unit : '',
 					price: 1,
-					minPrice: price,
+					MinPrice: price,
 				},
 			])
 		} else {
@@ -99,7 +102,7 @@ const ItemDop: FC<TypeProps> = ({
 					quantity: 1,
 					unit: unit ? unit : '',
 					price: 1,
-					minPrice: price,
+					MinPrice: price,
 				},
 			])
 		}
@@ -122,7 +125,7 @@ const ItemDop: FC<TypeProps> = ({
 				const newCard = DopCurrentPrice.slice()
 				newCard.splice(itemsIndex, 1, NewItem)
 				setDopCurrentPrice(newCard)
-				UpdateFinalPriceDop(newCard)
+				UpdateFinalPriceDop(newCard, id, setDopCurrentPrice)
 			} else {
 				setDopCurrentPrice(DopCurrentPrice => [
 					...DopCurrentPrice,
@@ -133,28 +136,13 @@ const ItemDop: FC<TypeProps> = ({
 						quantity: QuantityDop,
 						unit: unit ? unit : '',
 						price: price,
-						minPrice: price,
+						MinPrice: price,
 					},
 				])
 			}
 		} else {
 			setQuantityDop(0)
 			MinusListDop(id)
-		}
-	}
-
-	const UpdateFinalPriceDop = (UpdateCart: TypeDopPrice[]) => {
-		if (setDopCurrentPrice) {
-			const itemsIndex = UpdateCart.findIndex(value => value.id === id)
-			const NewItem = {
-				...UpdateCart[itemsIndex],
-				FinalPriceDop:
-					(UpdateCart[itemsIndex].quantity - 1) * UpdateCart[itemsIndex].price +
-					UpdateCart[itemsIndex].minPrice,
-			}
-			const newCard = UpdateCart.slice()
-			newCard.splice(itemsIndex, 1, NewItem)
-			setDopCurrentPrice(newCard)
 		}
 	}
 
@@ -171,10 +159,16 @@ const ItemDop: FC<TypeProps> = ({
 
 	const StyleBlockActive: React.CSSProperties = {
 		background: '#d8d8c5',
+		minHeight: `${minW}px`,
 	}
 
 	const StyleBlock: React.CSSProperties = {
 		background: `#ecdecb`,
+		minHeight: `${minW}px`,
+	}
+
+	const StyleH3: React.CSSProperties = {
+		fontSize: `${fsH3}px`,
 	}
 	return (
 		<div
@@ -184,7 +178,7 @@ const ItemDop: FC<TypeProps> = ({
 			<p className='Calculator--content--BlockPosition--DopServices--item--PriceBD'>
 				{`${price ? PriceFormat(price) : ''}  ${unit ? unit : ''}  `}
 			</p>
-			<h3>{Text}</h3>
+			<h3 style={StyleH3}>{Text}</h3>
 			{unit && SymbolSearch === false ? (
 				<div className='Calculator--content--BlockPosition--DopServices--item--Quantity'>
 					<button

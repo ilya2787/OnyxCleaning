@@ -1,14 +1,15 @@
 import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react'
-import { TypeDopPrice } from '../../../page/Calculator/TypePrice'
+import { TDopCurrent } from '../../type/Services.type'
+import { UpdateFinalPriceDop } from '../Function/function'
 
 interface TypeProps {
 	CurrentServicesSingle: string
 	Num: number
 	setNum: Dispatch<SetStateAction<number>>
 	id?: number
-	DopCurrentPrice?: TypeDopPrice[]
-	setDopCurrentPrice?: Dispatch<SetStateAction<TypeDopPrice[]>>
-	priceItem?: number
+	DopCurrentPrice?: TDopCurrent[]
+	setDopCurrentPrice?: Dispatch<SetStateAction<TDopCurrent[]>>
+	CalculatorPriceAndQuantity: () => void
 }
 
 const NumberPlusMinus: FC<TypeProps> = ({
@@ -18,21 +19,22 @@ const NumberPlusMinus: FC<TypeProps> = ({
 	id,
 	DopCurrentPrice,
 	setDopCurrentPrice,
-	priceItem,
+	CalculatorPriceAndQuantity,
 }) => {
 	//Функция сложения вычитания для квадратуры и количеству створок
 	const [TitleWindows, setTitleWindows] = useState<string>('')
 	const PlusNumber = () => {
 		setNum(Num + 1)
 		ListNumberPlus()
+		CalculatorPriceAndQuantity()
 	}
 	const MinusNumber = () => {
 		setNum(Num - 1)
 		ListNumberMinus()
+		CalculatorPriceAndQuantity()
 	}
-
 	const ListNumberPlus = () => {
-		if (DopCurrentPrice && setDopCurrentPrice && priceItem) {
+		if (DopCurrentPrice && setDopCurrentPrice && id) {
 			const itemsIndex = DopCurrentPrice.findIndex(value => value.id === id)
 			const NewItem = {
 				...DopCurrentPrice[itemsIndex],
@@ -41,12 +43,12 @@ const NumberPlusMinus: FC<TypeProps> = ({
 			const newCard = DopCurrentPrice.slice()
 			newCard.splice(itemsIndex, 1, NewItem)
 			setDopCurrentPrice(newCard)
-			UpdateFinalPriceDop(newCard)
+			UpdateFinalPriceDop(newCard, id, setDopCurrentPrice)
 		}
 	}
 
 	const ListNumberMinus = () => {
-		if (DopCurrentPrice) {
+		if (DopCurrentPrice && id) {
 			if (setDopCurrentPrice) {
 				const itemsIndex = DopCurrentPrice.findIndex(value => value.id === id)
 				const NewItem = {
@@ -59,13 +61,13 @@ const NumberPlusMinus: FC<TypeProps> = ({
 				const newCard = DopCurrentPrice.slice()
 				newCard.splice(itemsIndex, 1, NewItem)
 				setDopCurrentPrice(newCard)
-				UpdateFinalPriceDop(newCard)
+				UpdateFinalPriceDop(newCard, id, setDopCurrentPrice)
 			}
 		}
 	}
 
 	const ListNumberEnter = () => {
-		if (DopCurrentPrice) {
+		if (DopCurrentPrice && id) {
 			if (setDopCurrentPrice) {
 				const itemsIndex = DopCurrentPrice.findIndex(value => value.id === id)
 				const NewItem = {
@@ -75,27 +77,15 @@ const NumberPlusMinus: FC<TypeProps> = ({
 				const newCard = DopCurrentPrice.slice()
 				newCard.splice(itemsIndex, 1, NewItem)
 				setDopCurrentPrice(newCard)
-				UpdateFinalPriceDop(newCard)
+				UpdateFinalPriceDop(newCard, id, setDopCurrentPrice)
 			}
 		}
 	}
-	const UpdateFinalPriceDop = (UpdateCart: TypeDopPrice[]) => {
-		if (setDopCurrentPrice) {
-			const itemsIndex = UpdateCart.findIndex(value => value.id === id)
-			const NewItem = {
-				...UpdateCart[itemsIndex],
-				FinalPriceDop:
-					(UpdateCart[itemsIndex].quantity - 1) * UpdateCart[itemsIndex].price +
-					UpdateCart[itemsIndex].minPrice,
-			}
-			const newCard = UpdateCart.slice()
-			newCard.splice(itemsIndex, 1, NewItem)
-			setDopCurrentPrice(newCard)
-		}
-	}
+
 	//Выставления в количестве не ниже 1
 	useEffect(() => {
 		Num == 0 && setNum(1)
+		CalculatorPriceAndQuantity()
 	}, [Num])
 
 	useEffect(() => {

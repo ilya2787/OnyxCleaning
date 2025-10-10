@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import { TypeBdCat } from '../../components/ListDataCleaning/ListDataCleaning'
+import { TCategories } from '../../components/type/Services.type'
 import BackBTN from '../../components/ui/BackBTN/BackBTN'
 import HeaderServices from '../../components/ui/HeaderServices/HeaderServices'
 import { IconList } from '../../components/ui/IconList'
@@ -13,15 +13,15 @@ import './StyleApartmentCleaning.scss'
 const ApartmentCleaning = () => {
 	const [CatCleaning, setCatCleaning] = useState<string>('Basic')
 
-	const [ArrayBD, setArrayBd] = useState<TypeBdCat[]>([])
-	const [ArrayDopBasic, setArrayDopBasic] = useState<TypeBdCat[]>([])
-	const [ArrayDopGeneral, setArrayDopGeneral] = useState<TypeBdCat[]>([])
-	const [ArrayDopRepair, setArrayDopRepair] = useState<TypeBdCat[]>([])
+	const [ArrayBD, setArrayBd] = useState<TCategories[]>([])
+	const [ArrayDopBasic, setArrayDopBasic] = useState<TCategories[]>([])
+	const [ArrayDopGeneral, setArrayDopGeneral] = useState<TCategories[]>([])
+	const [ArrayDopRepair, setArrayDopRepair] = useState<TCategories[]>([])
 
 	useEffect(() => {
 		async function ListBDDop() {
 			axios
-				.get<TypeBdCat[]>('/DopCleaningApartment')
+				.get<TCategories[]>('/DopCleaningApartment')
 				.then(res => {
 					setArrayBd(res.data)
 				})

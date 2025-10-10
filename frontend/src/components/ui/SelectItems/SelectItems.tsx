@@ -11,6 +11,7 @@ interface TypeProps {
 	CurrentServicesMulti?: string[]
 	setCurrentServicesMulti?: Dispatch<SetStateAction<string[]>>
 	isMulti: boolean
+	CalculatorPriceAndQuantity: () => void
 }
 
 const SelectItems: FC<TypeProps> = ({
@@ -21,6 +22,7 @@ const SelectItems: FC<TypeProps> = ({
 	CurrentServicesMulti,
 	setCurrentServicesMulti,
 	isMulti,
+	CalculatorPriceAndQuantity,
 }) => {
 	const getSingle = () => {
 		return CurrentServicesSingle
@@ -36,6 +38,7 @@ const SelectItems: FC<TypeProps> = ({
 	const onChangeServiceSingle = (newValue: SingleValue<string | IOption>) => {
 		setCurrentServicesSingle &&
 			setCurrentServicesSingle((newValue as IOption).value)
+		CalculatorPriceAndQuantity()
 	}
 
 	const onChangeServiceMulti = (

@@ -185,6 +185,23 @@
 						}
 					}
 				}
+				&--ListDop {
+					&--h3 {
+						padding: 10px 0;
+						text-align: center;
+						font-size: 19px;
+						color: CS.$ColorBrown;
+					}
+					&--content {
+						display: flex;
+						flex-direction: row;
+						justify-content: flex-start;
+						align-items: flex-start;
+						flex-wrap: wrap;
+						row-gap: 10px;
+						column-gap: 10px;
+					}
+				}
 			}
 
 			&--structure {
@@ -222,10 +239,8 @@
 				padding-bottom: 50px;
 				&--item {
 					flex: 1 1 250px;
-					background-color: #ecdecb;
 					border-radius: 10px;
 					padding: 30px 10px 40px 10px;
-					min-height: 200px;
 					position: relative;
 					&--PriceBD {
 						position: absolute;
@@ -238,7 +253,6 @@
 						width: max-content;
 					}
 					h3 {
-						font-size: 20px;
 						color: CS.$ColorBrown;
 					}
 					&--Quantity {
@@ -296,7 +310,7 @@
 			background-color: #fff;
 			border-radius: 10px;
 			padding: 0 20px;
-			&--MimimunPrice {
+			&--MinimumPrice {
 				@include SettingLinkFinalPrice();
 				border-bottom: 3px dotted #eae7db;
 			}

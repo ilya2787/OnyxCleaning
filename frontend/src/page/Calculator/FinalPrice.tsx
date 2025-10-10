@@ -1,15 +1,17 @@
 import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react'
+import { InitialQuadrature } from '../../components/type/Parameter.type'
+import { TDopCurrent, TDopPrice } from '../../components/type/Services.type'
 import { PriceFormat } from '../../components/ui/PriceFormat/PriceFormat'
-import { InitialQuadrature, TypeDopPrice } from './TypePrice'
 
 interface TypeProps {
 	NumberArea: number
 	CurrentPrice: number
 	PriceQuadrature: number
 	C_Windows?: boolean
-	DopCurrentPrice?: TypeDopPrice[]
-	setDopCurrentPrice?: Dispatch<SetStateAction<TypeDopPrice[]>>
-	MinemumPrice: number
+	DopCurrentPrice?: TDopCurrent[]
+	setDopCurrentPrice?: Dispatch<SetStateAction<TDopCurrent[]>>
+	MinimumPrice: number
+	ArrayDopWindowsCleaning?: TDopPrice[]
 }
 
 const FinalPrice: FC<TypeProps> = ({
@@ -18,12 +20,11 @@ const FinalPrice: FC<TypeProps> = ({
 	PriceQuadrature,
 	C_Windows,
 	DopCurrentPrice,
-	MinemumPrice,
+	MinimumPrice,
 }) => {
 	const [PriceQuadratureNew, setPriceQuadratureNew] = useState<number>(0)
 	const [FinalPrice, setFinalPrice] = useState<number>(CurrentPrice)
 	const [TitleWindows, setTitleWindows] = useState<string>('')
-
 	useEffect(() => {
 		if (C_Windows === false) {
 			if (NumberArea > InitialQuadrature.Quantity) {
@@ -40,14 +41,14 @@ const FinalPrice: FC<TypeProps> = ({
 				setPriceQuadratureNew(0)
 			}
 		}
-	}, [NumberArea, PriceQuadrature])
+	}, [NumberArea, PriceQuadrature, C_Windows])
 
 	useEffect(() => {
 		if (DopCurrentPrice) {
 			setFinalPrice(
 				CurrentPrice +
 					DopCurrentPrice?.reduce(
-						(a, v) => a + (v.quantity - 1) * v.price + v.minPrice,
+						(a, v) => a + (v.quantity - 1) * v.price + v.MinPrice,
 						0
 					)
 			)
@@ -63,10 +64,10 @@ const FinalPrice: FC<TypeProps> = ({
 	}, [NumberArea])
 	return (
 		<div className='Calculator--content--BlockResult'>
-			<div className='Calculator--content--BlockResult--MimimunPrice'>
+			<div className='Calculator--content--BlockResult--MinimumPrice'>
 				<p>Минимальная стоимость</p>
-				<div className='Calculator--content--BlockResult--MimimunPrice--price'>
-					{PriceFormat(MinemumPrice)}
+				<div className='Calculator--content--BlockResult--MinimumPrice--price'>
+					{PriceFormat(MinimumPrice)}
 				</div>
 			</div>
 			{PriceQuadrature ? (
@@ -102,7 +103,7 @@ const FinalPrice: FC<TypeProps> = ({
 							</div>
 							<div className='Calculator--content--BlockResult--DopServices--item--price'>
 								{PriceFormat(
-									data.FinalPriceDop ? data.FinalPriceDop : data.minPrice
+									data.FinalPriceDop ? data.FinalPriceDop : data.MinPrice
 								)}
 							</div>
 						</div>
