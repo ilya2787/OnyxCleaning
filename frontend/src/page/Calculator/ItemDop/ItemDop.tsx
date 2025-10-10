@@ -23,23 +23,72 @@ const ItemDop: FC<TypeProps> = ({
 }) => {
 	const [QuantityDop, setQuantityDop] = useState<number>(0)
 	const [ActiveBlockDop, setActiveBlockDop] = useState<boolean>(false)
+	const [SymbolSearch, setSymbolSearch] = useState<boolean>(false)
 
 	useEffect(() => {}, [ActiveBlockDop])
 
 	const Plus = () => {
 		setQuantityDop(QuantityDop + 1)
+		const itemsIndex = DopCurrentPrice.findIndex(value => value.id === id)
+		if (itemsIndex >= 0) {
+			const NewItem = {
+				...DopCurrentPrice[itemsIndex],
+				quantity: DopCurrentPrice[itemsIndex].quantity + 1,
+			}
+			const newCard = DopCurrentPrice.slice()
+			newCard.splice(itemsIndex, 1, NewItem)
+			setDopCurrentPrice(newCard)
+			UpdateFinalPriceDop(newCard)
+		} else {
+			setDopCurrentPrice(DopCurrentPrice => [
+				...DopCurrentPrice,
+				{
+					id: id,
+					title: '',
+					value: Text,
+					quantity: 1,
+					unit: unit ? unit : '',
+					price: price,
+					minPrice: price,
+				},
+			])
+		}
 	}
-
 	const Minus = () => {
 		if (QuantityDop > 1) {
 			setQuantityDop(QuantityDop - 1)
+			const itemsIndex = DopCurrentPrice.findIndex(value => value.id === id)
+			const NewItem = {
+				...DopCurrentPrice[itemsIndex],
+				quantity:
+					DopCurrentPrice[itemsIndex].quantity > 1
+						? DopCurrentPrice[itemsIndex].quantity - 1
+						: 0,
+			}
+			const newCard = DopCurrentPrice.slice()
+			newCard.splice(itemsIndex, 1, NewItem)
+			setDopCurrentPrice(newCard)
+			UpdateFinalPriceDop(newCard)
 		} else {
 			setQuantityDop(0)
+			MinusListDop(id)
 		}
 	}
 
 	const PlusListDop = (id: number) => {
-		if (!BTN) {
+		if (!SymbolSearch) {
+			setDopCurrentPrice(DopCurrentPrice => [
+				...DopCurrentPrice,
+				{
+					id: id,
+					title: '',
+					value: Text,
+					quantity: 1,
+					unit: unit ? unit : '',
+					price: 1,
+					minPrice: price,
+				},
+			])
 		} else {
 			setDopCurrentPrice(DopCurrentPrice => [
 				...DopCurrentPrice,
@@ -57,12 +106,68 @@ const ItemDop: FC<TypeProps> = ({
 	}
 
 	const MinusListDop = (id: number) => {
-		if (!BTN) {
+		const NewList = DopCurrentPrice.filter(item => item.id !== id)
+		setDopCurrentPrice(NewList)
+	}
+
+	const ListNumberEnter = () => {
+		if (QuantityDop > 1) {
+			setQuantityDop(QuantityDop)
+			const itemsIndex = DopCurrentPrice.findIndex(value => value.id === id)
+			if (itemsIndex >= 0) {
+				const NewItem = {
+					...DopCurrentPrice[itemsIndex],
+					quantity: DopCurrentPrice[itemsIndex].quantity > 1 ? QuantityDop : 0,
+				}
+				const newCard = DopCurrentPrice.slice()
+				newCard.splice(itemsIndex, 1, NewItem)
+				setDopCurrentPrice(newCard)
+				UpdateFinalPriceDop(newCard)
+			} else {
+				setDopCurrentPrice(DopCurrentPrice => [
+					...DopCurrentPrice,
+					{
+						id: id,
+						title: '',
+						value: Text,
+						quantity: QuantityDop,
+						unit: unit ? unit : '',
+						price: price,
+						minPrice: price,
+					},
+				])
+			}
 		} else {
-			const NewList = DopCurrentPrice.filter(item => item.id !== id)
-			setDopCurrentPrice(NewList)
+			setQuantityDop(0)
+			MinusListDop(id)
 		}
 	}
+
+	const UpdateFinalPriceDop = (UpdateCart: TypeDopPrice[]) => {
+		if (setDopCurrentPrice) {
+			const itemsIndex = UpdateCart.findIndex(value => value.id === id)
+			const NewItem = {
+				...UpdateCart[itemsIndex],
+				FinalPriceDop:
+					(UpdateCart[itemsIndex].quantity - 1) * UpdateCart[itemsIndex].price +
+					UpdateCart[itemsIndex].minPrice,
+			}
+			const newCard = UpdateCart.slice()
+			newCard.splice(itemsIndex, 1, NewItem)
+			setDopCurrentPrice(newCard)
+		}
+	}
+
+	useEffect(() => {
+		if (unit) {
+			let SymbolSearchUnit = unit.indexOf('%')
+			if (SymbolSearchUnit >= 0) {
+				setSymbolSearch(true)
+			} else {
+				setSymbolSearch(false)
+			}
+		}
+	}, [unit])
 
 	const StyleBlockActive: React.CSSProperties = {
 		background: '#d8d8c5',
@@ -71,15 +176,16 @@ const ItemDop: FC<TypeProps> = ({
 	const StyleBlock: React.CSSProperties = {
 		background: `#ecdecb`,
 	}
-
 	return (
 		<div
 			className='Calculator--content--BlockPosition--DopServices--item'
-			style={ActiveBlockDop ? StyleBlockActive : StyleBlock}
+			style={ActiveBlockDop || QuantityDop > 0 ? StyleBlockActive : StyleBlock}
 		>
-			<p>{PriceFormat(price)}</p>
+			<p className='Calculator--content--BlockPosition--DopServices--item--PriceBD'>
+				{`${price ? PriceFormat(price) : ''}  ${unit ? unit : ''}  `}
+			</p>
 			<h3>{Text}</h3>
-			{!BTN ? (
+			{unit && SymbolSearch === false ? (
 				<div className='Calculator--content--BlockPosition--DopServices--item--Quantity'>
 					<button
 						className='Calculator--content--BlockPosition--DopServices--item--Quantity--BTNMinus'
@@ -87,7 +193,16 @@ const ItemDop: FC<TypeProps> = ({
 					>
 						-
 					</button>
-					<p>{QuantityDop}</p>
+					<input
+						onChange={event => {
+							setQuantityDop(Number(event.target.value))
+						}}
+						onKeyDown={event => {
+							event.key === 'Enter' && ListNumberEnter()
+						}}
+						value={QuantityDop}
+						type='number'
+					/>
 					<button
 						className='Calculator--content--BlockPosition--DopServices--item--Quantity--BTNPlus'
 						onClick={() => Plus()}

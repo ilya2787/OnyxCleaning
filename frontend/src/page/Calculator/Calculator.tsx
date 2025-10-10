@@ -55,6 +55,14 @@ const Calculator = () => {
 	const [ArrayDopGeneral, setArrayDopGeneral] = useState<TypeBdCat[]>([])
 	const [ArrayDopRepair, setArrayDopRepair] = useState<TypeBdCat[]>([])
 
+	const [ArrayBDOfficeCleaning, setArrayBDOfficeCleaning] = useState<
+		TypeBdCat[]
+	>([])
+
+	const [ArrayBDWindowsCleaning, setArrayBDWindowsCleaning] = useState<
+		TypeBdCat[]
+	>([])
+
 	//Выгрузка прайса из БД
 	useEffect(() => {
 		async function BdPrice() {
@@ -94,6 +102,7 @@ const Calculator = () => {
 
 	//Отчистка позиций
 	useEffect(() => {
+		ClearDop()
 		if (CurrentServicesSingle !== 'CleaningApartment') {
 			setCurrentCatCleaning('')
 			setPriceRootApartment(0)
@@ -105,7 +114,15 @@ const Calculator = () => {
 		} else {
 			setC_Windows(false)
 		}
-	}, [CurrentServicesSingle])
+	}, [CurrentServicesSingle, CurrentCatCleaning])
+
+	const ClearDop = () => {
+		setDopClearWindowsSost(false)
+		DeleteItemDop(999)
+		setNumWindowsDop(1)
+		setDopCurrentPrice([])
+	}
+
 	//Склонение наименования створка
 
 	const OnClickInputWindows = () => {
@@ -130,7 +147,7 @@ const Calculator = () => {
 		}
 	}
 
-	//Обновление данных по списке допов
+	//Удаление данных в списке допов
 	const DeleteItemDop = (id: number) => {
 		const NewList = DopCurrentPrice.filter(item => item.id !== id)
 		setDopCurrentPrice(NewList)
@@ -205,6 +222,30 @@ const Calculator = () => {
 		}
 		DataBD()
 	}, [ArrayBDApartment])
+
+	useEffect(() => {
+		async function ListBD() {
+			axios
+				.get<TypeBdCat[]>('/DopCleaningOffice')
+				.then(res => {
+					setArrayBDOfficeCleaning(res.data)
+				})
+				.catch(err => console.log(err))
+		}
+		ListBD()
+	}, [ArrayBDOfficeCleaning])
+
+	useEffect(() => {
+		async function ListBD() {
+			axios
+				.get<TypeBdCat[]>('/DopCleaningWindows')
+				.then(res => {
+					setArrayBDWindowsCleaning(res.data)
+				})
+				.catch(err => console.log(err))
+		}
+		ListBD()
+	}, [ArrayBDWindowsCleaning])
 
 	return (
 		<div className='Calculator'>
@@ -285,15 +326,71 @@ const Calculator = () => {
 						Выбор дополнительных опций
 					</h2>
 					<div className='Calculator--content--BlockPosition--DopServices'>
-						{CurrentServicesSingle === 'CleaningApartment' &&
-							CurrentCatCleaning === 'Basic' &&
-							ArrayDopBasic.map(data => (
+						{CurrentServicesSingle === 'CleaningApartment' && (
+							<>
+								{CurrentCatCleaning === 'Basic' &&
+									ArrayDopBasic.map(data => (
+										<ItemDop
+											key={data.id}
+											Text={data.text}
+											id={data.id}
+											DopCurrentPrice={DopCurrentPrice}
+											setDopCurrentPrice={setDopCurrentPrice}
+											BTN={true}
+											price={data.price}
+											unit={data.unit}
+										/>
+									))}
+								{CurrentCatCleaning === 'General' &&
+									ArrayDopGeneral.map(data => (
+										<ItemDop
+											key={data.id}
+											Text={data.text}
+											id={data.id}
+											DopCurrentPrice={DopCurrentPrice}
+											setDopCurrentPrice={setDopCurrentPrice}
+											BTN={true}
+											price={data.price}
+											unit={data.unit}
+										/>
+									))}
+								{CurrentCatCleaning === 'Repair' &&
+									ArrayDopRepair.map(data => (
+										<ItemDop
+											key={data.id}
+											Text={data.text}
+											id={data.id}
+											DopCurrentPrice={DopCurrentPrice}
+											setDopCurrentPrice={setDopCurrentPrice}
+											BTN={true}
+											price={data.price}
+											unit={data.unit}
+										/>
+									))}
+							</>
+						)}
+						{CurrentServicesSingle === 'CleaningOffice' &&
+							ArrayBDOfficeCleaning.map(data => (
 								<ItemDop
+									key={data.id}
 									Text={data.text}
 									id={data.id}
 									DopCurrentPrice={DopCurrentPrice}
 									setDopCurrentPrice={setDopCurrentPrice}
-									BTN={true}
+									BTN={false}
+									price={data.price}
+									unit={data.unit}
+								/>
+							))}
+						{CurrentServicesSingle === 'CleaningWindows' &&
+							ArrayBDWindowsCleaning.map(data => (
+								<ItemDop
+									key={data.id}
+									Text={data.text}
+									id={data.id}
+									DopCurrentPrice={DopCurrentPrice}
+									setDopCurrentPrice={setDopCurrentPrice}
+									BTN={false}
 									price={data.price}
 									unit={data.unit}
 								/>
@@ -327,6 +424,8 @@ const Calculator = () => {
 						NumberArea={NumberArea}
 						CurrentPrice={CurrentPrice}
 						PriceQuadrature={DoorPriceWindows}
+						DopCurrentPrice={DopCurrentPrice}
+						setDopCurrentPrice={setDopCurrentPrice}
 						C_Windows={C_Windows}
 						MinemumPrice={MinPriceWindows}
 					/>

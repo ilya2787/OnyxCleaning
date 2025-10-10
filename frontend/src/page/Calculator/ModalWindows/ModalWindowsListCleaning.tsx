@@ -34,7 +34,7 @@ const ModalWindowsListCleaning: FC<TypeProps> = ({
 						<>
 							{CurrentCatCleaning === 'Basic' &&
 								BasicList.map((data, i) => (
-									<>
+									<section key={i}>
 										<h2>Комнаты</h2>
 										{data.AllRoom.List.map(List => (
 											<li key={List.id}>{List.Text}</li>
@@ -47,12 +47,12 @@ const ModalWindowsListCleaning: FC<TypeProps> = ({
 										{data.WC.List.map(List => (
 											<li key={List.id}>{List.Text}</li>
 										))}
-									</>
+									</section>
 								))}
 
 							{CurrentCatCleaning === 'General' &&
 								GeneralList.map((data, i) => (
-									<>
+									<section key={i}>
 										<h2>Комнаты</h2>
 										{data.AllRoom.List.map(List => (
 											<li key={List.id}>{List.Text}</li>
@@ -65,12 +65,12 @@ const ModalWindowsListCleaning: FC<TypeProps> = ({
 										{data.WC.List.map(List => (
 											<li key={List.id}>{List.Text}</li>
 										))}
-									</>
+									</section>
 								))}
 
 							{CurrentCatCleaning === 'Repair' &&
 								RepairList.map((data, i) => (
-									<>
+									<section key={i}>
 										<h2>Комнаты</h2>
 										{data.AllRoom.List.map(List => (
 											<li key={List.id}>{List.Text}</li>
@@ -83,7 +83,7 @@ const ModalWindowsListCleaning: FC<TypeProps> = ({
 										{data.WC.List.map(List => (
 											<li key={List.id}>{List.Text}</li>
 										))}
-									</>
+									</section>
 								))}
 							{CurrentCatCleaning === '' && <h2>Вы не выбрали тип уборки</h2>}
 						</>

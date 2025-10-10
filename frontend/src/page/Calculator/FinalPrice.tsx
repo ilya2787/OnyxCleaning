@@ -25,7 +25,7 @@ const FinalPrice: FC<TypeProps> = ({
 	const [TitleWindows, setTitleWindows] = useState<string>('')
 
 	useEffect(() => {
-		if (C_Windows == false) {
+		if (C_Windows === false) {
 			if (NumberArea > InitialQuadrature.Quantity) {
 				setPriceQuadratureNew(
 					(NumberArea - InitialQuadrature.Quantity) * PriceQuadrature
@@ -41,6 +41,7 @@ const FinalPrice: FC<TypeProps> = ({
 			}
 		}
 	}, [NumberArea, PriceQuadrature])
+
 	useEffect(() => {
 		if (DopCurrentPrice) {
 			setFinalPrice(
@@ -56,11 +57,10 @@ const FinalPrice: FC<TypeProps> = ({
 	}, [DopCurrentPrice, CurrentPrice])
 
 	useEffect(() => {
-		NumberArea == 1 && setTitleWindows('створка')
+		NumberArea === 1 && setTitleWindows('створка')
 		NumberArea > 1 && setTitleWindows('створки')
 		NumberArea >= 5 && setTitleWindows('створок')
 	}, [NumberArea])
-
 	return (
 		<div className='Calculator--content--BlockResult'>
 			<div className='Calculator--content--BlockResult--MimimunPrice'>
