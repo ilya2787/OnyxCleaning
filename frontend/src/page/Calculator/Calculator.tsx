@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { InitialQuadrature } from '../../components/type/Parameter.type'
 import type {
 	TCategories,
-	TDopCurrent,
+	TDopCurrentPrice,
 	TPriceBD,
 	TRootPrice,
 } from '../../components/type/Services.type'
@@ -27,7 +27,7 @@ const Calculator = () => {
 	const [CurrentCatCleaning, setCurrentCatCleaning] = useState<string>('')
 	const [NumberArea, setNumberArea] = useState<number>(0)
 
-	//Наименование "Створок"
+	//Данные по окнам
 	const [DopClearWindowsState, setDopClearWindowsState] =
 		useState<boolean>(false)
 	const [NumWindowsDop, setNumWindowsDop] = useState<number>(0)
@@ -36,16 +36,18 @@ const Calculator = () => {
 	//Текущий прайс по выбранным категориям
 
 	const [CurrentPrice, setCurrentPrice] = useState<number>(0)
-	const [DopCurrentPrice, setDopCurrentPrice] = useState<TDopCurrent[]>([])
+	const [DopCurrentPrice, setDopCurrentPrice] = useState<TDopCurrentPrice[]>([])
+	const [ArrayDopWindowsCleaning, setArrayDopWindowsCleaning] = useState<
+		TDopCurrentPrice[]
+	>([])
 
-	//Прайс из БД по позициям сервиса
 	const [Price, setPrice] = useState<TPriceBD[]>([])
 	const [MinPriceCleaningApartment, setMinPriceCleaningApartment] =
 		useState<number>(0)
+	const [PriceRootApartment, setPriceRootApartment] = useState<number>(0)
 	const [PriceCleaningApartment_DOP, setPriceCleaningApartment_DOP] = useState<
 		TRootPrice[]
 	>([])
-	const [PriceRootApartment, setPriceRootApartment] = useState<number>(0)
 	const [MinPriceOffice, setMinPriceOffice] = useState<number>(0)
 	const [PriceQuadratureOffice, setPriceQuadratureOffice] = useState<number>(0)
 	const [MinPriceWindows, setMinPriceWindows] = useState<number>(0)
@@ -56,16 +58,14 @@ const Calculator = () => {
 	const [ArrayDopBasic, setArrayDopBasic] = useState<TCategories[]>([])
 	const [ArrayDopGeneral, setArrayDopGeneral] = useState<TCategories[]>([])
 	const [ArrayDopRepair, setArrayDopRepair] = useState<TCategories[]>([])
-
 	const [ArrayBDOfficeCleaning, setArrayBDOfficeCleaning] = useState<
 		TCategories[]
 	>([])
-
 	const [ArrayBDWindowsCleaning, setArrayBDWindowsCleaning] = useState<
 		TCategories[]
 	>([])
 
-	//Выгрузка прайса минимальных и цену за квадратный метр из БД
+	//Выгрузка данных из БД
 	const ArrayBDPrice = async () => {
 		await axios
 			.get<TPriceBD[]>('/PriceCleaning')
@@ -75,6 +75,57 @@ const Calculator = () => {
 	useEffect(() => {
 		ArrayBDPrice()
 	}, [setPrice])
+
+	const ArrayDopServicesBD = async () => {
+		await axios
+			.get<TCategories[]>('/DopCleaningApartment')
+			.then(res => {
+				setArrayBDApartment(res.data)
+			})
+			.catch(err => console.log(err))
+	}
+	useEffect(() => {
+		ArrayDopServicesBD()
+	}, [setArrayBDApartment])
+
+	const SortingDopServicesApartment = async () => {
+		await ArrayBDApartment.map(data => {
+			data.NameCatCleaning === 'Basic' &&
+				setArrayDopBasic(ArrayDopBasic => [...ArrayDopBasic, data])
+			data.NameCatCleaning === 'General' &&
+				setArrayDopGeneral(ArrayDopGeneral => [...ArrayDopGeneral, data])
+			data.NameCatCleaning === 'Repair' &&
+				setArrayDopRepair(ArrayDopRepair => [...ArrayDopRepair, data])
+		})
+	}
+
+	useEffect(() => {
+		SortingDopServicesApartment()
+	}, [ArrayBDApartment])
+
+	const LandingDopServicesOffice = async () => {
+		await axios
+			.get<TCategories[]>('/DopCleaningOffice')
+			.then(res => {
+				setArrayBDOfficeCleaning(res.data)
+			})
+			.catch(err => console.log(err))
+	}
+	useEffect(() => {
+		LandingDopServicesOffice()
+	}, [setArrayBDOfficeCleaning])
+
+	const LandingDopServicesWindowsCleaning = async () => {
+		await axios
+			.get<TCategories[]>('/DopCleaningWindows')
+			.then(res => {
+				setArrayBDWindowsCleaning(res.data)
+			})
+			.catch(err => console.log(err))
+	}
+	useEffect(() => {
+		LandingDopServicesWindowsCleaning()
+	}, [setArrayBDWindowsCleaning])
 
 	//Сортировка цен по позициям сервиса
 	const SortingPrices = () => {
@@ -127,13 +178,14 @@ const Calculator = () => {
 		setDopClearWindowsState(false)
 		setNumWindowsDop(1)
 		setDopCurrentPrice([])
+		setArrayDopWindowsCleaning([])
 	}
 
 	const OnClickInputWindows = () => {
 		if (DopClearWindowsState === false) {
 			setDopClearWindowsState(true)
-			setDopCurrentPrice(DopCurrentPrice => [
-				...DopCurrentPrice,
+			setArrayDopWindowsCleaning(ArrayDopWindowsCleaning => [
+				...ArrayDopWindowsCleaning,
 				{
 					id: 500,
 					title: 'DopCleaningWindows_minPrice',
@@ -147,8 +199,10 @@ const Calculator = () => {
 		} else {
 			setDopClearWindowsState(false)
 			setNumWindowsDop(1)
+			setArrayDopWindowsCleaning([])
 		}
 	}
+
 	//Производимые расчеты количества на сумму из БД
 	const CalculatorPriceAndQuantity = () => {
 		if (NumberArea > InitialQuadrature.Quantity) {
@@ -191,58 +245,6 @@ const Calculator = () => {
 			data.Name === CurrentCatCleaning && setPriceRootApartment(data.price)
 		})
 	}, [PriceCleaningApartment_DOP, CurrentCatCleaning])
-
-	//Выгрузка доп услуг из БД
-	const ArrayDopServicesBD = async () => {
-		await axios
-			.get<TCategories[]>('/DopCleaningApartment')
-			.then(res => {
-				setArrayBDApartment(res.data)
-			})
-			.catch(err => console.log(err))
-	}
-
-	useEffect(() => {
-		ArrayDopServicesBD()
-	}, [setArrayBDApartment])
-
-	const SortingDopServicesApartment = async () => {
-		await ArrayBDApartment.map(data => {
-			data.NameCatCleaning === 'Basic' &&
-				setArrayDopBasic(ArrayDopBasic => [...ArrayDopBasic, data])
-			data.NameCatCleaning === 'General' &&
-				setArrayDopGeneral(ArrayDopGeneral => [...ArrayDopGeneral, data])
-			data.NameCatCleaning === 'Repair' &&
-				setArrayDopRepair(ArrayDopRepair => [...ArrayDopRepair, data])
-		})
-	}
-	useEffect(() => {
-		SortingDopServicesApartment()
-	}, [ArrayBDApartment])
-
-	const LandingDopServicesOffice = async () => {
-		await axios
-			.get<TCategories[]>('/DopCleaningOffice')
-			.then(res => {
-				setArrayBDOfficeCleaning(res.data)
-			})
-			.catch(err => console.log(err))
-	}
-	useEffect(() => {
-		LandingDopServicesOffice()
-	}, [setArrayBDOfficeCleaning])
-
-	const LandingDopServicesWindowsCleaning = async () => {
-		await axios
-			.get<TCategories[]>('/DopCleaningWindows')
-			.then(res => {
-				setArrayBDWindowsCleaning(res.data)
-			})
-			.catch(err => console.log(err))
-	}
-	useEffect(() => {
-		LandingDopServicesWindowsCleaning()
-	}, [setArrayBDWindowsCleaning])
 
 	return (
 		<div className='Calculator'>
@@ -306,8 +308,8 @@ const Calculator = () => {
 										Num={NumWindowsDop}
 										setNum={setNumWindowsDop}
 										id={500}
-										DopCurrentPrice={DopCurrentPrice}
-										setDopCurrentPrice={setDopCurrentPrice}
+										DopCurrentPrice={ArrayDopWindowsCleaning}
+										setDopCurrentPrice={setArrayDopWindowsCleaning}
 										CalculatorPriceAndQuantity={CalculatorPriceAndQuantity}
 									/>
 									<div className='Calculator--content--BlockPosition--CleaningWinDop--ListDop'>
@@ -320,8 +322,8 @@ const Calculator = () => {
 													key={data.id}
 													Text={data.text}
 													id={data.id + 400}
-													DopCurrentPrice={DopCurrentPrice}
-													setDopCurrentPrice={setDopCurrentPrice}
+													DopCurrentPrice={ArrayDopWindowsCleaning}
+													setDopCurrentPrice={setArrayDopWindowsCleaning}
 													price={data.price}
 													unit={data.unit}
 													minW={150}
@@ -433,6 +435,7 @@ const Calculator = () => {
 						setDopCurrentPrice={setDopCurrentPrice}
 						MinimumPrice={MinPriceCleaningApartment}
 						C_Windows={C_Windows}
+						ArrayIdDopWindows={ArrayDopWindowsCleaning}
 					/>
 				)}
 				{CurrentServicesSingle === 'CleaningOffice' && (
@@ -444,6 +447,7 @@ const Calculator = () => {
 						setDopCurrentPrice={setDopCurrentPrice}
 						MinimumPrice={MinPriceOffice}
 						C_Windows={C_Windows}
+						ArrayIdDopWindows={ArrayDopWindowsCleaning}
 					/>
 				)}
 				{CurrentServicesSingle === 'CleaningWindows' && (

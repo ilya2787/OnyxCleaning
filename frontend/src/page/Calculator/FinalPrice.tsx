@@ -1,6 +1,6 @@
 import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react'
 import { InitialQuadrature } from '../../components/type/Parameter.type'
-import { TDopCurrent, TDopPrice } from '../../components/type/Services.type'
+import { TDopCurrentPrice } from '../../components/type/Services.type'
 import { PriceFormat } from '../../components/ui/PriceFormat/PriceFormat'
 
 interface TypeProps {
@@ -8,10 +8,10 @@ interface TypeProps {
 	CurrentPrice: number
 	PriceQuadrature: number
 	C_Windows?: boolean
-	DopCurrentPrice?: TDopCurrent[]
-	setDopCurrentPrice?: Dispatch<SetStateAction<TDopCurrent[]>>
+	DopCurrentPrice?: TDopCurrentPrice[]
+	setDopCurrentPrice?: Dispatch<SetStateAction<TDopCurrentPrice[]>>
 	MinimumPrice: number
-	ArrayDopWindowsCleaning?: TDopPrice[]
+	ArrayIdDopWindows?: TDopCurrentPrice[]
 }
 
 const FinalPrice: FC<TypeProps> = ({
@@ -20,6 +20,7 @@ const FinalPrice: FC<TypeProps> = ({
 	PriceQuadrature,
 	C_Windows,
 	DopCurrentPrice,
+	ArrayIdDopWindows,
 	MinimumPrice,
 }) => {
 	const [PriceQuadratureNew, setPriceQuadratureNew] = useState<number>(0)
@@ -44,10 +45,14 @@ const FinalPrice: FC<TypeProps> = ({
 	}, [NumberArea, PriceQuadrature, C_Windows])
 
 	useEffect(() => {
-		if (DopCurrentPrice) {
+		if (DopCurrentPrice && ArrayIdDopWindows) {
 			setFinalPrice(
 				CurrentPrice +
 					DopCurrentPrice?.reduce(
+						(a, v) => a + (v.quantity - 1) * v.price + v.MinPrice,
+						0
+					) +
+					ArrayIdDopWindows?.reduce(
 						(a, v) => a + (v.quantity - 1) * v.price + v.MinPrice,
 						0
 					)
@@ -55,7 +60,7 @@ const FinalPrice: FC<TypeProps> = ({
 		} else {
 			setFinalPrice(CurrentPrice)
 		}
-	}, [DopCurrentPrice, CurrentPrice])
+	}, [DopCurrentPrice, CurrentPrice, ArrayIdDopWindows])
 
 	useEffect(() => {
 		NumberArea === 1 && setTitleWindows('створка')
@@ -89,9 +94,30 @@ const FinalPrice: FC<TypeProps> = ({
 					</div>
 				</div>
 			) : null}
+			{ArrayIdDopWindows && ArrayIdDopWindows.length > 0 && (
+				<div className='Calculator--content--BlockResult--DopServices'>
+					<h2>Услуги по мойке окон</h2>
+					{ArrayIdDopWindows.map((data, i) => (
+						<div
+							key={i}
+							className='Calculator--content--BlockResult--DopServices--item'
+						>
+							<div className='Calculator--content--BlockResult--DopServices--item--text'>
+								<p>{data.value}</p>
+								<p>{data.unit && `${data.unit} x ${data.quantity}`}</p>
+							</div>
+							<div className='Calculator--content--BlockResult--DopServices--item--price'>
+								{PriceFormat(
+									data.FinalPriceDop ? data.FinalPriceDop : data.MinPrice
+								)}
+							</div>
+						</div>
+					))}
+				</div>
+			)}
 			{DopCurrentPrice && DopCurrentPrice.length > 0 && (
 				<div className='Calculator--content--BlockResult--DopServices'>
-					<h2>Дополнительные услуги </h2>
+					<h2>Дополнительные услуги</h2>
 					{DopCurrentPrice.map((data, i) => (
 						<div
 							key={i}
@@ -110,6 +136,7 @@ const FinalPrice: FC<TypeProps> = ({
 					))}
 				</div>
 			)}
+
 			<div className='Calculator--content--BlockResult--FinalPrice'>
 				<h2>К оплате</h2>
 				<p>{PriceFormat(FinalPrice)}</p>

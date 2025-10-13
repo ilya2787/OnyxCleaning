@@ -1,10 +1,10 @@
 import { Dispatch, SetStateAction } from 'react'
-import { TDopCurrent } from '../../type/Services.type'
+import { TDopCurrentPrice } from '../../type/Services.type'
 
 export const UpdateFinalPriceDop = (
-	UpdateCart: TDopCurrent[],
+	UpdateCart: TDopCurrentPrice[],
 	id: number,
-	setDopCurrentPrice: Dispatch<SetStateAction<TDopCurrent[]>>
+	setDopCurrentPrice: Dispatch<SetStateAction<TDopCurrentPrice[]>>
 ) => {
 	const itemsIndex = UpdateCart.findIndex(value => value.id === id)
 	const NewItem = {

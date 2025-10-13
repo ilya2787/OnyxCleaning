@@ -209,8 +209,8 @@
 				margin-right: -20px;
 				border-radius: 8px 0 0 8px;
 				color: CS.$ColorBrown;
-				font-size: 20px;
-				padding: 5px 0 5px 10px;
+				font-size: 22px;
+				padding: 22px 0 22px 10px;
 				transition: all 0.3s ease;
 				cursor: pointer;
 				text-align: left;
@@ -224,8 +224,8 @@
 				margin-left: -20px;
 				border-radius: 0 8px 8px 0;
 				color: CS.$ColorBrown;
-				font-size: 20px;
-				padding: 5px 0;
+				font-size: 23px;
+				padding: 30px 0;
 				text-align: center;
 			}
 			&--DopServices {
@@ -239,9 +239,14 @@
 				padding-bottom: 50px;
 				&--item {
 					flex: 1 1 250px;
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					align-items: flex-start;
 					border-radius: 10px;
 					padding: 30px 10px 40px 10px;
 					position: relative;
+					box-shadow: 2px 2px 5px 0px #b8b8b8;
 					&--PriceBD {
 						position: absolute;
 						right: 0;
@@ -265,7 +270,7 @@
 						align-items: center;
 						width: 100px;
 						padding: 3px 10px;
-						background-color: CS.$ColorFon;
+						background-color: CS.$ColorFonDark;
 						border-radius: 10px;
 						&--BTNMinus {
 							font-size: 25px;

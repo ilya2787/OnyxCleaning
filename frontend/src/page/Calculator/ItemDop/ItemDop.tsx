@@ -1,11 +1,11 @@
 import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react'
-import { TDopCurrent } from '../../../components/type/Services.type'
+import { TDopCurrentPrice } from '../../../components/type/Services.type'
 import { UpdateFinalPriceDop } from '../../../components/ui/Function/function'
 import { PriceFormat } from '../../../components/ui/PriceFormat/PriceFormat'
 
 interface TypeProps {
-	DopCurrentPrice: TDopCurrent[]
-	setDopCurrentPrice: Dispatch<SetStateAction<TDopCurrent[]>>
+	DopCurrentPrice: TDopCurrentPrice[]
+	setDopCurrentPrice: Dispatch<SetStateAction<TDopCurrentPrice[]>>
 	Text: string
 	id: number
 	unit: string | undefined
@@ -27,8 +27,6 @@ const ItemDop: FC<TypeProps> = ({
 	const [QuantityDop, setQuantityDop] = useState<number>(0)
 	const [ActiveBlockDop, setActiveBlockDop] = useState<boolean>(false)
 	const [SymbolSearch, setSymbolSearch] = useState<boolean>(false)
-
-	useEffect(() => {}, [ActiveBlockDop])
 
 	const Plus = () => {
 		setQuantityDop(QuantityDop + 1)
@@ -158,12 +156,12 @@ const ItemDop: FC<TypeProps> = ({
 	}, [unit])
 
 	const StyleBlockActive: React.CSSProperties = {
-		background: '#d8d8c5',
+		background: '#f5f5ce',
 		minHeight: `${minW}px`,
 	}
 
 	const StyleBlock: React.CSSProperties = {
-		background: `#ecdecb`,
+		background: `#f3f0e4`,
 		minHeight: `${minW}px`,
 	}
 

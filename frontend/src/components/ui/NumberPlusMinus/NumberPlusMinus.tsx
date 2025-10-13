@@ -1,5 +1,5 @@
 import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react'
-import { TDopCurrent } from '../../type/Services.type'
+import { TDopCurrentPrice } from '../../type/Services.type'
 import { UpdateFinalPriceDop } from '../Function/function'
 
 interface TypeProps {
@@ -7,8 +7,8 @@ interface TypeProps {
 	Num: number
 	setNum: Dispatch<SetStateAction<number>>
 	id?: number
-	DopCurrentPrice?: TDopCurrent[]
-	setDopCurrentPrice?: Dispatch<SetStateAction<TDopCurrent[]>>
+	DopCurrentPrice?: TDopCurrentPrice[]
+	setDopCurrentPrice?: Dispatch<SetStateAction<TDopCurrentPrice[]>>
 	CalculatorPriceAndQuantity: () => void
 }
 

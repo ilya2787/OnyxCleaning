@@ -30,4 +30,4 @@ export interface TDopPrice extends TPriceBD {
 	FinalPriceDop?: number
 }
 
-export type TDopCurrent = Omit<TDopPrice, 'Name'>
+export type TDopCurrentPrice = Omit<TDopPrice, 'Name'>
