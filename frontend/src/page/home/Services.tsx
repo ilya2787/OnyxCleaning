@@ -1,3 +1,6 @@
+import { Link } from 'react-router'
+import { warning } from '../../components/ui/natificationMesseg/natificationMessag'
+import { ROUTES } from '../../model/routes'
 import './StyleHome.scss'
 
 const Services = () => {
@@ -7,7 +10,13 @@ const Services = () => {
 			<div className='services-home-content'>
 				<div className='services-home-content-apartments'>
 					<div className='services-home-content-apartments_items'>
-						<h2>Уборка квартир и домов</h2>
+						<Link
+							to={ROUTES.ApartmentCleaning}
+							className='services-home-content-apartments_items--h2'
+						>
+							<h2>Уборка квартир и домов</h2>
+						</Link>
+
 						<ul>
 							<li>Базовая уборка</li>
 							<li>Генеральная уборка</li>
@@ -19,7 +28,12 @@ const Services = () => {
 				<div className='services-home-content-topLeft'>
 					<div className='services-home-content-topLeft-office'>
 						<div className='services-home-content-topLeft-office_items'>
-							<h2>Уборка офисов</h2>
+							<Link
+								to={ROUTES.OfficesCleaning}
+								className='services-home-content-topLeft-office_items--h2'
+							>
+								<h2>Уборка офисов</h2>
+							</Link>
 							<ul>
 								<li>Базовая уборка</li>
 								<li>Генеральная уборка</li>
@@ -30,7 +44,12 @@ const Services = () => {
 					</div>
 					<div className='services-home-content-topLeft-windows'>
 						<div className='services-home-content-topLeft-windows_items'>
-							<h2>Мойка окон</h2>
+							<Link
+								to={ROUTES.WindowsCleaning}
+								className='services-home-content-topLeft-windows_items--h2'
+							>
+								<h2>Мойка окон</h2>
+							</Link>
 							<ul>
 								<li>Квартир</li>
 								<li>Домов</li>
@@ -50,7 +69,13 @@ const Services = () => {
 							<li>Пуфы</li>
 							<li>Матрасы</li>
 						</ul>
-						<button>Заказать</button>
+						<button
+							onClick={() => {
+								warning()
+							}}
+						>
+							Заказать
+						</button>
 					</div>
 				</div>
 			</div>

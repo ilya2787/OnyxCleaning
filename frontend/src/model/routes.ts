@@ -5,13 +5,14 @@ export const ROUTES = {
 	ApartmentCleaning: '/ApartmentCleaning',
 	OfficesCleaning: '/OfficesCleaning',
 	WindowsCleaning: '/WindowsCleaning',
-	Calculator: '/Calculator',
+	Calculator: '/Calculator/:NameCleaning/:Title',
 	SERVICE: '/services/:nameServices',
 } as const
 
 export type PathParams = {
-	[ROUTES.SERVICE]: {
-		nameServices: string
+	[ROUTES.Calculator]: {
+		NameCleaning: string
+		Title: string
 	}
 }
 

@@ -37,6 +37,7 @@ const WindowsCleaning = () => {
 				title='Мойка окон'
 				BackgroundUrl='./img/poster/Windows/Header.jpg'
 				Tp={0.5}
+				params='CleaningWindows'
 			>
 				<div className='WindowsCleaning--headerText'>
 					<p>

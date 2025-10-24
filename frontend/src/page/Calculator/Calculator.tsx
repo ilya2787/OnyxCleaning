@@ -1,32 +1,46 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import { InitialQuadrature } from '../../components/type/Parameter.type'
+import { useParams } from 'react-router'
+import {
+	DistancePrice,
+	InitialQuadrature,
+} from '../../components/type/Parameter.type'
 import type {
 	TCategories,
+	TCities,
+	TCitiesDistancePrice,
 	TDopCurrentPrice,
 	TPriceBD,
 	TRootPrice,
 } from '../../components/type/Services.type'
+import BTNFinalPrice from '../../components/ui/BTNFinalPrice/BTNFinalPrice'
+import { IconList } from '../../components/ui/IconList'
 import NumberPlusMinus from '../../components/ui/NumberPlusMinus/NumberPlusMinus'
 import {
 	CatCleaning,
 	Services,
 } from '../../components/ui/SelectItems/ListSelectCleaning'
 import SelectItems from '../../components/ui/SelectItems/SelectItems'
+import { IOption } from '../../components/ui/SelectItems/TypeSelect'
+import { PathParams, ROUTES } from '../../model/routes'
 import FinalPrice from './FinalPrice'
 import ItemDop from './ItemDop/ItemDop'
 import ModalWindowsListCleaning from './ModalWindows/ModalWindowsListCleaning'
 import './StyleCalculator.scss'
 
 const Calculator = () => {
+	const params = useParams<PathParams[typeof ROUTES.Calculator]>()
+	const [ParamsOrder, setParamsOrder] = useState<boolean>(false)
+
 	//Модальное окно
 	const [OpenModalListCleaning, setOpenModalListCleaning] =
 		useState<boolean>(false)
 	//Состояния текущий значений
-	const [CurrentServicesSingle, setCurrentServicesSingle] = useState<string>('')
-	const [CurrentCatCleaning, setCurrentCatCleaning] = useState<string>('')
+	const [CurrentServicesSingle, setCurrentServicesSingle] = useState<string>(
+		params.NameCleaning ? params.NameCleaning : 'CleaningApartment'
+	)
+	const [CurrentCatCleaning, setCurrentCatCleaning] = useState<string>('Basic')
 	const [NumberArea, setNumberArea] = useState<number>(0)
-
 	//Данные по окнам
 	const [DopClearWindowsState, setDopClearWindowsState] =
 		useState<boolean>(false)
@@ -34,13 +48,13 @@ const Calculator = () => {
 	const [C_Windows, setC_Windows] = useState<boolean>(false)
 
 	//Текущий прайс по выбранным категориям
-
 	const [CurrentPrice, setCurrentPrice] = useState<number>(0)
 	const [DopCurrentPrice, setDopCurrentPrice] = useState<TDopCurrentPrice[]>([])
 	const [ArrayDopWindowsCleaning, setArrayDopWindowsCleaning] = useState<
 		TDopCurrentPrice[]
 	>([])
 
+	//Перечень из БД
 	const [Price, setPrice] = useState<TPriceBD[]>([])
 	const [MinPriceCleaningApartment, setMinPriceCleaningApartment] =
 		useState<number>(0)
@@ -64,6 +78,28 @@ const Calculator = () => {
 	const [ArrayBDWindowsCleaning, setArrayBDWindowsCleaning] = useState<
 		TCategories[]
 	>([])
+	//Список городов из БД
+	const [ArrayCities, setArrayCities] = useState<TCities[]>([])
+	const [OptionsCities, setOptionsCities] = useState<IOption[]>([])
+	const [CurrentCities, setCurrentCities] = useState<string>('')
+	const [CurrentDistance, setCurrentDistance] = useState<
+		TCitiesDistancePrice[]
+	>([])
+
+	//Наименование для одной доп услуги из мойке окон
+	const [DegreeTitle, setDegreeTitle] = useState<string>('')
+
+	//Заголовок страницы
+	useEffect(() => {
+		if (params.Title) {
+			if (params.Title === 'Calculation') {
+				setParamsOrder(false)
+			}
+			if (params.Title === 'Order') {
+				setParamsOrder(true)
+			}
+		}
+	}, [params.Title])
 
 	//Выгрузка данных из БД
 	const ArrayBDPrice = async () => {
@@ -98,7 +134,6 @@ const Calculator = () => {
 				setArrayDopRepair(ArrayDopRepair => [...ArrayDopRepair, data])
 		})
 	}
-
 	useEffect(() => {
 		SortingDopServicesApartment()
 	}, [ArrayBDApartment])
@@ -126,6 +161,45 @@ const Calculator = () => {
 	useEffect(() => {
 		LandingDopServicesWindowsCleaning()
 	}, [setArrayBDWindowsCleaning])
+
+	//Выгрузка городов из БД
+
+	const FCities = async () => {
+		await axios
+			.get<TCities[]>('/Cities')
+			.then(res => {
+				setArrayCities(res.data)
+			})
+			.catch(err => console.log(err))
+	}
+	const CitiesOptions = () => {
+		ArrayCities.map(data => {
+			setOptionsCities(OptionsCities => [
+				...OptionsCities,
+				{ value: data.Name_EN, label: data.Name },
+			])
+		})
+	}
+	useEffect(() => {
+		CitiesOptions()
+	}, [ArrayCities])
+	useEffect(() => {
+		FCities()
+	}, [setArrayCities])
+
+	useEffect(() => {
+		ArrayCities.map(data => {
+			if (data.Name_EN === CurrentCities) {
+				setCurrentDistance([
+					{
+						Name: data.Name,
+						Distance: data.Distance,
+						price: data.Distance * DistancePrice.Price,
+					},
+				])
+			}
+		})
+	}, [CurrentCities])
 
 	//Сортировка цен по позициям сервиса
 	const SortingPrices = () => {
@@ -179,6 +253,8 @@ const Calculator = () => {
 		setNumWindowsDop(1)
 		setDopCurrentPrice([])
 		setArrayDopWindowsCleaning([])
+		setCurrentDistance([])
+		setCurrentCities('')
 	}
 
 	const OnClickInputWindows = () => {
@@ -248,7 +324,11 @@ const Calculator = () => {
 
 	return (
 		<div className='Calculator'>
-			<h1 className='Calculator--h1'>Рассчитать стоимость уборки</h1>
+			<h1 className='Calculator--h1'>
+				{ParamsOrder
+					? 'Оформление заказа на уборку'
+					: 'Рассчитать стоимость уборки'}
+			</h1>
 			<div className='Calculator--content'>
 				<div className='Calculator--content--BlockPosition'>
 					<div className='Calculator--content--BlockPosition--Services'>
@@ -260,6 +340,7 @@ const Calculator = () => {
 							Placeholder={'Выберите услугу'}
 							isMulti={false}
 							CalculatorPriceAndQuantity={CalculatorPriceAndQuantity}
+							isSearch={false}
 						/>
 					</div>
 					{CurrentServicesSingle === 'CleaningApartment' && (
@@ -272,6 +353,7 @@ const Calculator = () => {
 								Placeholder={'Выберите вид уборки'}
 								isMulti={false}
 								CalculatorPriceAndQuantity={CalculatorPriceAndQuantity}
+								isSearch={false}
 							/>
 						</div>
 					)}
@@ -288,7 +370,41 @@ const Calculator = () => {
 							CalculatorPriceAndQuantity={CalculatorPriceAndQuantity}
 						/>
 					</div>
-
+					<div className='Calculator--content--BlockPosition--Cities'>
+						<h2>Ваш адрес</h2>
+						<div className='Calculator--content--BlockPosition--Cities--content'>
+							<div className='Calculator--content--BlockPosition--Cities--content--SelectCities'>
+								<SelectItems
+									options={OptionsCities}
+									CurrentServicesSingle={CurrentCities}
+									setCurrentServicesSingle={setCurrentCities}
+									Placeholder={'Выберите ваш город'}
+									isMulti={false}
+									CalculatorPriceAndQuantity={CalculatorPriceAndQuantity}
+									isSearch={true}
+								/>
+								<p>
+									<span>{IconList.Warning}</span>В черте города Калининград
+									бесплатно, для других городов области транспортные расходы
+									составляют <br /> 25₽ за 1 км
+								</p>
+							</div>
+							<div className='Calculator--content--BlockPosition--Cities--content--street'>
+								<input
+									type='text'
+									name=''
+									id=''
+									placeholder='улица / дом / квартира'
+								/>
+							</div>
+						</div>
+					</div>
+					{ParamsOrder && (
+						<div className='Calculator--content--BlockPosition--Date'>
+							<h2>Выберите удобную для вас дату и время</h2>
+							<input type='date' name='' id='' />
+						</div>
+					)}
 					{CurrentServicesSingle !== 'CleaningWindows' && (
 						<div className='Calculator--content--BlockPosition--CleaningWinDop'>
 							<div className='Calculator--content--BlockPosition--CleaningWinDop--checkbox'>
@@ -328,6 +444,7 @@ const Calculator = () => {
 													unit={data.unit}
 													minW={150}
 													fsH3={18}
+													setDegreeTitle={setDegreeTitle}
 												/>
 											))}
 										</div>
@@ -422,45 +539,61 @@ const Calculator = () => {
 									unit={data.unit}
 									minW={200}
 									fsH3={20}
+									setDegreeTitle={setDegreeTitle}
 								/>
 							))}
 					</div>
 				</div>
-				{CurrentServicesSingle === 'CleaningApartment' && (
-					<FinalPrice
-						NumberArea={NumberArea}
-						CurrentPrice={CurrentPrice}
-						PriceQuadrature={PriceRootApartment}
-						DopCurrentPrice={DopCurrentPrice}
-						setDopCurrentPrice={setDopCurrentPrice}
-						MinimumPrice={MinPriceCleaningApartment}
-						C_Windows={C_Windows}
-						ArrayIdDopWindows={ArrayDopWindowsCleaning}
+				<div className='Calculator--content--BlockResult'>
+					{CurrentServicesSingle === 'CleaningApartment' && (
+						<FinalPrice
+							NumberArea={NumberArea}
+							CurrentPrice={CurrentPrice}
+							PriceQuadrature={PriceRootApartment}
+							DopCurrentPrice={DopCurrentPrice}
+							setDopCurrentPrice={setDopCurrentPrice}
+							MinimumPrice={MinPriceCleaningApartment}
+							C_Windows={C_Windows}
+							ArrayIdDopWindows={ArrayDopWindowsCleaning}
+							DegreeTitle={DegreeTitle}
+							CurrentDistance={CurrentDistance}
+						/>
+					)}
+					{CurrentServicesSingle === 'CleaningOffice' && (
+						<FinalPrice
+							NumberArea={NumberArea}
+							CurrentPrice={CurrentPrice}
+							PriceQuadrature={PriceQuadratureOffice}
+							DopCurrentPrice={DopCurrentPrice}
+							setDopCurrentPrice={setDopCurrentPrice}
+							MinimumPrice={MinPriceOffice}
+							C_Windows={C_Windows}
+							ArrayIdDopWindows={ArrayDopWindowsCleaning}
+							DegreeTitle={DegreeTitle}
+							CurrentDistance={CurrentDistance}
+						/>
+					)}
+					{CurrentServicesSingle === 'CleaningWindows' && (
+						<FinalPrice
+							NumberArea={NumberArea}
+							CurrentPrice={CurrentPrice}
+							PriceQuadrature={DoorPriceWindows}
+							DopCurrentPrice={DopCurrentPrice}
+							setDopCurrentPrice={setDopCurrentPrice}
+							C_Windows={C_Windows}
+							MinimumPrice={MinPriceWindows}
+							DegreeTitle={DegreeTitle}
+							CurrentDistance={CurrentDistance}
+						/>
+					)}
+					<BTNFinalPrice
+						Text={`${ParamsOrder ? 'Продолжить' : 'Перейти к оформлению'}`}
+						FunctionOnClick={() => {
+							!ParamsOrder && setParamsOrder(true)
+						}}
+						Links={`${`/Calculator/${CurrentServicesSingle}/Order`}`}
 					/>
-				)}
-				{CurrentServicesSingle === 'CleaningOffice' && (
-					<FinalPrice
-						NumberArea={NumberArea}
-						CurrentPrice={CurrentPrice}
-						PriceQuadrature={PriceQuadratureOffice}
-						DopCurrentPrice={DopCurrentPrice}
-						setDopCurrentPrice={setDopCurrentPrice}
-						MinimumPrice={MinPriceOffice}
-						C_Windows={C_Windows}
-						ArrayIdDopWindows={ArrayDopWindowsCleaning}
-					/>
-				)}
-				{CurrentServicesSingle === 'CleaningWindows' && (
-					<FinalPrice
-						NumberArea={NumberArea}
-						CurrentPrice={CurrentPrice}
-						PriceQuadrature={DoorPriceWindows}
-						DopCurrentPrice={DopCurrentPrice}
-						setDopCurrentPrice={setDopCurrentPrice}
-						C_Windows={C_Windows}
-						MinimumPrice={MinPriceWindows}
-					/>
-				)}
+				</div>
 			</div>
 
 			<ModalWindowsListCleaning

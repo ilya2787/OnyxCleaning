@@ -50,6 +50,7 @@ const ApartmentCleaning = () => {
 				title='Уборка квартир и домов'
 				BackgroundUrl='./img/poster/Apartment/Main.jpg'
 				Tp={0.5}
+				params={'CleaningApartment'}
 			>
 				<div className='ApartmentCleaning--Header--text'>
 					<ul>

@@ -34,6 +34,7 @@ const OfficesCleaning = () => {
 		<div className='OfficesCleaning'>
 			<BackBTN />
 			<HeaderServices
+				params='CleaningOffice'
 				title='Уборка офисов'
 				BackgroundUrl='./img/poster/Office/Header.jpg'
 				Tp={0.5}

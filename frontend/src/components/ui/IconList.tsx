@@ -4,8 +4,9 @@ import { CiCalculator1 } from 'react-icons/ci'
 import { FaTelegramPlane } from 'react-icons/fa'
 import { FaCheck, FaLocationDot } from 'react-icons/fa6'
 import { IoIosArrowBack, IoIosArrowDown, IoLogoWhatsapp } from 'react-icons/io'
-import { IoCloseOutline } from 'react-icons/io5'
+import { IoCloseOutline, IoWarningOutline } from 'react-icons/io5'
 import { LuCopyright } from 'react-icons/lu'
+import { MdDeleteForever } from 'react-icons/md'
 
 export const IconList = {
 	Location: <FaLocationDot />,
@@ -19,4 +20,6 @@ export const IconList = {
 	Messages: <BiMessageDetail />,
 	ListIcon: <BsListCheck />,
 	Exit: <IoCloseOutline />,
+	Delete: <MdDeleteForever />,
+	Warning: <IoWarningOutline />,
 }

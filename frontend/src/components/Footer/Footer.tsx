@@ -4,6 +4,7 @@ import { CONTACT } from '../ContactData/ContactData'
 import { ItemsMenu } from '../HeaderMenu/ItemsMenu'
 import { TypeListMenu } from '../HeaderMenu/TypeData'
 import { IconList } from '../ui/IconList'
+import { warning } from '../ui/natificationMesseg/natificationMessag'
 import './footer.scss'
 
 const Footer = () => {
@@ -25,7 +26,15 @@ const Footer = () => {
 					<ul>
 						{ListMenu.map(data => (
 							<li key={data.id}>
-								<Link to={data.link} className='content-menu--Link'>
+								<Link
+									to={data.link}
+									className='content-menu--Link'
+									onClick={() => {
+										if (data.name === 'Химчистка') {
+											warning()
+										}
+									}}
+								>
 									{data.name}
 								</Link>
 							</li>
@@ -34,7 +43,7 @@ const Footer = () => {
 				</div>
 				<div className='content-LogoAndCopyright'>
 					<div className='content-LogoAndCopyright-logo'>
-						<img src='./img/Logo.png' alt='' />
+						<img src='http://localhost:3000/img/Logo.png' alt='' />
 					</div>
 					<p className='content-LogoAndCopyright-copyright'>
 						{IconList.Copyright} Onyx cleaning, 2025

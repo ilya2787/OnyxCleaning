@@ -2,6 +2,23 @@
 @use '../../styles/config/mixin' as MX;
 @forward '../../styles/fonts/fonts';
 
+@mixin BTNSetting {
+	padding: 15px 80px;
+	font-size: 19px;
+	font-family: Gabriela;
+	border-radius: 5px;
+	border: none;
+	color: CS.$ColorBrown;
+	transition: all 0.3s ease;
+	cursor: pointer;
+	border: 2px solid #fff;
+	@media (max-width: 800px) {
+		width: clamp(250px, 45vw, 350px);
+		height: 55px;
+		padding: 0;
+	}
+}
+
 .header_home {
 	background-color: CS.$ColorFonDark;
 	padding: 0 20px;
@@ -87,24 +104,9 @@
 			right: 0;
 		}
 		button {
-			padding: 15px 80px;
-			font-size: 19px;
-			font-family: Gabriela;
-			border-radius: 5px;
-			border: none;
-			color: CS.$ColorBrown;
-			transition: all 0.3s ease;
-			cursor: pointer;
-			border: 2px solid #fff;
-			@media (max-width: 800px) {
-				width: clamp(250px, 45vw, 350px);
-				height: 55px;
-				padding: 0;
-			}
-		}
-		button:nth-child(2n + 1) {
 			margin-right: 60px;
 			background-color: #fff;
+			@include BTNSetting();
 			&:hover {
 				background-color: CS.$ColorAccent;
 			}
@@ -112,8 +114,9 @@
 				margin-right: 10px;
 			}
 		}
-		button:nth-child(2n + 2) {
+		&--Calculator {
 			@include MX.GlassBackground;
+			@include BTNSetting();
 			display: flex;
 			flex-direction: row;
 			justify-content: center;
@@ -164,11 +167,12 @@
 				height: max-content;
 				padding: 20px;
 				color: #fff;
-				h2 {
+				&--h2 {
 					font-family: Gabriela;
 					font-size: 33px;
 					float: right;
 					margin-right: 40px;
+					color: CS.$ColorFon;
 				}
 				ul {
 					margin: 60px 0 40px 0;
@@ -203,10 +207,11 @@
 					padding: 20px;
 					color: #fff;
 					position: relative;
-					h2 {
+					&--h2 {
 						font-family: Gabriela;
 						font-size: 33px;
 						text-align: center;
+						color: CS.$ColorFon;
 					}
 					ul {
 						margin: 10px 0 40px 0;
@@ -242,10 +247,11 @@
 					padding: 20px;
 					color: #fff;
 					position: relative;
-					h2 {
+					&--h2 {
 						font-family: Gabriela;
 						font-size: 33px;
 						text-align: center;
+						color: CS.$ColorFon;
 					}
 					ul {
 						margin: 10px 0 40px 0;

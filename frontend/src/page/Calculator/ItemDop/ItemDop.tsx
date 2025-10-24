@@ -1,6 +1,8 @@
 import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react'
+import { Degree, DegreePrice } from '../../../components/type/Parameter.type'
 import { TDopCurrentPrice } from '../../../components/type/Services.type'
 import { UpdateFinalPriceDop } from '../../../components/ui/Function/function'
+import { IconList } from '../../../components/ui/IconList'
 import { PriceFormat } from '../../../components/ui/PriceFormat/PriceFormat'
 
 interface TypeProps {
@@ -12,6 +14,7 @@ interface TypeProps {
 	price: number
 	minW: number
 	fsH3: number
+	setDegreeTitle?: Dispatch<SetStateAction<string>>
 }
 
 const ItemDop: FC<TypeProps> = ({
@@ -23,6 +26,7 @@ const ItemDop: FC<TypeProps> = ({
 	price,
 	minW,
 	fsH3,
+	setDegreeTitle,
 }) => {
 	const [QuantityDop, setQuantityDop] = useState<number>(0)
 	const [ActiveBlockDop, setActiveBlockDop] = useState<boolean>(false)
@@ -77,33 +81,18 @@ const ItemDop: FC<TypeProps> = ({
 	}
 
 	const PlusListDop = (id: number) => {
-		if (!SymbolSearch) {
-			setDopCurrentPrice(DopCurrentPrice => [
-				...DopCurrentPrice,
-				{
-					id: id,
-					title: '',
-					value: Text,
-					quantity: 1,
-					unit: unit ? unit : '',
-					price: 1,
-					MinPrice: price,
-				},
-			])
-		} else {
-			setDopCurrentPrice(DopCurrentPrice => [
-				...DopCurrentPrice,
-				{
-					id: id,
-					title: '',
-					value: Text,
-					quantity: 1,
-					unit: unit ? unit : '',
-					price: 1,
-					MinPrice: price,
-				},
-			])
-		}
+		setDopCurrentPrice(DopCurrentPrice => [
+			...DopCurrentPrice,
+			{
+				id: id,
+				title: '',
+				value: Text,
+				quantity: 1,
+				unit: unit ? unit : '',
+				price: 1,
+				MinPrice: price,
+			},
+		])
 	}
 
 	const MinusListDop = (id: number) => {
@@ -146,7 +135,7 @@ const ItemDop: FC<TypeProps> = ({
 
 	useEffect(() => {
 		if (unit) {
-			let SymbolSearchUnit = unit.indexOf('%')
+			let SymbolSearchUnit = unit.indexOf('степени')
 			if (SymbolSearchUnit >= 0) {
 				setSymbolSearch(true)
 			} else {
@@ -154,6 +143,25 @@ const ItemDop: FC<TypeProps> = ({
 			}
 		}
 	}, [unit])
+
+	const PlusDopDegree = (Title: string, price: number, id: number) => {
+		MinusListDop(id)
+		if (setDegreeTitle) {
+			setDegreeTitle(Title)
+		}
+		setDopCurrentPrice(DopCurrentPrice => [
+			...DopCurrentPrice,
+			{
+				id: id,
+				title: '',
+				value: Text,
+				quantity: 1,
+				unit: unit ? unit : '',
+				price: 1,
+				MinPrice: price,
+			},
+		])
+	}
 
 	const StyleBlockActive: React.CSSProperties = {
 		background: '#f5f5ce',
@@ -202,7 +210,7 @@ const ItemDop: FC<TypeProps> = ({
 						+
 					</button>
 				</div>
-			) : (
+			) : SymbolSearch === false ? (
 				<div className='Calculator--content--BlockPosition--DopServices--item--BTNYesNo'>
 					<div className='Calculator--content--BlockPosition--DopServices--item--BTNYesNo--Yes'>
 						<input
@@ -234,6 +242,60 @@ const ItemDop: FC<TypeProps> = ({
 						<label htmlFor={`${String(id)}--No`}>Не нужно</label>
 					</div>
 				</div>
+			) : (
+				<section className='Calculator--content--BlockPosition--DopServices--item--degree'>
+					<div className='Calculator--content--BlockPosition--DopServices--item--degree--low'>
+						<input
+							type='radio'
+							name={`${String(id)}--Name`}
+							id={`${String(id)}--low`}
+							onChange={event => {
+								if (event.target.checked) {
+									setActiveBlockDop(true)
+									PlusDopDegree(Degree.Low, DegreePrice.Low_price, id)
+								}
+							}}
+						/>
+						<label htmlFor={`${String(id)}--low`}>{Degree.Low}</label>
+					</div>
+					<div className='Calculator--content--BlockPosition--DopServices--item--degree--average'>
+						<input
+							type='radio'
+							name={`${String(id)}--Name`}
+							id={`${String(id)}--average`}
+							onChange={event => {
+								if (event.target.checked) {
+									setActiveBlockDop(true)
+									PlusDopDegree(Degree.Average, DegreePrice.Average_price, id)
+								}
+							}}
+						/>
+						<label htmlFor={`${String(id)}--average`}>{Degree.Average}</label>
+					</div>
+					<div className='Calculator--content--BlockPosition--DopServices--item--degree--hard'>
+						<input
+							type='radio'
+							name={`${String(id)}--Name`}
+							id={`${String(id)}--hard`}
+							onChange={event => {
+								if (event.target.checked) {
+									setActiveBlockDop(true)
+									PlusDopDegree(Degree.Hard, DegreePrice.Hard_price, id)
+								}
+							}}
+						/>
+						<label htmlFor={`${String(id)}--hard`}>{Degree.Hard}</label>
+					</div>
+					<button
+						className='Calculator--content--BlockPosition--DopServices--item--degree--Del'
+						onClick={() => {
+							MinusListDop(id)
+							setActiveBlockDop(false)
+						}}
+					>
+						{IconList.Delete}
+					</button>
+				</section>
 			)}
 		</div>
 	)

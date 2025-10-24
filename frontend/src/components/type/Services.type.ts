@@ -31,3 +31,16 @@ export interface TDopPrice extends TPriceBD {
 }
 
 export type TDopCurrentPrice = Omit<TDopPrice, 'Name'>
+
+export interface TCities {
+	id: number
+	Name: string
+	Name_EN: string
+	Distance: number
+}
+
+export interface TCitiesDistancePrice {
+	Name: string
+	Distance: number
+	price: number
+}

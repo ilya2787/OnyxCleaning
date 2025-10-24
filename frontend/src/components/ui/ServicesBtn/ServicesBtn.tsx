@@ -1,14 +1,23 @@
+import { FC } from 'react'
 import { Link } from 'react-router'
-import { ROUTES } from '../../../model/routes'
 import { IconList } from '../IconList'
 import './ServicesBtn.scss'
 
-const ServicesBtn = () => {
+interface TypeProps {
+	params: string
+}
+
+const ServicesBtn: FC<TypeProps> = ({ params }) => {
 	return (
 		<div className='Btn'>
-			<button className='Btn--order'>Заказать</button>
+			<Link to={`/Calculator/${params}/Order`} className='Btn--order'>
+				Заказать
+			</Link>
 			<div className='Btn--item'>
-				<Link to={ROUTES.Calculator} className='Btn--item--calc'>
+				<Link
+					to={`/Calculator/${params}/Calculation`}
+					className='Btn--item--calc'
+				>
 					<span>{IconList.Calculator}</span> Рассчитать
 				</Link>
 				<button className='Btn--item--question'>

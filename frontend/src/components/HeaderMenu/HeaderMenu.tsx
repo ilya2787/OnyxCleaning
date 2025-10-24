@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { IconList } from '../../components/ui/IconList'
 import { ROUTES } from '../../model/routes'
 import { CONTACT } from '../ContactData/ContactData'
+import { warning } from '../ui/natificationMesseg/natificationMessag'
 import './HeaderMenu.scss'
 import { ItemsMenu } from './ItemsMenu'
 import { TypeListMenu } from './TypeData'
@@ -31,7 +32,7 @@ const HeaderMenu: FC = () => {
 			<div className='nav_logo'>
 				<Link to={ROUTES.HOME}>
 					{' '}
-					<img src='./img/Logo.png' alt='' />{' '}
+					<img src='http://localhost:3000/img/Logo.png' alt='' />{' '}
 				</Link>
 			</div>
 			<button className='nav_Btn' onClick={() => setOpenNav(!OpenNav)}>
@@ -56,7 +57,14 @@ const HeaderMenu: FC = () => {
 						to={data.link}
 						key={data.id}
 						className='nav_BlockMenu-link'
-						onClick={() => setOpenNav(!OpenNav)}
+						onClick={() => {
+							if (data.name === 'Химчистка') {
+								setOpenNav(!OpenNav)
+								warning()
+							} else {
+								setOpenNav(!OpenNav)
+							}
+						}}
 					>
 						{data.name}
 					</Link>

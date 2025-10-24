@@ -12,6 +12,7 @@ interface TypeProps {
 	setCurrentServicesMulti?: Dispatch<SetStateAction<string[]>>
 	isMulti: boolean
 	CalculatorPriceAndQuantity: () => void
+	isSearch: boolean
 }
 
 const SelectItems: FC<TypeProps> = ({
@@ -23,8 +24,10 @@ const SelectItems: FC<TypeProps> = ({
 	setCurrentServicesMulti,
 	isMulti,
 	CalculatorPriceAndQuantity,
+	isSearch,
 }) => {
 	const getSingle = () => {
+		CalculatorPriceAndQuantity()
 		return CurrentServicesSingle
 			? options.find(c => c.value === CurrentServicesSingle)
 			: ''
@@ -46,6 +49,7 @@ const SelectItems: FC<TypeProps> = ({
 	) => {
 		setCurrentServicesMulti &&
 			setCurrentServicesMulti((newValue as IOption[]).map(c => c.value))
+		CalculatorPriceAndQuantity()
 	}
 
 	return (
@@ -55,7 +59,7 @@ const SelectItems: FC<TypeProps> = ({
 					onChange={onChangeServiceMulti}
 					value={getMulti()}
 					options={options}
-					isSearchable={false}
+					isSearchable={isSearch}
 					placeholder={Placeholder}
 					isMulti={true}
 				/>
@@ -65,9 +69,10 @@ const SelectItems: FC<TypeProps> = ({
 					onChange={onChangeServiceSingle}
 					value={getSingle()}
 					options={options}
-					isSearchable={false}
+					isSearchable={isSearch}
 					placeholder={Placeholder}
 					isMulti={false}
+					noOptionsMessage={() => 'Город не найден'}
 				/>
 			)}
 		</div>

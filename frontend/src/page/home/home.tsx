@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { IconList } from '../../components/ui/IconList'
 import Advantages from './Advantages'
 import FeedBack from './Feedback'
@@ -24,9 +25,12 @@ const Home = () => {
 				</div>
 				<div className='header_home_Btn'>
 					<button>Заказать</button>
-					<button>
+					<Link
+						to={'/Calculator/CleaningApartment'}
+						className='header_home_Btn--Calculator'
+					>
 						<span>{IconList.Calculator}</span> Рассчитать
-					</button>
+					</Link>
 				</div>
 			</div>
 			<Services />

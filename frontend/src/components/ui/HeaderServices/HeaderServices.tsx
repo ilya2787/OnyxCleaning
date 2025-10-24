@@ -6,6 +6,7 @@ interface TypeProps extends PropsWithChildren {
 	title: string
 	BackgroundUrl: string
 	Tp: number
+	params: string
 }
 
 const HeaderServices: FC<TypeProps> = ({
@@ -13,6 +14,7 @@ const HeaderServices: FC<TypeProps> = ({
 	BackgroundUrl,
 	Tp,
 	children,
+	params,
 }) => {
 	const BackgroundHeader: React.CSSProperties = {
 		background: `url(${BackgroundUrl})`,
@@ -27,7 +29,7 @@ const HeaderServices: FC<TypeProps> = ({
 			<h1>{title}</h1>
 			<div className='header--textAndBTN'>
 				<div className='header--textAndBTN--text'>{children}</div>
-				<ServicesBtn />
+				<ServicesBtn params={params} />
 			</div>
 		</div>
 	)

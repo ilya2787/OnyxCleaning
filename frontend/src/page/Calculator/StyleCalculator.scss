@@ -97,10 +97,10 @@
 			border-radius: 10px;
 
 			&--Services {
-				@include H2Style;
+				@include H2Style();
 			}
 			&--CatServices {
-				@include H2Style;
+				@include H2Style();
 			}
 			&--quadrature {
 				@include H2Style();
@@ -143,6 +143,45 @@
 						@include BTNCalc;
 					}
 				}
+			}
+			&--Cities {
+				@include H2Style();
+				&--content {
+					display: flex;
+					flex-direction: row;
+					justify-content: space-between;
+					align-items: flex-start;
+					flex-wrap: wrap;
+					row-gap: 20px;
+					&--SelectCities {
+						min-width: 400px;
+						p {
+							margin-top: 5px;
+							span {
+								color: CS.$ColorAccent;
+								font-size: 20px;
+								padding: 0 5px;
+							}
+							text-align: justify;
+							color: #484848;
+							line-height: 17px;
+							font-size: 15px;
+							max-width: 390px;
+						}
+					}
+					&--street {
+						input[type='text'] {
+							background: CS.$ColorFon;
+							min-width: 400px;
+							padding: 5px 10px;
+							border-radius: 10px;
+							border: 1px solid #cccccc;
+							color: #333;
+						}
+					}
+				}
+			}
+			&--Date {
 			}
 			&--CleaningWinDop {
 				&--checkbox {
@@ -244,7 +283,7 @@
 					justify-content: center;
 					align-items: flex-start;
 					border-radius: 10px;
-					padding: 30px 10px 40px 10px;
+					padding: 30px 10px 90px 10px;
 					position: relative;
 					box-shadow: 2px 2px 5px 0px #b8b8b8;
 					&--PriceBD {
@@ -307,44 +346,102 @@
 							@include SettingInputRadio();
 						}
 					}
+					&--degree {
+						display: flex;
+						flex-direction: row;
+						justify-content: space-between;
+						align-items: center;
+						position: absolute;
+						right: 0;
+						left: 0;
+						bottom: 10px;
+						border-radius: 0 0 10px 10px;
+						row-gap: 10px;
+						&--low {
+							@include SettingInputRadio();
+						}
+						&--average {
+							@include SettingInputRadio();
+						}
+						&--hard {
+							@include SettingInputRadio();
+						}
+						&--Del {
+							display: flex;
+							flex-direction: column;
+							justify-content: center;
+							align-items: center;
+							font-size: 20px;
+							color: #eae7db;
+							border-radius: 10px;
+							padding: 5px 10px;
+							background-color: #772828;
+							transition: all 0.3s ease;
+							&:hover {
+								background-color: #8e3333;
+							}
+						}
+					}
 				}
 			}
 		}
 		&--BlockResult {
 			flex: 1 1 400px;
-			background-color: #fff;
-			border-radius: 10px;
-			padding: 0 20px;
-			&--MinimumPrice {
-				@include SettingLinkFinalPrice();
-				border-bottom: 3px dotted #eae7db;
-			}
-			&--quadrature {
-				@include SettingLinkFinalPrice();
-				p {
-					span {
-						margin-left: 10px;
-					}
-				}
-			}
-			&--DopServices {
-				@include H2StyleFinalPrice(0 10px 10px 0, CS.$ColorFonDark);
-				&--item {
-					border-bottom: 3px dotted #eae7db;
-					margin: 0 0 10px 0;
+			&--item {
+				background-color: #fff;
+				border-radius: 10px;
+				padding: 0 20px;
+				&--MinimumPrice {
 					@include SettingLinkFinalPrice();
-					&:last-child {
-						border-bottom: none;
+					border-bottom: 3px dotted #eae7db;
+				}
+				&--quadrature {
+					@include SettingLinkFinalPrice();
+					p {
+						span {
+							margin-left: 10px;
+						}
+					}
+				}
+				&--Distance {
+					@include SettingLinkFinalPrice();
+				}
+				&--DopServices {
+					@include H2StyleFinalPrice(0 10px 10px 0, CS.$ColorFonDark);
+					&--item {
+						border-bottom: 3px dotted #eae7db;
+						margin: 0 0 10px 0;
+						@include SettingLinkFinalPrice();
+						&:last-child {
+							border-bottom: none;
+						}
+					}
+				}
+				&--FinalPrice {
+					@include H2StyleFinalPrice(0 10px 10px 0, CS.$ColorFonDark);
+					p {
+						text-align: center;
+						font-size: 28px;
+						color: CS.$ColorBrown;
+						padding: 15px 0;
 					}
 				}
 			}
-			&--FinalPrice {
-				@include H2StyleFinalPrice(0 10px 10px 0, CS.$ColorFonDark);
-				p {
-					text-align: center;
-					font-size: 28px;
-					color: CS.$ColorBrown;
-					padding: 15px 0;
+			&--BTN {
+				display: inline-block;
+				margin-top: 20px;
+				padding: 10px;
+				width: 100%;
+				color: CS.$ColorBrown;
+				background: CS.$ColorAccent;
+				text-align: center;
+				text-transform: uppercase;
+				font-size: 20px;
+				border-radius: 10px;
+				transition: all 0.3s ease;
+				&:hover {
+					filter: brightness(90%);
+					-webkit-filter: brightness(90%);
 				}
 			}
 		}
