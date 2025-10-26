@@ -103,7 +103,8 @@
 			left: 0;
 			right: 0;
 		}
-		button {
+		&--Order {
+			display: inline-block;
 			margin-right: 60px;
 			background-color: #fff;
 			@include BTNSetting();

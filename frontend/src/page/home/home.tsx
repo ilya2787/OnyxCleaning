@@ -24,9 +24,14 @@ const Home = () => {
 					/>
 				</div>
 				<div className='header_home_Btn'>
-					<button>Заказать</button>
 					<Link
-						to={'/Calculator/CleaningApartment'}
+						to={'/Calculator/CleaningApartment/Order'}
+						className='header_home_Btn--Order'
+					>
+						Заказать
+					</Link>
+					<Link
+						to={'/Calculator/CleaningApartment/Calculation'}
 						className='header_home_Btn--Calculator'
 					>
 						<span>{IconList.Calculator}</span> Рассчитать

@@ -12,3 +12,16 @@ export const warning = () => {
 		},
 	})
 }
+
+export const ErrorOrderNewt = (Pole: string) => {
+	Store.addNotification({
+		title: 'Заполнены не все поля',
+		message: `Заполните поле: \n ${Pole}`,
+		type: 'danger',
+		container: 'top-right',
+		dismiss: {
+			duration: 5000,
+			onScreen: true,
+		},
+	})
+}

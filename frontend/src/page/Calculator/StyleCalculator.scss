@@ -182,6 +182,33 @@
 				}
 			}
 			&--Date {
+				@include H2Style();
+				input[type='date'] {
+					background-color: CS.$ColorFon;
+					padding: 5px 20px;
+					font-size: 18px;
+					color: CS.$ColorBrown;
+					border-radius: 10px;
+					border: 1px solid #cccccc;
+					margin-right: 20px;
+					&::-webkit-calendar-picker-indicator {
+						padding: 5px;
+						border-radius: 5px;
+					}
+				}
+				input[type='time'] {
+					background-color: CS.$ColorFon;
+					padding: 5px 20px;
+					font-size: 18px;
+					color: CS.$ColorBrown;
+					border-radius: 10px;
+					border: 1px solid #cccccc;
+					min-width: 200px;
+					&::-webkit-calendar-picker-indicator {
+						padding: 5px;
+						border-radius: 5px;
+					}
+				}
 			}
 			&--CleaningWinDop {
 				&--checkbox {

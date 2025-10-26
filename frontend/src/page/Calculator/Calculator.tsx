@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useEffect, useState } from 'react'
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import {
 	DistancePrice,
@@ -15,6 +15,7 @@ import type {
 } from '../../components/type/Services.type'
 import BTNFinalPrice from '../../components/ui/BTNFinalPrice/BTNFinalPrice'
 import { IconList } from '../../components/ui/IconList'
+import { ErrorOrderNewt } from '../../components/ui/natificationMesseg/natificationMessag'
 import NumberPlusMinus from '../../components/ui/NumberPlusMinus/NumberPlusMinus'
 import {
 	CatCleaning,
@@ -81,13 +82,35 @@ const Calculator = () => {
 	//Список городов из БД
 	const [ArrayCities, setArrayCities] = useState<TCities[]>([])
 	const [OptionsCities, setOptionsCities] = useState<IOption[]>([])
-	const [CurrentCities, setCurrentCities] = useState<string>('')
+	const [CurrentCities, setCurrentCities] = useState<string>('Kaliningrad')
 	const [CurrentDistance, setCurrentDistance] = useState<
 		TCitiesDistancePrice[]
-	>([])
+	>([
+		{
+			Name: 'Калининград',
+			Distance: 0,
+			price: 0,
+		},
+	])
+
+	const [ValueStreet, setValueStreet] = useState<string>('')
+	const onChangeValueStreet = (street: string) => {
+		setValueStreet(street)
+	}
 
 	//Наименование для одной доп услуги из мойке окон
 	const [DegreeTitle, setDegreeTitle] = useState<string>('')
+
+	//Выбор даты и времени
+	const [ValueDate, setValueDate] = useState<string>('')
+	const [ValueTime, setValueTime] = useState<string>('')
+	const OnChangeValueDate = (date: string) => {
+		setValueDate(date)
+	}
+
+	const OnChangeValueTime = (Time: string) => {
+		setValueTime(Time)
+	}
 
 	//Заголовок страницы
 	useEffect(() => {
@@ -253,8 +276,14 @@ const Calculator = () => {
 		setNumWindowsDop(1)
 		setDopCurrentPrice([])
 		setArrayDopWindowsCleaning([])
-		setCurrentDistance([])
-		setCurrentCities('')
+		setCurrentDistance([
+			{
+				Name: 'Калининград',
+				Distance: 0,
+				price: 0,
+			},
+		])
+		setCurrentCities('Kaliningrad')
 	}
 
 	const OnClickInputWindows = () => {
@@ -321,6 +350,63 @@ const Calculator = () => {
 			data.Name === CurrentCatCleaning && setPriceRootApartment(data.price)
 		})
 	}, [PriceCleaningApartment_DOP, CurrentCatCleaning])
+
+	//Нажатие кнопки продолжить
+	const OnClickNext = () => {
+		if (!FunctionValidNext()) {
+			console.log('No')
+		} else {
+			console.log('Yes')
+		}
+	}
+
+	const FunctionValidNext = () => {
+		if (!ValueDate || !ValueTime || !ValueStreet) {
+			if (!ValueDate) {
+				ErrorOrderNewt('Дата')
+				FunctionValidField(setErrorDateValue, 'Red')
+			} else {
+				FunctionValidField(setErrorDateValue, '#cccccc')
+			}
+			if (!ValueTime) {
+				ErrorOrderNewt('Время')
+				FunctionValidField(setErrorTimeValue, 'Red')
+			} else {
+				FunctionValidField(setErrorTimeValue, '#cccccc')
+			}
+			if (!ValueStreet) {
+				ErrorOrderNewt('Улица')
+				FunctionValidField(setErrorStreetValue, 'Red')
+			} else {
+				FunctionValidField(setErrorStreetValue, '#cccccc')
+			}
+			return false
+		} else {
+			FunctionValidField(setErrorDateValue, '#cccccc')
+			FunctionValidField(setErrorTimeValue, '#cccccc')
+			FunctionValidField(setErrorStreetValue, '#cccccc')
+			return true
+		}
+	}
+
+	const [ErrorStreetValue, setErrorStreetValue] = useState<
+		React.CSSProperties | undefined
+	>()
+	const [ErrorDateValue, setErrorDateValue] = useState<
+		React.CSSProperties | undefined
+	>()
+	const [ErrorTimeValue, setErrorTimeValue] = useState<
+		React.CSSProperties | undefined
+	>()
+
+	const FunctionValidField = (
+		setDate: Dispatch<SetStateAction<React.CSSProperties | undefined>>,
+		Color: string
+	) => {
+		setDate({
+			border: `1px solid ${Color}`,
+		})
+	}
 
 	return (
 		<div className='Calculator'>
@@ -392,9 +478,12 @@ const Calculator = () => {
 							<div className='Calculator--content--BlockPosition--Cities--content--street'>
 								<input
 									type='text'
+									onChange={event => onChangeValueStreet(event.target.value)}
+									value={ValueStreet}
 									name=''
 									id=''
 									placeholder='улица / дом / квартира'
+									style={ErrorStreetValue}
 								/>
 							</div>
 						</div>
@@ -402,7 +491,22 @@ const Calculator = () => {
 					{ParamsOrder && (
 						<div className='Calculator--content--BlockPosition--Date'>
 							<h2>Выберите удобную для вас дату и время</h2>
-							<input type='date' name='' id='' />
+							<input
+								type='date'
+								name=''
+								id=''
+								onChange={event => OnChangeValueDate(event.target.value)}
+								value={ValueDate}
+								style={ErrorDateValue}
+							/>
+							<input
+								type='time'
+								name=''
+								id=''
+								onChange={event => OnChangeValueTime(event.target.value)}
+								value={ValueTime}
+								style={ErrorTimeValue}
+							/>
 						</div>
 					)}
 					{CurrentServicesSingle !== 'CleaningWindows' && (
@@ -589,7 +693,11 @@ const Calculator = () => {
 					<BTNFinalPrice
 						Text={`${ParamsOrder ? 'Продолжить' : 'Перейти к оформлению'}`}
 						FunctionOnClick={() => {
-							!ParamsOrder && setParamsOrder(true)
+							if (ParamsOrder) {
+								OnClickNext()
+							} else {
+								setParamsOrder(true)
+							}
 						}}
 						Links={`${`/Calculator/${CurrentServicesSingle}/Order`}`}
 					/>
