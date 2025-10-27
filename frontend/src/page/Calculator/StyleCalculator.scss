@@ -66,6 +66,19 @@
 	}
 }
 
+@mixin SettingModalContentItem {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: flex-start;
+	width: 100%;
+	padding: 0 20px;
+	border-bottom: 3px dotted #ccc;
+	p {
+		font-size: 20px;
+	}
+}
+
 .Calculator {
 	margin: 100px 0;
 	padding: 0 10px 50px 10px;
@@ -142,6 +155,18 @@
 					&--BTNPlus {
 						@include BTNCalc;
 					}
+				}
+				p {
+					margin-top: 5px;
+					span {
+						color: CS.$ColorAccent;
+						font-size: 20px;
+						padding: 0 5px;
+					}
+					text-align: justify;
+					color: #484848;
+					line-height: 17px;
+					font-size: 15px;
 				}
 			}
 			&--Cities {
@@ -451,6 +476,146 @@
 						font-size: 28px;
 						color: CS.$ColorBrown;
 						padding: 15px 0;
+					}
+				}
+				&--TimeCleaning {
+					display: flex;
+					flex-direction: row;
+					justify-content: space-between;
+					align-items: center;
+					margin: 0 -20px;
+					padding: 5px 20px;
+					color: #797979;
+					background-color: CS.$ColorFon;
+					border-radius: 0 0 10px 10px;
+				}
+				&--ModalOrder {
+					display: flex;
+					flex-direction: column;
+					&--BlockMain {
+						display: flex;
+						flex-direction: column;
+						justify-content: space-between;
+						align-items: center;
+						row-gap: 10px;
+						&--Services {
+							@include SettingModalContentItem();
+						}
+						&--CatServices {
+							width: 100%;
+							&--item {
+								@include SettingModalContentItem();
+							}
+						}
+						&--MinPrice {
+							@include SettingModalContentItem();
+						}
+						&--Quadrature {
+							@include SettingModalContentItem();
+						}
+						&--DateAndTime {
+							@include SettingModalContentItem();
+						}
+						&--Cites {
+							width: 100%;
+							padding: 0 20px;
+							h2 {
+								text-align: center;
+								font-size: 22px;
+								font-style: italic;
+								font-weight: bold;
+								color: CS.$ColorBrown;
+							}
+							&--item {
+								display: flex;
+								flex-direction: row;
+								justify-content: space-between;
+								align-items: flex-start;
+								font-size: 20px;
+								&--inform {
+									display: flex;
+									flex-direction: column;
+									justify-content: flex-start;
+									align-items: flex-start;
+								}
+							}
+						}
+					}
+					&--BlockDop {
+						display: flex;
+						flex-direction: column;
+						justify-content: space-between;
+						align-items: center;
+						row-gap: 10px;
+						& h2 {
+							width: 100%;
+							background-color: CS.$ColorFonDark;
+							padding: 15px 0;
+							font-size: 24px;
+							color: CS.$ColorBrown;
+							text-align: center;
+							border-radius: 10px;
+						}
+						&--item {
+							@include SettingModalContentItem();
+							&--inform {
+								display: flex;
+								flex-direction: column;
+							}
+						}
+						& h3 {
+							font-size: 25px;
+							color: CS.$ColorBrown;
+							font-style: italic;
+						}
+					}
+					&--TimeCleaning {
+						display: flex;
+						flex-direction: row;
+						justify-content: space-between;
+						align-items: center;
+						margin-top: 20px;
+						font-size: 23px;
+						color: CS.$ColorBrown;
+						margin-top: 30px;
+					}
+					&--FinalPrice {
+						display: flex;
+						flex-direction: column;
+						justify-content: center;
+						align-items: center;
+						row-gap: 15px;
+						font-size: 30px;
+						margin-top: 30px;
+						color: CS.$ColorBrown;
+						p {
+							font-weight: bold;
+						}
+					}
+					&--BTN {
+						display: flex;
+						flex-direction: row;
+						justify-content: space-around;
+						align-items: center;
+						column-gap: 150px;
+						margin-top: 50px;
+						button {
+							padding: 15px 30px;
+							font-size: 17px;
+							text-transform: uppercase;
+							color: CS.$ColorBrown;
+							border-radius: 5px;
+							transition: all 0.3s ease;
+							&:hover {
+								filter: brightness(90%);
+							}
+						}
+						button:nth-child(1) {
+							background-color: CS.$ColorAccent;
+						}
+						button:nth-child(2) {
+							background-color: #fff;
+						}
 					}
 				}
 			}

@@ -44,3 +44,8 @@ export interface TCitiesDistancePrice {
 	Distance: number
 	price: number
 }
+
+export interface TTimeCleaning {
+	id: number
+	quantity: number
+}

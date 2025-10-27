@@ -12,6 +12,7 @@ import type {
 	TDopCurrentPrice,
 	TPriceBD,
 	TRootPrice,
+	TTimeCleaning,
 } from '../../components/type/Services.type'
 import BTNFinalPrice from '../../components/ui/BTNFinalPrice/BTNFinalPrice'
 import { IconList } from '../../components/ui/IconList'
@@ -32,6 +33,7 @@ import './StyleCalculator.scss'
 const Calculator = () => {
 	const params = useParams<PathParams[typeof ROUTES.Calculator]>()
 	const [ParamsOrder, setParamsOrder] = useState<boolean>(false)
+	const [OpenModal, setOpenModal] = useState<boolean>(false)
 
 	//Модальное окно
 	const [OpenModalListCleaning, setOpenModalListCleaning] =
@@ -111,6 +113,103 @@ const Calculator = () => {
 	const OnChangeValueTime = (Time: string) => {
 		setValueTime(Time)
 	}
+
+	//Время уборки
+	const [TimeCleaning, setTimeCleaning] = useState<TTimeCleaning[]>([
+		{ id: 0, quantity: 1.3 },
+	])
+
+	useEffect(() => {
+		if (CurrentServicesSingle != 'CleaningWindows') {
+			if (NumberArea <= 44) {
+				const itemsIndex = TimeCleaning.findIndex(value => value.id === 0)
+				if (itemsIndex >= 0) {
+					const NewItem = {
+						...TimeCleaning[itemsIndex],
+						quantity: 1.3,
+					}
+					const newCard = TimeCleaning.slice()
+					newCard.splice(itemsIndex, 1, NewItem)
+					setTimeCleaning(newCard)
+				}
+			}
+			if (NumberArea >= 45 && NumberArea < 65) {
+				const itemsIndex = TimeCleaning.findIndex(value => value.id === 0)
+				if (itemsIndex >= 0) {
+					const NewItem = {
+						...TimeCleaning[itemsIndex],
+						quantity: 2.3,
+					}
+					const newCard = TimeCleaning.slice()
+					newCard.splice(itemsIndex, 1, NewItem)
+					setTimeCleaning(newCard)
+				}
+			}
+			if (NumberArea >= 65) {
+				const itemsIndex = TimeCleaning.findIndex(value => value.id === 0)
+				if (itemsIndex >= 0) {
+					const NewItem = {
+						...TimeCleaning[itemsIndex],
+						quantity: 3.3,
+					}
+					const newCard = TimeCleaning.slice()
+					newCard.splice(itemsIndex, 1, NewItem)
+					setTimeCleaning(newCard)
+				}
+			}
+		} else {
+			if (NumberArea < 5) {
+				const itemsIndex = TimeCleaning.findIndex(value => value.id === 0)
+				if (itemsIndex >= 0) {
+					const NewItem = {
+						...TimeCleaning[itemsIndex],
+						quantity: 1.3,
+					}
+					const newCard = TimeCleaning.slice()
+					newCard.splice(itemsIndex, 1, NewItem)
+					setTimeCleaning(newCard)
+				}
+			}
+			if (NumberArea >= 5) {
+				const itemsIndex = TimeCleaning.findIndex(value => value.id === 0)
+				if (itemsIndex >= 0) {
+					const NewItem = {
+						...TimeCleaning[itemsIndex],
+						quantity: 2.3,
+					}
+					const newCard = TimeCleaning.slice()
+					newCard.splice(itemsIndex, 1, NewItem)
+					setTimeCleaning(newCard)
+				}
+			}
+			if (NumberArea >= 10) {
+				const itemsIndex = TimeCleaning.findIndex(value => value.id === 0)
+				if (itemsIndex >= 0) {
+					const NewItem = {
+						...TimeCleaning[itemsIndex],
+						quantity: 3.3,
+					}
+					const newCard = TimeCleaning.slice()
+					newCard.splice(itemsIndex, 1, NewItem)
+					setTimeCleaning(newCard)
+				}
+			}
+		}
+	}, [NumberArea, CurrentServicesSingle])
+
+	useEffect(() => {
+		if (DopCurrentPrice.length > 0) {
+			const itemsIndex = TimeCleaning.findIndex(value => value.id === 1)
+			if (itemsIndex < 0) {
+				setTimeCleaning(TimeCleaning => [
+					...TimeCleaning,
+					{ id: 1, quantity: 1 },
+				])
+			}
+		} else {
+			setTimeCleaning(TimeCleaning.filter(v => v.id !== 1))
+		}
+	}, [DopCurrentPrice])
 
 	//Заголовок страницы
 	useEffect(() => {
@@ -284,6 +383,7 @@ const Calculator = () => {
 			},
 		])
 		setCurrentCities('Kaliningrad')
+		setTimeCleaning([{ id: 0, quantity: 1.3 }])
 	}
 
 	const OnClickInputWindows = () => {
@@ -354,9 +454,8 @@ const Calculator = () => {
 	//Нажатие кнопки продолжить
 	const OnClickNext = () => {
 		if (!FunctionValidNext()) {
-			console.log('No')
 		} else {
-			console.log('Yes')
+			setOpenModal(true)
 		}
 	}
 
@@ -431,7 +530,7 @@ const Calculator = () => {
 					</div>
 					{CurrentServicesSingle === 'CleaningApartment' && (
 						<div className='Calculator--content--BlockPosition--CatServices'>
-							<h2>Вид уборки</h2>
+							<h2>Тип уборки</h2>
 							<SelectItems
 								options={CatCleaning}
 								CurrentServicesSingle={CurrentCatCleaning}
@@ -455,6 +554,12 @@ const Calculator = () => {
 							setNum={setNumberArea}
 							CalculatorPriceAndQuantity={CalculatorPriceAndQuantity}
 						/>
+						{CurrentServicesSingle !== 'CleaningWindows' && (
+							<p>
+								<span>{IconList.Warning}</span> До 30 m<sup>2</sup> бесплатно,
+								далее цена зависит и выбранной услуги или типа уборки
+							</p>
+						)}
 					</div>
 					<div className='Calculator--content--BlockPosition--Cities'>
 						<h2>Ваш адрес</h2>
@@ -661,6 +766,14 @@ const Calculator = () => {
 							ArrayIdDopWindows={ArrayDopWindowsCleaning}
 							DegreeTitle={DegreeTitle}
 							CurrentDistance={CurrentDistance}
+							TimeCleaning={TimeCleaning}
+							OpenModal={OpenModal}
+							setOpenModal={setOpenModal}
+							CurrentServices={CurrentServicesSingle}
+							CurrentCatCleaning={CurrentCatCleaning}
+							Date={ValueDate}
+							Time={ValueTime}
+							ValueStreet={ValueStreet}
 						/>
 					)}
 					{CurrentServicesSingle === 'CleaningOffice' && (
@@ -675,6 +788,14 @@ const Calculator = () => {
 							ArrayIdDopWindows={ArrayDopWindowsCleaning}
 							DegreeTitle={DegreeTitle}
 							CurrentDistance={CurrentDistance}
+							TimeCleaning={TimeCleaning}
+							OpenModal={OpenModal}
+							setOpenModal={setOpenModal}
+							CurrentServices={CurrentServicesSingle}
+							CurrentCatCleaning={CurrentCatCleaning}
+							Date={ValueDate}
+							Time={ValueTime}
+							ValueStreet={ValueStreet}
 						/>
 					)}
 					{CurrentServicesSingle === 'CleaningWindows' && (
@@ -688,6 +809,14 @@ const Calculator = () => {
 							MinimumPrice={MinPriceWindows}
 							DegreeTitle={DegreeTitle}
 							CurrentDistance={CurrentDistance}
+							TimeCleaning={TimeCleaning}
+							OpenModal={OpenModal}
+							setOpenModal={setOpenModal}
+							CurrentServices={CurrentServicesSingle}
+							CurrentCatCleaning={CurrentCatCleaning}
+							Date={ValueDate}
+							Time={ValueTime}
+							ValueStreet={ValueStreet}
 						/>
 					)}
 					<BTNFinalPrice

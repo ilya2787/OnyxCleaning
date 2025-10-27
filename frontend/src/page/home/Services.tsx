@@ -22,7 +22,12 @@ const Services = () => {
 							<li>Генеральная уборка</li>
 							<li>Уборка после ремонта</li>
 						</ul>
-						<button>Заказать</button>
+						<Link
+							className='services-home-content-apartments_items--BTN'
+							to={'/Calculator/CleaningApartment/Order'}
+						>
+							Заказать
+						</Link>
 					</div>
 				</div>
 				<div className='services-home-content-topLeft'>
@@ -39,7 +44,12 @@ const Services = () => {
 								<li>Генеральная уборка</li>
 								<li>Уборка после ремонта</li>
 							</ul>
-							<button>Заказать</button>
+							<Link
+								to={'/Calculator/CleaningOffice/Order'}
+								className='services-home-content-topLeft-office_items--BTN'
+							>
+								Заказать
+							</Link>
 						</div>
 					</div>
 					<div className='services-home-content-topLeft-windows'>
@@ -55,7 +65,12 @@ const Services = () => {
 								<li>Домов</li>
 								<li>Офисов</li>
 							</ul>
-							<button>Заказать</button>
+							<Link
+								to={'/Calculator/CleaningWindows/Order'}
+								className='services-home-content-topLeft-windows_items--BTN'
+							>
+								Заказать
+							</Link>
 						</div>
 					</div>
 				</div>

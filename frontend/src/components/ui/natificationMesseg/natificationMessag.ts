@@ -3,7 +3,8 @@ import { Store } from 'react-notifications-component'
 export const warning = () => {
 	Store.addNotification({
 		title: 'Уважаемый клиент',
-		message: 'Приносим свои извинения! \n услуги по химчистки пока не доступны',
+		message: `Приносим свои извинения! 
+		\n услуги по химчистки пока не доступны`,
 		type: 'warning',
 		container: 'top-right',
 		dismiss: {
@@ -16,11 +17,12 @@ export const warning = () => {
 export const ErrorOrderNewt = (Pole: string) => {
 	Store.addNotification({
 		title: 'Заполнены не все поля',
-		message: `Заполните поле: \n ${Pole}`,
+		message: `Заполните поле: 
+		\n ${Pole}`,
 		type: 'danger',
 		container: 'top-right',
 		dismiss: {
-			duration: 5000,
+			duration: 3000,
 			onScreen: true,
 		},
 	})
