@@ -6,7 +6,6 @@ export const ROUTES = {
 	OfficesCleaning: '/OfficesCleaning',
 	WindowsCleaning: '/WindowsCleaning',
 	Calculator: '/Calculator/:NameCleaning/:Title',
-	SERVICE: '/services/:nameServices',
 } as const
 
 export type PathParams = {
