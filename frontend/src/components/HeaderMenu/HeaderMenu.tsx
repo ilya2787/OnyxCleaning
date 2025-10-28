@@ -32,7 +32,7 @@ const HeaderMenu: FC = () => {
 			<div className='nav_logo'>
 				<Link to={ROUTES.HOME}>
 					{' '}
-					<img src='http://localhost:3000/img/Logo.png' alt='' />{' '}
+					<img src='/img/Logo.png' alt='' />{' '}
 				</Link>
 			</div>
 			<button className='nav_Btn' onClick={() => setOpenNav(!OpenNav)}>

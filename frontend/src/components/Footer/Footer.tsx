@@ -43,7 +43,7 @@ const Footer = () => {
 				</div>
 				<div className='content-LogoAndCopyright'>
 					<div className='content-LogoAndCopyright-logo'>
-						<img src='http://localhost:3000/img/Logo.png' alt='' />
+						<img src='/img/Logo.png' alt='' />
 					</div>
 					<p className='content-LogoAndCopyright-copyright'>
 						{IconList.Copyright} Onyx cleaning, 2025
