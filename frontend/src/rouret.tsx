@@ -5,7 +5,6 @@ import ApartmentCleaning from './page/ApartmentCleaning/ApartmentCleaning'
 import Calculator from './page/Calculator/Calculator'
 import Home from './page/home/home'
 import OfficesCleaning from './page/OfficesCleanning/officesCleaning'
-import ServicesPage from './page/services/ServicesPage'
 import WindowsCleaning from './page/WindowsCleaning/WindowsCleaning'
 
 export const router = createBrowserRouter([
@@ -31,10 +30,6 @@ export const router = createBrowserRouter([
 			{
 				path: ROUTES.Calculator,
 				element: <Calculator />,
-			},
-			{
-				path: ROUTES.SERVICE,
-				element: <ServicesPage />,
 			},
 		],
 	},

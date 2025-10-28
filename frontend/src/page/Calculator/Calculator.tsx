@@ -506,7 +506,7 @@ const Calculator = () => {
 			border: `1px solid ${Color}`,
 		})
 	}
-
+	console.log(DopCurrentPrice)
 	return (
 		<div className='Calculator'>
 			<h1 className='Calculator--h1'>

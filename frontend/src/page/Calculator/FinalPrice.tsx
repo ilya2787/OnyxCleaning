@@ -76,23 +76,34 @@ const FinalPrice: FC<TypeProps> = ({
 	}, [NumberArea, PriceQuadrature, C_Windows])
 
 	useEffect(() => {
-		if (DopCurrentPrice && ArrayIdDopWindows && CurrentDistance) {
-			setFinalPrice(
-				CurrentPrice +
-					DopCurrentPrice?.reduce(
-						(a, v) => a + (v.quantity - 1) * v.price + v.MinPrice,
-						0
-					) +
-					ArrayIdDopWindows?.reduce(
-						(a, v) => a + (v.quantity - 1) * v.price + v.MinPrice,
-						0
-					) +
-					CurrentDistance?.reduce((a, v) => a + v.price, 0)
-			)
+		if (DopCurrentPrice && CurrentDistance) {
+			if (ArrayIdDopWindows) {
+				setFinalPrice(
+					CurrentPrice +
+						DopCurrentPrice?.reduce(
+							(a, v) => a + (v.quantity - 1) * v.price + v.MinPrice,
+							0
+						) +
+						ArrayIdDopWindows?.reduce(
+							(a, v) => a + (v.quantity - 1) * v.price + v.MinPrice,
+							0
+						) +
+						CurrentDistance?.reduce((a, v) => a + v.price, 0)
+				)
+			} else {
+				setFinalPrice(
+					CurrentPrice +
+						DopCurrentPrice?.reduce(
+							(a, v) => a + (v.quantity - 1) * v.price + v.MinPrice,
+							0
+						) +
+						CurrentDistance?.reduce((a, v) => a + v.price, 0)
+				)
+			}
 		} else {
 			setFinalPrice(CurrentPrice)
 		}
-	}, [DopCurrentPrice, CurrentPrice, ArrayIdDopWindows, CurrentDistance])
+	}, [DopCurrentPrice, CurrentPrice, CurrentDistance, ArrayIdDopWindows])
 
 	useEffect(() => {
 		NumberArea === 1 && setTitleWindows('створка')
