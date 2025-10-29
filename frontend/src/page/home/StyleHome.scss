@@ -22,7 +22,7 @@
 .header_home {
 	background-color: CS.$ColorFonDark;
 	padding: 0 20px;
-	margin-top: -20px;
+	margin-top: 140px;
 	border-radius: 0 0 15px 15px;
 	position: relative;
 	height: 83.4vh;
@@ -86,7 +86,8 @@
 			z-index: 2;
 			bottom: 0;
 			right: 0;
-			width: clamp(300px, 45vw, 600px);
+			width: clamp(300px, 45vw, 590px);
+			max-height: 100%;
 		}
 	}
 	&_Btn {

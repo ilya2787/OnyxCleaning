@@ -1,6 +1,7 @@
 @use '../../styles/config/color' as CS;
 @use '../../styles/config/mixin' as MX;
 .ApartmentCleaning {
+	margin-top: 200px;
 	&--Header--text {
 		ul {
 			li {
