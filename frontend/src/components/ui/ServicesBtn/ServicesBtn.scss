@@ -10,7 +10,7 @@
 	font-size: 19px;
 	color: #fff;
 	height: 55px;
-	width: 300px;
+	width: clamp(200px, 20vw, 300px);
 	@include MX.GlassBackgroundBlack;
 	border-radius: 5px;
 	border: 2px solid #fff;
@@ -25,7 +25,7 @@
 		justify-content: center;
 		align-items: center;
 		height: max-content;
-		font-size: 30px;
+		font-size: clamp(25px, 3vw, 30px);
 	}
 }
 

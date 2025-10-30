@@ -7,6 +7,9 @@
 	font-size: 50px;
 	margin-bottom: 20px;
 	text-transform: uppercase;
+	@media (max-width: 1000px) {
+		font-size: clamp(25px, 5vw, 50px);
+	}
 }
 
 @mixin GlassBackground {
@@ -34,7 +37,7 @@
 @mixin SettingButtonServices($Float) {
 	float: $Float;
 	font-family: Gabriela;
-	font-size: 19px;
+	font-size: clamp(17px, 2vw, 19px);
 	padding: 15px 57px;
 	border-radius: 5px;
 	border: none;
@@ -61,6 +64,13 @@
 	font-size: clamp(300px, 23vw, 450px);
 	color: CS.$ColorFon;
 	text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.35);
+	z-index: 1;
+	@media (max-width: 1000px) {
+		opacity: 30%;
+		font-size: 150px;
+		justify-content: flex-start;
+		top: 20px;
+	}
 }
 
 @mixin SettingBlockAdvantages($Left, $Right, $deg) {
@@ -75,7 +85,7 @@
 		right: $Right;
 		background-color: CS.$ColorFon;
 		font-family: Gabriela;
-		font-size: 35px;
+		font-size: clamp(20px, 3vw, 35px);
 		padding: 17px 50px;
 		border-radius: 0 0 15px 15px;
 	}
@@ -83,13 +93,17 @@
 		margin: 120px 30px 100px 30px;
 		font-family: Kurale;
 		max-width: 70%;
+		position: relative;
+		z-index: 2;
+		@media (max-width: 800px) {
+			max-width: 100%;
+		}
 		h3 {
-			font-size: 30px;
+			font-size: clamp(25px, 2.5vw, 30px);
 			margin-top: 40px;
 		}
-
 		p {
-			font-size: 25px;
+			font-size: clamp(19px, 1.8vw, 25px);
 			color: #333;
 		}
 	}
@@ -115,7 +129,7 @@
 	position: absolute;
 	top: 20px;
 	left: 20px;
-	font-size: 23px;
+	font-size: clamp(18px, 1.8vw, 23px);
 	color: #949494;
 	transition: all 0.3s ease;
 }

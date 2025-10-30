@@ -11,7 +11,7 @@
 				align-items: center;
 				column-gap: 20px;
 				color: #fff;
-				font-size: 23px;
+				font-size: clamp(19px, 1.8vw, 23px);
 				margin-top: 20px;
 				span {
 					display: flex;
@@ -27,6 +27,7 @@
 	}
 	&-content {
 		margin: 100px 0;
+		min-width: 555px;
 		&--h1 {
 			@include MX.TitleText;
 		}

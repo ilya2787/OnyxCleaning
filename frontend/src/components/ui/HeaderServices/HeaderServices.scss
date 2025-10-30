@@ -7,15 +7,16 @@
 	align-items: center;
 	row-gap: 100px;
 	border-radius: 20px;
-	padding: 30px 20px 5px 20px;
+	padding: 30px 20px 20px 20px;
 	min-height: 30vw;
+	min-width: 555px;
 	h1 {
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-start;
 		color: CS.$ColorFon;
 		font-family: Gabriela;
-		font-size: 80px;
+		font-size: clamp(40px, 7vw, 80px);
 		width: 100%;
 		margin-left: 100px;
 		letter-spacing: 4px;
@@ -26,6 +27,7 @@
 		justify-content: center;
 		align-items: center;
 		flex-wrap: wrap;
+		row-gap: 30px;
 		width: 100%;
 		&--text {
 			flex: 1 1 450px;
