@@ -507,6 +507,7 @@ const Calculator = () => {
 			border: `1px solid ${Color}`,
 		})
 	}
+
 	return (
 		<div className='Calculator'>
 			<TitlePage Title={!ParamsOrder ? 'Калькулятор' : 'Оформление заказа'} />

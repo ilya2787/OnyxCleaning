@@ -3,6 +3,7 @@
 
 .WindowsCleaning {
 	margin-top: 200px;
+	min-width: 555px;
 	&--headerText {
 		p {
 			color: #fff;
@@ -39,6 +40,12 @@
 		margin: 100px 0;
 		&--h1 {
 			@include MX.TitleText;
+		}
+		section {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
 		}
 	}
 

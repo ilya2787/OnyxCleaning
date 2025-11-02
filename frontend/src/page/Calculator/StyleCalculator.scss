@@ -83,6 +83,7 @@
 	margin: 200px 0 100px 0;
 	padding: 0 10px 50px 10px;
 	border-radius: 15px;
+	min-width: 545px;
 	background-color: CS.$ColorFonDark;
 	&--h1 {
 		display: inline-block;
@@ -616,6 +617,23 @@
 						button:nth-child(2) {
 							background-color: #fff;
 						}
+					}
+				}
+				&--FinalPriceMobile {
+					display: none;
+					position: fixed;
+					top: 140px;
+					right: 15px;
+					background-color: CS.$ColorFonDark;
+					padding: 10px 20px;
+					z-index: 10;
+					border-radius: 10px;
+					p {
+						font-size: 20px;
+						color: CS.$ColorBrown;
+					}
+					@media (max-width: 1030px) {
+						display: block;
 					}
 				}
 			}

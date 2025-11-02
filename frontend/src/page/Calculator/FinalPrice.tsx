@@ -56,7 +56,6 @@ const FinalPrice: FC<TypeProps> = ({
 	const [FinalPrice, setFinalPrice] = useState<number>(CurrentPrice)
 	const [TitleWindows, setTitleWindows] = useState<string>('')
 	const [FinalTimeCleaning, setFinalTimeCleaning] = useState<number>(0)
-
 	useEffect(() => {
 		if (C_Windows === false) {
 			if (NumberArea > InitialQuadrature.Quantity) {
@@ -126,6 +125,10 @@ const FinalPrice: FC<TypeProps> = ({
 
 	return (
 		<div className='Calculator--content--BlockResult--item'>
+			<div className='Calculator--content--BlockResult--item--FinalPriceMobile'>
+				<p>К оплате: {PriceFormat(FinalPrice)}</p>
+			</div>
+
 			<div className='Calculator--content--BlockResult--item--MinimumPrice'>
 				<p>Минимальная стоимость</p>
 				<div className='Calculator--content--BlockResult--item--MinimumPrice--price'>

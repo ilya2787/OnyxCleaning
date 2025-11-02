@@ -59,20 +59,24 @@ const WindowsCleaning = () => {
 				</div>
 			</HeaderServices>
 			<div className='WindowsCleaning--content'>
-				<h1 className='WindowsCleaning--content--h1'>Что входит</h1>
-				<BlockInformText
-					positions='row-reverse'
-					deg={-90}
-					Title=''
-					LinkImg='./img/poster/Windows/WindowsList.jpg'
-					ArrayDataCleaning={WindowsList}
-					setArrayData={setArrayData}
-					setOpenModal={setOpenModal}
-					setOpenModalDop={setOpenModalDop}
-					setTitleModalDop={setTitleModalDop}
-					setArrayDataDop={setArrayDataDop}
-					ArrayDopServices={ArrayFullListDop}
-				/>
+				<h1 className='WindowsCleaning--content--h1'>
+					Что входит в мойку окон
+				</h1>
+				<section>
+					<BlockInformText
+						positions='row-reverse'
+						deg={-90}
+						Title=''
+						LinkImg='./img/poster/Windows/WindowsList.jpg'
+						ArrayDataCleaning={WindowsList}
+						setArrayData={setArrayData}
+						setOpenModal={setOpenModal}
+						setOpenModalDop={setOpenModalDop}
+						setTitleModalDop={setTitleModalDop}
+						setArrayDataDop={setArrayDataDop}
+						ArrayDopServices={ArrayFullListDop}
+					/>
+				</section>
 			</div>
 			<ModalWindows
 				Title='Полный список'

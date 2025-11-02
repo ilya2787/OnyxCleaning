@@ -65,19 +65,21 @@ const OfficesCleaning = () => {
 			</HeaderServices>
 			<div className='OfficesCleaning--content'>
 				<h1 className='OfficesCleaning--content--h1'> что входит в уборку</h1>
-				<BlockInformText
-					positions='row-reverse'
-					deg={-90}
-					Title=''
-					LinkImg='./img/poster/Office/OfficeList.jpg'
-					ArrayDataCleaning={OfficeList}
-					setArrayData={setArrayData}
-					setOpenModal={setOpenModal}
-					setOpenModalDop={setOpenModalDop}
-					setTitleModalDop={setTitleModalDop}
-					setArrayDataDop={setArrayDataDop}
-					ArrayDopServices={ArrayFullListDop}
-				/>
+				<section>
+					<BlockInformText
+						positions='row-reverse'
+						deg={-90}
+						Title=''
+						LinkImg='./img/poster/Office/OfficeList.jpg'
+						ArrayDataCleaning={OfficeList}
+						setArrayData={setArrayData}
+						setOpenModal={setOpenModal}
+						setOpenModalDop={setOpenModalDop}
+						setTitleModalDop={setTitleModalDop}
+						setArrayDataDop={setArrayDataDop}
+						ArrayDopServices={ArrayFullListDop}
+					/>
+				</section>
 			</div>
 			<ModalWindows
 				Title='Полный список'
