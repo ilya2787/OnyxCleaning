@@ -13,6 +13,7 @@ const HeaderMenu: FC = () => {
 	const [ListMenu, setListMenu] = useState<TypeListMenu[]>(ItemsMenu)
 	const BtnNavMenu = useRef<HTMLSpanElement>(null)
 	const BlockMenu = useRef<HTMLDivElement>(null)
+	const [show, handleShow] = useState(false)
 
 	useEffect(() => {
 		if (OpenNav) {
@@ -27,12 +28,24 @@ const HeaderMenu: FC = () => {
 			BtnNavMenu.current?.classList.add('Close')
 		}
 	}, [OpenNav])
+
+	useEffect(() => {
+		window.addEventListener('scroll', () => {
+			if (window.scrollY > 50) {
+				handleShow(true)
+			} else handleShow(false)
+		})
+		return () => {
+			window.removeEventListener('scroll', () => {})
+		}
+	}, [])
+
 	return (
-		<nav className='nav'>
-			<div className='nav_logo'>
+		<nav className={!show ? 'nav' : 'nav Scroll'}>
+			<div className={!show ? 'nav_logo' : 'nav_logo ScrollActive'}>
 				<Link to={ROUTES.HOME}>
 					{' '}
-					<img src='http://localhost:3000/img/Logo.png' alt='' />{' '}
+					<img src='/img/Logo.png' alt='' />{' '}
 				</Link>
 			</div>
 			<button className='nav_Btn' onClick={() => setOpenNav(!OpenNav)}>
@@ -46,12 +59,16 @@ const HeaderMenu: FC = () => {
 					<span>{IconList.Location}</span> <p>Калининград</p>
 				</div>
 				<p className='nav_contact_tel'>{CONTACT.Telephone}</p>
-				<div className='nav_contact_social'>
+				<div
+					className={
+						!show ? 'nav_contact_social' : 'nav_contact_social ScrollActive'
+					}
+				>
 					<a href='/#'>{IconList.WhatsApp}</a>
 					<a href='/#'>{IconList.Telegram}</a>
 				</div>
 			</div>
-			<div className='nav_BlockMenu' ref={BlockMenu}>
+			<div className={'nav_BlockMenu'} ref={BlockMenu}>
 				{ListMenu.map(data => (
 					<Link
 						to={data.link}

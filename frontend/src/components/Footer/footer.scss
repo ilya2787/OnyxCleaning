@@ -4,11 +4,20 @@ footer {
 	position: relative;
 	padding: 0 30px 10px 30px;
 	border-radius: 20px 20px 0 0;
+	min-width: 555px;
+	@media (max-width: 1050px) {
+		padding: 20px 0;
+		margin-top: 100px;
+	}
 	.content {
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
 		align-items: center;
+		row-gap: 30px;
+		@media (max-width: 1050px) {
+			flex-direction: column;
+		}
 		&-contact {
 			display: flex;
 			flex-direction: column;
@@ -19,7 +28,7 @@ footer {
 				color: CS.$ColorBrown;
 			}
 			&-tel {
-				font-size: 23px;
+				font-size: Clamp(19px, 1.8vw, 23px);
 				letter-spacing: 2px;
 			}
 			&-social {
@@ -51,7 +60,7 @@ footer {
 				li {
 					.content-menu--Link {
 						font-family: Gabriela;
-						font-size: 18px;
+						font-size: clamp(14px, 1.3vw, 18px);
 						text-transform: uppercase;
 						letter-spacing: 2px;
 						transition: all 0.2s ease;
@@ -63,6 +72,9 @@ footer {
 						}
 					}
 				}
+			}
+			@media (max-width: 500px) {
+				display: none;
 			}
 		}
 		&-LogoAndCopyright {
@@ -78,6 +90,15 @@ footer {
 				border-radius: 0 0 20px 20px;
 				img {
 					width: 100%;
+				}
+				@media (max-width: 1050px) {
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					align-items: center;
+					width: 150px;
+					border-radius: 50%;
+					height: 150px;
 				}
 			}
 			&-copyright {

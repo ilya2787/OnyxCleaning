@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { useParams } from 'react-router'
+import TitlePage from '../../components/Title/TitlePage'
 import {
 	DistancePrice,
 	InitialQuadrature,
@@ -506,8 +507,10 @@ const Calculator = () => {
 			border: `1px solid ${Color}`,
 		})
 	}
+
 	return (
 		<div className='Calculator'>
+			<TitlePage Title={!ParamsOrder ? 'Калькулятор' : 'Оформление заказа'} />
 			<h1 className='Calculator--h1'>
 				{ParamsOrder
 					? 'Оформление заказа на уборку'
