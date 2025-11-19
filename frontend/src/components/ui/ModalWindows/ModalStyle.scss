@@ -15,6 +15,10 @@
 	height: 100vh;
 	z-index: 99;
 	background-color: rgba($color: #333333, $alpha: 0.5);
+	@media (max-width: 600px) {
+		width: auto;
+		height: 100%;
+	}
 	.Modal_container {
 		position: relative;
 		min-width: 50vw;
@@ -31,9 +35,13 @@
 			min-width: 90%;
 			max-width: 90%;
 		}
+		@media (max-width: 1000px) {
+			padding: 0 20px 20px 20px;
+			min-height: max-content;
+		}
 		&--title {
 			margin: 30px 0;
-			font-size: 45px;
+			font-size: clamp(20px, 5vw, 40px);
 			font-family: Unbounded;
 			text-transform: uppercase;
 			font-weight: bold;
@@ -78,6 +86,13 @@
 				border-radius: 20px; /* закругления плашки */
 				border: 3px solid CS.$ColorAccent; /* padding вокруг плашки */
 			}
+			@media (max-width: 1000px) {
+				max-height: 60dvh;
+			}
+			@media (max-width: 400px) {
+				max-height: 90dvh;
+			}
+			overflow-x: hidden;
 		}
 	}
 }

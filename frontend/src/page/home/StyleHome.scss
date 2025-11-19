@@ -27,6 +27,9 @@
 	position: relative;
 	height: 83.4vh;
 	min-width: 555px;
+	@media (max-height: 850px) {
+		height: 100%;
+	}
 	&_h1 {
 		text-transform: uppercase;
 		font-family: DaysOne;
@@ -57,6 +60,9 @@
 			h2 {
 				font-size: clamp(22px, 3vw, 55px);
 				color: #725b27;
+				@media (max-height: 550px) and (max-width: 850px) {
+					font-size: 18px;
+				}
 			}
 			h3 {
 				font-size: clamp(17px, 3vw, 40px);
@@ -70,11 +76,19 @@
 				@media (max-width: 1036px) {
 					margin-left: 25%;
 				}
+				@media (max-height: 550px) and (max-width: 850px) {
+					font-size: 18px;
+					margin-top: 5px;
+				}
 			}
 			p:nth-child(2n + 1) {
 				font-size: clamp(17px, 3vw, 42px);
 				color: #222;
 				margin-top: 20px;
+				@media (max-height: 550px) and (max-width: 850px) {
+					font-size: 17px;
+					margin-top: 10px;
+				}
 			}
 			p:nth-child(2n + 2) {
 				font-size: clamp(17px, 3vw, 32px);
@@ -86,6 +100,10 @@
 				@media (max-width: 920px) {
 					max-width: 300px;
 				}
+				@media (max-height: 550px) and (max-width: 850px) {
+					font-size: 18px;
+					margin-top: 10px;
+				}
 			}
 		}
 		&_img {
@@ -95,6 +113,12 @@
 			right: 0;
 			width: clamp(300px, 45vw, 590px);
 			max-height: 100%;
+			@media (max-height: 800px) and (min-width: 1000px) {
+				width: auto;
+			}
+			@media (max-height: 700px) and (max-width: 1000px) {
+				width: clamp(250px, 35vw, 390px);
+			}
 		}
 	}
 	&_Btn {
@@ -110,6 +134,10 @@
 			width: 100%;
 			left: 0;
 			right: 0;
+		}
+		@media (max-height: 850px) {
+			position: relative;
+			margin-top: 20px;
 		}
 		&--Order {
 			display: inline-block;

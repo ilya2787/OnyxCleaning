@@ -2,6 +2,8 @@
 @use '../../styles/config/mixin' as MX;
 .ApartmentCleaning {
 	margin-top: 200px;
+	overflow-x: hidden;
+	min-width: 555px;
 	&--Header--text {
 		ul {
 			li {
@@ -27,7 +29,7 @@
 	}
 	&-content {
 		margin: 100px 0;
-		min-width: 555px;
+
 		&--h1 {
 			@include MX.TitleText;
 		}
