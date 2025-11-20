@@ -6,6 +6,7 @@
 	font-weight: bold;
 	font-size: 50px;
 	margin-bottom: 20px;
+	padding-left: 30px;
 	text-transform: uppercase;
 	@media (max-width: 1000px) {
 		font-size: clamp(25px, 5vw, 50px);
