@@ -4,10 +4,11 @@ footer {
 	position: relative;
 	padding: 0 30px 10px 30px;
 	border-radius: 20px 20px 0 0;
-	min-width: 555px;
+	margin: 0 15px 0 15px;
+	min-width: 582px;
 	@media (max-width: 1050px) {
 		padding: 20px 0;
-		margin-top: 100px;
+		margin: 100px 0 0 0;
 	}
 	.content {
 		display: flex;

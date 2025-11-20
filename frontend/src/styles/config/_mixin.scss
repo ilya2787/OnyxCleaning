@@ -30,12 +30,10 @@
 	background-repeat: no-repeat;
 	background-size: cover;
 	border-radius: 15px;
-	padding: 20px;
 	transition: all 0.3s ease;
 }
 
-@mixin SettingButtonServices($Float) {
-	float: $Float;
+@mixin SettingButtonServices() {
 	font-family: Gabriela;
 	font-size: clamp(17px, 2vw, 19px);
 	padding: 15px 57px;

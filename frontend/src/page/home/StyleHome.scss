@@ -11,7 +11,6 @@
 	color: CS.$ColorBrown;
 	transition: all 0.3s ease;
 	cursor: pointer;
-	border: 2px solid #fff;
 	@media (max-width: 800px) {
 		width: clamp(250px, 45vw, 350px);
 		height: 55px;
@@ -21,44 +20,38 @@
 
 .header_home {
 	background-color: CS.$ColorFonDark;
-	padding: 0 20px;
-	margin-top: 140px;
+	padding: 130px 20px 0 20px;
 	border-radius: 0 0 15px 15px;
 	position: relative;
-	height: 83.4vh;
-	min-width: 555px;
-	@media (max-height: 850px) {
-		height: 100%;
-	}
+	height: 100dvh;
+	width: 100dvw;
+	min-width: 582px;
 	&_h1 {
 		text-transform: uppercase;
 		font-family: DaysOne;
 		color: CS.$ColorFon;
 		font-size: 15.3vw;
-		position: absolute;
+		position: relative;
 		text-align: center;
 		left: 0;
 		right: 0;
-		z-index: 1;
+		z-index: 8;
 		@media (max-width: 600px) {
 			font-size: 85px;
 		}
 	}
 	&_center {
-		padding-top: 40vh;
-		@media (max-width: 1450px) {
-			padding-top: 20vw;
-		}
-		@media (max-height: 900px) {
-			padding-top: 17vw;
-		}
-		@media (max-width: 600px) {
-			padding-top: 100px;
-		}
 		&_text {
 			font-family: Gabriela;
+			h1 {
+				font-size: clamp(17px, 3vw, 42px);
+				color: #222;
+				@media (max-height: 550px) and (max-width: 850px) {
+					font-size: 17px;
+				}
+			}
 			h2 {
-				font-size: clamp(22px, 3vw, 55px);
+				font-size: clamp(22px, 3vw, 45px);
 				color: #725b27;
 				@media (max-height: 550px) and (max-width: 850px) {
 					font-size: 18px;
@@ -81,15 +74,6 @@
 					margin-top: 5px;
 				}
 			}
-			p:nth-child(2n + 1) {
-				font-size: clamp(17px, 3vw, 42px);
-				color: #222;
-				margin-top: 20px;
-				@media (max-height: 550px) and (max-width: 850px) {
-					font-size: 17px;
-					margin-top: 10px;
-				}
-			}
 			p:nth-child(2n + 2) {
 				font-size: clamp(17px, 3vw, 32px);
 				color: #70510e;
@@ -108,11 +92,11 @@
 		}
 		&_img {
 			position: absolute;
-			z-index: 2;
+			z-index: 8;
 			bottom: 0;
 			right: 0;
 			width: clamp(300px, 45vw, 590px);
-			max-height: 100%;
+			max-height: 85%;
 			@media (max-height: 800px) and (min-width: 1000px) {
 				width: auto;
 			}
@@ -122,22 +106,19 @@
 		}
 	}
 	&_Btn {
-		position: absolute;
-		bottom: 10px;
+		margin-top: 40px;
 		display: flex;
 		flex-direction: row;
 		justify-content: flex-start;
 		align-items: center;
-		z-index: 3;
+		z-index: 8;
 		@media (max-width: 800px) {
+			position: absolute;
 			justify-content: center;
 			width: 100%;
 			left: 0;
 			right: 0;
-		}
-		@media (max-height: 850px) {
-			position: relative;
-			margin-top: 20px;
+			bottom: 20px;
 		}
 		&--Order {
 			display: inline-block;
@@ -177,9 +158,16 @@
 }
 
 .services-home {
-	margin-top: 100px;
+	margin: 100px 15px 0 15px;
+	min-width: 582px;
+	@media (max-width: 600px) {
+		margin: 100px 0 0 0;
+	}
 	&-h1 {
 		@include MX.TitleText;
+		@media (max-width: 600px) {
+			text-align: center;
+		}
 	}
 	&-content {
 		background-color: #fff;
@@ -189,6 +177,8 @@
 		gap: 10px;
 		@media (max-width: 1290px) {
 			grid-template-columns: repeat(auto-fit, minmax(570px, 1fr));
+		}
+		@media (max-width: 700px) {
 		}
 		&-apartments {
 			@include MX.SettingFonServices(
@@ -201,12 +191,17 @@
 			justify-content: flex-start;
 			align-items: center;
 			&_items {
-				@include MX.GlassBackgroundBlack;
 				border-radius: 15px;
-				width: 95%;
-				height: max-content;
+				width: 100%;
+				background: linear-gradient(
+					180deg,
+					rgba(26, 13, 4, 0.603),
+					transparent
+				);
+				height: 100%;
 				padding: 20px;
 				color: #fff;
+				position: relative;
 				&--h2 {
 					font-family: Gabriela;
 					font-size: clamp(25px, 3.3vw, 33px);
@@ -222,7 +217,10 @@
 					}
 				}
 				&--BTN {
-					@include MX.SettingButtonServices(right);
+					position: absolute;
+					bottom: 20px;
+					right: 20px;
+					@include MX.SettingButtonServices();
 				}
 			}
 		}
@@ -240,13 +238,17 @@
 				justify-content: center;
 				align-items: center;
 				&_items {
-					@include MX.GlassBackgroundBlack;
+					position: relative;
 					border-radius: 15px;
-					width: 95%;
-					height: 87%;
+					width: 100%;
+					height: 100%;
 					padding: 20px;
 					color: #fff;
-					position: relative;
+					background: linear-gradient(
+						180deg,
+						rgba(26, 13, 4, 0.603),
+						transparent
+					);
 					&--h2 {
 						font-family: Gabriela;
 						font-size: clamp(25px, 3.3vw, 33px);
@@ -261,13 +263,10 @@
 						}
 					}
 					&--BTN {
-						@include MX.SettingButtonServices(auto);
 						position: absolute;
-						bottom: 0;
-						left: 0;
-						right: 0;
-						border-radius: 5px 5px 15px 15px !important;
-						text-align: center;
+						bottom: 20px;
+						right: 20px;
+						@include MX.SettingButtonServices();
 					}
 				}
 			}
@@ -281,13 +280,17 @@
 				justify-content: center;
 				align-items: center;
 				&_items {
-					@include MX.GlassBackgroundBlack;
+					position: relative;
 					border-radius: 15px;
-					width: 95%;
-					height: 87%;
+					width: 100%;
+					height: 100%;
 					padding: 20px;
 					color: #fff;
-					position: relative;
+					background: linear-gradient(
+						180deg,
+						rgba(26, 13, 4, 0.603),
+						transparent
+					);
 					&--h2 {
 						font-family: Gabriela;
 						font-size: clamp(25px, 3.3vw, 33px);
@@ -302,13 +305,10 @@
 						}
 					}
 					&--BTN {
-						@include MX.SettingButtonServices(auto);
+						@include MX.SettingButtonServices();
 						position: absolute;
-						bottom: 0;
-						left: 0;
-						right: 0;
-						border-radius: 5px 5px 15px 15px !important;
-						text-align: center;
+						bottom: 20px;
+						right: 20px;
 					}
 				}
 			}
@@ -321,12 +321,17 @@
 			justify-content: flex-end;
 			align-items: center;
 			&_items {
-				@include MX.GlassBackgroundBlack;
+				position: relative;
 				border-radius: 15px;
-				width: 95%;
-				height: max-content;
+				width: 100%;
+				height: 100%;
 				padding: 20px;
 				color: #fff;
+				background: linear-gradient(
+					180deg,
+					rgba(26, 13, 4, 0.603),
+					transparent
+				);
 				h2 {
 					font-family: Gabriela;
 					font-size: clamp(25px, 3.3vw, 33px);
@@ -347,7 +352,10 @@
 					}
 				}
 				button {
-					@include MX.SettingButtonServices(right);
+					position: absolute;
+					bottom: 20px;
+					right: 20px;
+					@include MX.SettingButtonServices();
 				}
 			}
 		}
@@ -355,11 +363,17 @@
 }
 
 .advantages-home {
-	margin-top: 100px;
-	min-width: 555px;
+	margin: 100px 15px 0 15px;
+	@media (max-width: 600px) {
+		margin: 100px 0 0 0;
+	}
+	min-width: 582px;
 	h1 {
 		@include MX.TitleText;
 		text-align: right;
+		@media (max-width: 600px) {
+			text-align: center;
+		}
 	}
 	&-content {
 		display: flex;
@@ -368,12 +382,38 @@
 		align-items: center;
 		row-gap: 50px;
 		&--item-1 {
+			@keyframes show-animation-item1 {
+				from {
+					opacity: 0;
+					transform: translateX(-100%);
+				}
+				to {
+					opacity: 1;
+					transform: translateX(0px);
+				}
+			}
+			animation: show-animation-item1 linear;
+			animation-timeline: view();
+			animation-range: entry 0% cover 40%;
 			@include MX.SettingBlockAdvantages(30px, auto, 90deg);
 			&-number {
 				@include MX.SettingNumberAdvantages(auto, 15%);
 			}
 		}
 		&--item-2 {
+			@keyframes show-animation-item2 {
+				from {
+					opacity: 0;
+					transform: translateX(100%);
+				}
+				to {
+					opacity: 1;
+					transform: translateX(0px);
+				}
+			}
+			animation: show-animation-item2 linear;
+			animation-timeline: view();
+			animation-range: entry 0% cover 40%;
 			@include MX.SettingBlockAdvantages(auto, 30px, -90deg);
 			&-text {
 				float: right;
@@ -384,6 +424,19 @@
 			}
 		}
 		&--item-3 {
+			@keyframes show-animation-item3 {
+				from {
+					opacity: 0;
+					transform: translateX(-100%);
+				}
+				to {
+					opacity: 1;
+					transform: translateX(0px);
+				}
+			}
+			animation: show-animation-item3 linear;
+			animation-timeline: view();
+			animation-range: entry 0% cover 40%;
 			@include MX.SettingBlockAdvantages(30px, auto, 90deg);
 			&-number {
 				@include MX.SettingNumberAdvantages(auto, 15%);
@@ -397,8 +450,8 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	margin-top: 100px;
-	min-width: 555px;
+	margin: 100px 15px 0 15px;
+	min-width: 570px;
 	h1 {
 		@include MX.TitleText;
 		font-size: clamp(25px, 3vw, 33px) !important;
@@ -433,6 +486,9 @@
 			align-items: center;
 			row-gap: 50px;
 			max-width: 700px;
+			@media (max-width: 600px) {
+				width: 80%;
+			}
 			&--name {
 				position: relative;
 				width: 100%;

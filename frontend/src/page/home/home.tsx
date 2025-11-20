@@ -12,10 +12,10 @@ const Home = () => {
 				<h1 className='header_home_h1'>Cleaning</h1>
 				<div className='header_home_center'>
 					<div className='header_home_center_text'>
+						<h1>Клининговые услуги для дома и офиса</h1>
 						<h2>Профессиональные стандарты</h2>
 						<h3>Ваш комфорт</h3>
 						<p>Персональный подход к чистоте</p>
-						<p>Клининговые услуги для дома и офиса</p>
 					</div>
 					<img
 						className='header_home_center_img'

@@ -3,7 +3,7 @@
 .ApartmentCleaning {
 	margin-top: 200px;
 	overflow-x: hidden;
-	min-width: 555px;
+	min-width: 582px;
 	&--Header--text {
 		ul {
 			li {
@@ -29,7 +29,6 @@
 	}
 	&-content {
 		margin: 100px 0;
-
 		&--h1 {
 			@include MX.TitleText;
 		}
