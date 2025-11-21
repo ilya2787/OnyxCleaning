@@ -4,10 +4,11 @@ footer {
 	position: relative;
 	padding: 0 30px 10px 30px;
 	border-radius: 20px 20px 0 0;
-	min-width: 555px;
+	margin: 0 15px 0 15px;
+	min-width: 582px;
 	@media (max-width: 1050px) {
 		padding: 20px 0;
-		margin-top: 100px;
+		margin: 100px 0 0 0;
 	}
 	.content {
 		display: flex;
@@ -25,7 +26,7 @@ footer {
 			align-items: center;
 			row-gap: 10px;
 			a {
-				color: CS.$ColorBrown;
+				color: CS.$ColorFon;
 			}
 			&-tel {
 				font-size: Clamp(19px, 1.8vw, 23px);
@@ -65,7 +66,7 @@ footer {
 						letter-spacing: 2px;
 						transition: all 0.2s ease;
 						cursor: pointer;
-						color: CS.$ColorBrown;
+						color: CS.$ColorFon;
 						&:hover {
 							color: CS.$ColorAccent;
 							filter: brightness(80%);
@@ -107,8 +108,9 @@ footer {
 				justify-content: center;
 				align-items: center;
 				column-gap: 10px;
-				font-size: 18px;
+				font-size: 17px;
 				text-transform: uppercase;
+				color: CS.$ColorFon;
 			}
 		}
 	}

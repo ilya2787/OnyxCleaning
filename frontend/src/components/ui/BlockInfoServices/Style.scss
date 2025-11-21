@@ -13,7 +13,6 @@
 	border-radius: 10px;
 	transition: all 0.3s ease;
 	font-size: 18px;
-	color: CS.$ColorBrown;
 	span {
 		display: flex;
 		justify-content: center;
@@ -120,7 +119,8 @@
 			column-gap: 20px;
 			row-gap: 20px;
 			&--List {
-				@include SettingBlock--BTN(CS.$ColorFonDark);
+				color: CS.$ColorFon;
+				@include SettingBlock--BTN(CS.$ColorFonDark_Transparency);
 			}
 			&--Dop {
 				@include SettingBlock--BTN(CS.$ColorAccent);

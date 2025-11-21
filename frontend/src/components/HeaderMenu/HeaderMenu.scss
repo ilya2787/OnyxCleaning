@@ -7,22 +7,22 @@
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: flex-start;
-	background-color: CS.$ColorFonDark;
 	padding: 0 20px 40px 20px;
-	border-radius: 15px;
-	left: 15px;
-	right: 15px;
+	border-radius: 0 0 15px 15px;
+	left: 0;
+	right: 0;
+	top: 0;
 	position: fixed;
 	z-index: 10;
 	transition: all 0.3s ease;
 	&.Scroll {
-		background: rgba($color: CS.$ColorFonDark, $alpha: 0.7);
+		background: rgba($color: CS.$ColorFonDark, $alpha: 0.7) !important;
 		padding: 0 20px 0 20px;
 		transition: all 0.3s ease;
-		border-bottom: 2px solid #fff;
-		border-top: 2px solid #fff;
+		border-bottom: 2px solid rgba(255, 255, 255, 0.738);
+		border-radius: 0 0 5px 5px;
 		&:hover {
-			background: rgba($color: CS.$ColorFonDark, $alpha: 0.9);
+			background: rgba($color: CS.$ColorFonDark, $alpha: 0.9) !important;
 		}
 	}
 	&_logo {
@@ -38,7 +38,7 @@
 		&.ScrollActive {
 			width: 170px;
 			height: 91px;
-			border-radius: 10px 20px 20px 10px;
+			border-radius: 0 0 0 5px;
 			margin-left: -19px;
 			padding: 10px 10px 0 30px;
 			img {
@@ -60,15 +60,15 @@
 		&_text {
 			font-family: Gabriela;
 			font-size: 23px;
-			color: CS.$ColorBrown;
+			color: CS.$ColorFon;
 			margin: 0;
 			width: max-content;
 			padding: 10px 30px 5px 30px;
-			border-bottom: 2px solid CS.$ColorBrown;
+			border-bottom: 2px solid CS.$ColorFon;
 			border-radius: 15px;
 		}
 		&_Icon {
-			color: CS.$ColorBrown;
+			color: CS.$ColorFon;
 			font-size: 30px;
 			&.Active {
 				animation: OpenBTNMenu 1s forwards;
@@ -79,7 +79,7 @@
 		}
 	}
 	&_contact {
-		color: CS.$ColorBrown;
+		color: CS.$ColorFon;
 		margin-top: 5px;
 		&_location {
 			display: flex;

@@ -8,7 +8,11 @@ import './HeaderMenu.scss'
 import { ItemsMenu } from './ItemsMenu'
 import { TypeListMenu } from './TypeData'
 
-const HeaderMenu: FC = () => {
+interface TypeProps {
+	The_Background: boolean
+}
+
+const HeaderMenu: FC<TypeProps> = ({ The_Background }) => {
 	const [OpenNav, setOpenNav] = useState<boolean>(false)
 	const [ListMenu, setListMenu] = useState<TypeListMenu[]>(ItemsMenu)
 	const BtnNavMenu = useRef<HTMLSpanElement>(null)
@@ -40,8 +44,12 @@ const HeaderMenu: FC = () => {
 		}
 	}, [])
 
+	const BackgroundNav: React.CSSProperties = {
+		background: `${!The_Background ? 'transparent' : '#363231'}`,
+	}
+
 	return (
-		<nav className={!show ? 'nav' : 'nav Scroll'}>
+		<nav className={!show ? 'nav' : 'nav Scroll'} style={BackgroundNav}>
 			<div className={!show ? 'nav_logo' : 'nav_logo ScrollActive'}>
 				<Link to={ROUTES.HOME}>
 					{' '}
