@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
+import HeaderMenu from '../../components/HeaderMenu/HeaderMenu'
 import { OfficeList } from '../../components/ListDataCleaning/ListDataCleaning'
 import { TCategories, TListServices } from '../../components/type/Services.type'
 import BackBTN from '../../components/ui/BackBTN/BackBTN'
@@ -32,6 +33,7 @@ const OfficesCleaning = () => {
 
 	return (
 		<div className='OfficesCleaning'>
+			<HeaderMenu The_Background={true} />
 			<BackBTN />
 			<HeaderServices
 				params='CleaningOffice'

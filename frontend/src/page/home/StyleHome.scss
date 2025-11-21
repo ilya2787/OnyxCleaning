@@ -3,14 +3,18 @@
 @forward '../../styles/fonts/fonts';
 
 @mixin BTNSetting {
-	padding: 15px 80px;
+	height: 55px;
+	width: 250px;
 	font-size: 19px;
 	font-family: Gabriela;
-	border-radius: 5px;
-	border: none;
-	color: CS.$ColorBrown;
+	color: #fff;
 	transition: all 0.3s ease;
 	cursor: pointer;
+	border: 1px solid #78736d;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
 	@media (max-width: 800px) {
 		width: clamp(250px, 45vw, 350px);
 		height: 55px;
@@ -21,7 +25,6 @@
 .header_home {
 	background-color: CS.$ColorFonDark;
 	padding: 130px 20px 0 20px;
-	border-radius: 0 0 15px 15px;
 	position: relative;
 	height: 100dvh;
 	width: 100dvw;
@@ -44,30 +47,31 @@
 		&_text {
 			font-family: Gabriela;
 			h1 {
-				font-size: clamp(17px, 3vw, 42px);
-				color: #222;
+				font-size: clamp(17px, 3vw, 38px);
+				color: CS.$ColorBrownLithe;
 				@media (max-height: 550px) and (max-width: 850px) {
 					font-size: 17px;
 				}
 			}
 			h2 {
-				font-size: clamp(22px, 3vw, 45px);
-				color: #725b27;
+				font-size: clamp(22px, 3vw, 35px);
+				color: CS.$ColorFon;
+				margin-top: 15px;
 				@media (max-height: 550px) and (max-width: 850px) {
 					font-size: 18px;
 				}
 			}
 			h3 {
-				font-size: clamp(17px, 3vw, 40px);
-				color: #8d5a1f;
+				font-size: clamp(17px, 3vw, 30px);
+				color: CS.$ColorBrownLithe;
 				margin-top: 15px;
-				margin-left: 40%;
+				margin-left: 30%;
 				text-transform: uppercase;
 				@media (max-width: 1300px) {
-					margin-left: 32%;
+					margin-left: 22%;
 				}
 				@media (max-width: 1036px) {
-					margin-left: 25%;
+					margin-left: 15%;
 				}
 				@media (max-height: 550px) and (max-width: 850px) {
 					font-size: 18px;
@@ -76,8 +80,8 @@
 			}
 			p:nth-child(2n + 2) {
 				font-size: clamp(17px, 3vw, 32px);
-				color: #70510e;
-				margin-top: 50px;
+				color: CS.$ColorFon;
+				margin-top: 10px;
 				@media (max-width: 1140px) {
 					max-width: 450px;
 				}
@@ -106,7 +110,7 @@
 		}
 	}
 	&_Btn {
-		margin-top: 40px;
+		margin-top: 30px;
 		display: flex;
 		flex-direction: row;
 		justify-content: flex-start;
@@ -122,26 +126,26 @@
 		}
 		&--Order {
 			display: inline-block;
-			margin-right: 60px;
-			background-color: #fff;
+			background: #78736d;
+			border-radius: 5px 0 0 5px;
 			@include BTNSetting();
 			&:hover {
 				background-color: CS.$ColorAccent;
 			}
 			@media (max-width: 800px) {
-				margin-right: 10px;
+				background: CS.$ColorFon;
+				color: CS.$ColorBrown;
 			}
 		}
 		&--Calculator {
-			@include MX.GlassBackground;
 			@include BTNSetting();
-			display: flex;
-			flex-direction: row;
-			justify-content: center;
-			align-items: center;
 			column-gap: 20px;
-			@media (max-width: 700px) {
+			border-left: none;
+			border-radius: 0 5px 5px 0;
+			@media (max-width: 800px) {
 				column-gap: 5px;
+				@include MX.GlassBackground;
+				color: CS.$ColorBrown;
 			}
 			&:hover {
 				background-color: CS.$ColorAccent;
@@ -395,9 +399,16 @@
 			animation: show-animation-item1 linear;
 			animation-timeline: view();
 			animation-range: entry 0% cover 40%;
-			@include MX.SettingBlockAdvantages(30px, auto, 90deg);
+			@include MX.SettingBlockAdvantages(-90deg);
+
 			&-number {
 				@include MX.SettingNumberAdvantages(auto, 15%);
+			}
+			h2 {
+				display: inline-block;
+				padding: 30px 15px;
+				writing-mode: sideways-rl;
+				border-radius: 10px 0 0 10px;
 			}
 		}
 		&--item-2 {
@@ -414,7 +425,14 @@
 			animation: show-animation-item2 linear;
 			animation-timeline: view();
 			animation-range: entry 0% cover 40%;
-			@include MX.SettingBlockAdvantages(auto, 30px, -90deg);
+			@include MX.SettingBlockAdvantages(90deg);
+			h2 {
+				display: inline-block;
+				padding: 30px 15px;
+				writing-mode: sideways-lr;
+				border-radius: 0 10px 10px 0;
+				margin: 0;
+			}
 			&-text {
 				float: right;
 				margin-right: 10% !important;
@@ -437,9 +455,15 @@
 			animation: show-animation-item3 linear;
 			animation-timeline: view();
 			animation-range: entry 0% cover 40%;
-			@include MX.SettingBlockAdvantages(30px, auto, 90deg);
+			@include MX.SettingBlockAdvantages(-90deg);
 			&-number {
 				@include MX.SettingNumberAdvantages(auto, 15%);
+			}
+			h2 {
+				display: inline-block;
+				padding: 30px 15px;
+				writing-mode: sideways-rl;
+				border-radius: 10px 0 0 10px;
 			}
 		}
 	}
@@ -516,21 +540,20 @@
 			button {
 				width: 100%;
 				height: 50px;
-				background-color: CS.$ColorAccent;
-				color: CS.$ColorBrown;
+				background-color: CS.$ColorFonDark_Transparency;
+				color: CS.$ColorFon;
 				border-radius: 5px;
 				font-size: 23px;
 				transition: all 0.3s ease;
 				&:hover {
-					filter: brightness(90%);
-					-webkit-filter: brightness(90%);
+					background-color: CS.$ColorFonDark;
 				}
 			}
 			p {
 				font-size: clamp(14px, 1.5vw, 18px);
 				margin-top: -30px;
 				span {
-					color: CS.$ColorAccent;
+					color: CS.$ColorBrownLithe;
 					cursor: pointer;
 					transition: all 0.3s ease;
 					&:hover {

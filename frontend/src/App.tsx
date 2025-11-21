@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { ReactNotifications } from 'react-notifications-component'
 import { Outlet } from 'react-router-dom'
 import Footer from './components/Footer/Footer'
-import HeaderMenu from './components/HeaderMenu/HeaderMenu'
 import TitlePage from './components/Title/TitlePage'
 import { IconList } from './components/ui/IconList'
 import ScrollTop from './components/ui/ScrollTop/ScrollTop'
@@ -40,7 +39,6 @@ const App = () => {
 					</button>
 				</div>
 			)}
-			<HeaderMenu />
 			<Outlet />
 			<Footer />
 		</div>

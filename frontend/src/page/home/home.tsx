@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import HeaderMenu from '../../components/HeaderMenu/HeaderMenu'
 import { IconList } from '../../components/ui/IconList'
 import Advantages from './Advantages'
 import FeedBack from './Feedback'
@@ -8,6 +9,7 @@ import './StyleHome.scss'
 const Home = () => {
 	return (
 		<div>
+			<HeaderMenu The_Background={false} />
 			<div className='header_home'>
 				<h1 className='header_home_h1'>Cleaning</h1>
 				<div className='header_home_center'>

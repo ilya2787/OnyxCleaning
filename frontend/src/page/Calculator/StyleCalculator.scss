@@ -1,4 +1,5 @@
 @use '../../styles/config/color' as CS;
+@use '../../styles/config/mixin' as MX;
 
 @mixin H2Style {
 	h2 {
@@ -31,7 +32,7 @@
 		border-radius: $BR;
 		margin-left: -20px;
 		font-family: Gabriela;
-		color: CS.$ColorBrown;
+		color: CS.$ColorFon;
 	}
 }
 
@@ -84,14 +85,12 @@
 	padding: 0 10px 50px 10px;
 	border-radius: 15px;
 	min-width: 582px;
-	background-color: CS.$ColorFonDark;
 	&--h1 {
-		display: inline-block;
-		margin: 0 0 30px 30px;
-		background-color: CS.$ColorFon;
-		font-size: 28px;
-		padding: 5px 30px;
-		border-radius: 0 0 10px 10px;
+		@include MX.TitleText;
+		font-size: 30px !important;
+		@media (max-width: 600px) {
+			text-align: center;
+		}
 	}
 	&--content {
 		display: flex;
@@ -106,7 +105,7 @@
 			display: flex;
 			flex-direction: column;
 			row-gap: 20px;
-			background-color: #fff;
+			background-color: #dcd4ca;
 			padding: 10px 20px 0 20px;
 			border-radius: 10px;
 
@@ -312,10 +311,10 @@
 				}
 			}
 			&--h2 {
-				background-color: CS.$ColorFonDark;
+				background-color: CS.$ColorFonDark_Transparency;
 				margin-left: -20px;
 				border-radius: 0 8px 8px 0;
-				color: CS.$ColorBrown;
+				color: CS.$ColorFon;
 				font-size: 23px;
 				padding: 30px 0;
 				text-align: center;
@@ -362,15 +361,14 @@
 						align-items: center;
 						width: 100px;
 						padding: 3px 10px;
-						background-color: CS.$ColorFonDark;
+						background-color: CS.$ColorFonDark_Transparency;
 						border-radius: 10px;
+						color: CS.$ColorFon;
 						&--BTNMinus {
 							font-size: 25px;
-							color: #6c6c6c;
 						}
 						&--BTNPlus {
 							font-size: 25px;
-							color: #6c6c6c;
 						}
 						input::-webkit-outer-spin-button,
 						input::-webkit-inner-spin-button {
@@ -410,6 +408,7 @@
 						bottom: 10px;
 						border-radius: 0 0 10px 10px;
 						row-gap: 10px;
+						font-size: clamp(13px, 1.3vw, 17px);
 						&--low {
 							@include SettingInputRadio();
 						}
@@ -427,7 +426,9 @@
 							font-size: 20px;
 							color: #eae7db;
 							border-radius: 10px;
-							padding: 5px 10px;
+							width: 30px;
+							min-width: 30px;
+							height: 25px;
 							background-color: #772828;
 							transition: all 0.3s ease;
 							&:hover {
@@ -441,7 +442,7 @@
 		&--BlockResult {
 			flex: 1 1 400px;
 			&--item {
-				background-color: #fff;
+				background-color: #dcd4ca;
 				border-radius: 10px;
 				padding: 0 20px;
 				&--MinimumPrice {
@@ -460,7 +461,10 @@
 					@include SettingLinkFinalPrice();
 				}
 				&--DopServices {
-					@include H2StyleFinalPrice(0 10px 10px 0, CS.$ColorFonDark);
+					@include H2StyleFinalPrice(
+						0 10px 10px 0,
+						CS.$ColorFonDark_Transparency
+					);
 					&--item {
 						border-bottom: 3px dotted #eae7db;
 						margin: 0 0 10px 0;
@@ -471,7 +475,10 @@
 					}
 				}
 				&--FinalPrice {
-					@include H2StyleFinalPrice(0 10px 10px 0, CS.$ColorFonDark);
+					@include H2StyleFinalPrice(
+						0 10px 10px 0,
+						CS.$ColorFonDark_Transparency
+					);
 					p {
 						text-align: center;
 						font-size: 28px;
@@ -486,8 +493,8 @@
 					align-items: center;
 					margin: 0 -20px;
 					padding: 5px 20px;
-					color: #797979;
-					background-color: CS.$ColorFon;
+					color: CS.$ColorFon;
+					background-color: #beb7ad;
 					border-radius: 0 0 10px 10px;
 				}
 				&--ModalOrder {
@@ -550,10 +557,10 @@
 						row-gap: 10px;
 						& h2 {
 							width: 100%;
-							background-color: CS.$ColorFonDark;
+							background-color: CS.$ColorFonDark_Transparency;
 							padding: 15px 0;
 							font-size: 24px;
-							color: CS.$ColorBrown;
+							color: CS.$ColorFon;
 							text-align: center;
 							border-radius: 10px;
 						}
@@ -562,6 +569,9 @@
 							&--inform {
 								display: flex;
 								flex-direction: column;
+							}
+							p {
+								min-width: 110px;
 							}
 						}
 						& h3 {
@@ -630,7 +640,7 @@
 					border-radius: 10px;
 					p {
 						font-size: 20px;
-						color: CS.$ColorBrown;
+						color: CS.$ColorFon;
 					}
 					@media (max-width: 1030px) {
 						display: block;

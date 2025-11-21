@@ -36,7 +36,7 @@ const BlockInformText: FC<TypeProps> = ({
 		flexDirection: positions as `row`,
 	}
 	const StyleTextBlock: React.CSSProperties = {
-		background: `linear-gradient(${deg}deg, #fff, #fefaef)`,
+		background: `linear-gradient(${deg}deg, #fff, #f2eadd)`,
 	}
 
 	return (

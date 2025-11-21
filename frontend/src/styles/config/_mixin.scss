@@ -42,7 +42,7 @@
 	border: none;
 	color: CS.$ColorBrown;
 	transition: all 0.3s ease;
-	background-color: #fff;
+	background-color: CS.$ColorFon;
 	cursor: pointer;
 	&:hover {
 		background-color: CS.$ColorAccent;
@@ -72,21 +72,23 @@
 	}
 }
 
-@mixin SettingBlockAdvantages($Left, $Right, $deg) {
-	background: linear-gradient($deg, #ffffff, CS.$ColorFon);
+@mixin SettingBlockAdvantages($deg) {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	background: linear-gradient(
+		$deg,
+		CS.$ColorFonDark_Transparency,
+		CS.$ColorFon 50%
+	);
 	position: relative;
 	width: 100%;
 	border-radius: 15px;
 	h2 {
-		position: absolute;
-		top: 0;
-		left: $Left;
-		right: $Right;
 		background-color: CS.$ColorFon;
 		font-family: Gabriela;
-		font-size: clamp(20px, 3vw, 35px);
-		padding: 17px 50px;
-		border-radius: 0 0 15px 15px;
+		font-size: clamp(20px, 3vw, 28px);
 	}
 	&-text {
 		margin: 120px 30px 100px 30px;

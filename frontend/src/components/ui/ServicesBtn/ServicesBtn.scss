@@ -8,12 +8,12 @@
 	align-items: center;
 	column-gap: 20px;
 	font-size: 19px;
-	color: #fff;
+	color: CS.$ColorFon;
 	height: 55px;
 	width: clamp(200px, 20vw, 300px);
 	@include MX.GlassBackgroundBlack;
 	border-radius: 5px;
-	border: 2px solid #fff;
+	border: 2px solid CS.$ColorFon;
 	transition: all 0.3s ease;
 	&:hover {
 		background-color: CS.$ColorAccent;
@@ -44,7 +44,7 @@
 		height: 55px;
 		color: CS.$ColorBrown;
 		font-size: 19px;
-		background-color: #fff;
+		background-color: CS.$ColorFon;
 		border-radius: 5px;
 		transition: all 0.3s ease;
 		&:hover {
