@@ -215,6 +215,7 @@
 			align-items: center;
 			row-gap: 20px;
 			padding: 30px 15px 18dvh 15px;
+
 			@include MX.GlassBackgroundBlack;
 			&-link {
 				display: flex;
@@ -257,6 +258,8 @@
 		border-radius: 10px;
 		background: rgba(54, 50, 49, 0.9);
 		z-index: 11;
+		backdrop-filter: blur(3px);
+		-webkit-backdrop-filter: blur(3px);
 		&--Order {
 			@include BtnMobile();
 			color: CS.$ColorFon;
