@@ -4,6 +4,7 @@ import { IconList } from '../../components/ui/IconList'
 import { ROUTES } from '../../model/routes'
 import { CONTACT } from '../ContactData/ContactData'
 import { warning } from '../ui/natificationMesseg/natificationMessag'
+import { UseClickOut } from '../ui/UseClickOut/UseClickOut'
 import './HeaderMenu.scss'
 import { ItemsMenu } from './ItemsMenu'
 import { TypeListMenu } from './TypeData'
@@ -52,12 +53,22 @@ const HeaderMenu: FC = () => {
 			BlockMenu.current?.classList.remove('Close')
 		}
 	}
+
 	useEffect(() => {
 		if (!OpenBurger) {
 			BlockMenu.current?.classList.remove('Active')
 			BlockMenu.current?.classList.add('Close')
 		}
 	}, [OpenBurger])
+
+	UseClickOut(BlockMenu, () => {
+		if (OpenNav) {
+			setTimeout(() => setOpenNav(false), 100)
+		}
+		if (OpenBurger) {
+			setTimeout(() => setOpenBurger(false), 100)
+		}
+	})
 
 	return (
 		<nav className={!show ? 'nav' : 'nav Scroll'}>
