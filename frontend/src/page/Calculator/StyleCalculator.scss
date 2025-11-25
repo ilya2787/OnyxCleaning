@@ -632,12 +632,18 @@
 				&--FinalPriceMobile {
 					display: none;
 					position: fixed;
-					top: 140px;
+					bottom: 9dvh;
 					right: 15px;
-					background-color: CS.$ColorFonDark;
+					left: 15px;
+					background: CS.$ColorFonDark_Transparency;
 					padding: 10px 20px;
 					z-index: 10;
-					border-radius: 10px;
+					backdrop-filter: blur(5px);
+					-webkit-backdrop-filter: blur(5px);
+					border-radius: 10px 10px 0 0;
+					@media (min-width: 700px) {
+						bottom: 0;
+					}
 					p {
 						font-size: 20px;
 						color: CS.$ColorFon;

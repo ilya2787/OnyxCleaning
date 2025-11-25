@@ -82,9 +82,8 @@ const NumberPlusMinus: FC<TypeProps> = ({
 		}
 	}
 
-	//Выставления в количестве не ниже 1
 	useEffect(() => {
-		Num == 0 && setNum(1)
+		Num === 0 && setNum(1)
 		CalculatorPriceAndQuantity()
 	}, [Num])
 

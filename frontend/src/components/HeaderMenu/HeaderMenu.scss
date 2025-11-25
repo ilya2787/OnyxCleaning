@@ -2,6 +2,13 @@
 @use '../../styles/config/color' as CS;
 @use '../../styles/config/mixin' as MX;
 
+@mixin BtnMobile {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
 .nav {
 	display: flex;
 	flex-direction: row;
@@ -15,14 +22,21 @@
 	position: fixed;
 	z-index: 10;
 	transition: all 0.3s ease;
-	&.Scroll {
-		background: rgba($color: CS.$ColorFonDark, $alpha: 0.7) !important;
-		padding: 0 20px 0 20px;
-		transition: all 0.3s ease;
-		border-bottom: 2px solid rgba(255, 255, 255, 0.738);
-		border-radius: 0 0 5px 5px;
-		&:hover {
-			background: rgba($color: CS.$ColorFonDark, $alpha: 0.9) !important;
+	background: CS.$ColorFonDark;
+	min-width: 582px;
+	@media (max-width: 700px) {
+		position: absolute;
+	}
+	@media (min-width: 700px) {
+		&.Scroll {
+			background: rgba($color: CS.$ColorFonDark, $alpha: 0.7) !important;
+			padding: 0 20px 0 20px;
+			transition: all 0.3s ease;
+			border-bottom: 2px solid rgba(255, 255, 255, 0.738);
+			border-radius: 0 0 5px 5px;
+			&:hover {
+				background: rgba($color: CS.$ColorFonDark, $alpha: 0.9) !important;
+			}
 		}
 	}
 	&_logo {
@@ -35,14 +49,16 @@
 			width: 100%;
 			transition: all 0.3s ease;
 		}
-		&.ScrollActive {
-			width: 170px;
-			height: 91px;
-			border-radius: 0 0 0 5px;
-			margin-left: -19px;
-			padding: 10px 10px 0 30px;
-			img {
-				width: 75%;
+		@media (min-width: 700px) {
+			&.ScrollActive {
+				width: 170px;
+				height: 91px;
+				border-radius: 0 0 0 5px;
+				margin-left: -19px;
+				padding: 10px 10px 0 30px;
+				img {
+					width: 75%;
+				}
 			}
 		}
 	}
@@ -76,6 +92,9 @@
 			&.Close {
 				animation: CloseBTNMenu 1s forwards;
 			}
+		}
+		@media (max-width: 700px) {
+			display: none;
 		}
 	}
 	&_contact {
@@ -129,18 +148,23 @@
 					color: CS.$ColorAccent;
 				}
 			}
-			&.ScrollActive {
-				margin-top: auto;
-				top: 20px;
-				right: 300px;
-				border-radius: 10px;
-				@media (max-width: 1100px) {
-					display: none;
+			@media (min-width: 700px) {
+				&.ScrollActive {
+					margin-top: auto;
+					top: 20px;
+					right: 300px;
+					border-radius: 10px;
+					@media (max-width: 1100px) {
+						display: none;
+					}
 				}
 			}
 		}
 	}
 	&_BlockMenu {
+		@media (max-width: 700px) {
+			display: none;
+		}
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
@@ -179,6 +203,125 @@
 		}
 		&.Close {
 			animation: CloseBlockMenu 1s forwards;
+		}
+	}
+	&_BlockMenu_Burger {
+		@media (min-width: 700px) {
+			display: none;
+		}
+		position: fixed;
+		bottom: -100%;
+		left: 0;
+		right: 0;
+		z-index: -1;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		align-items: center;
+		row-gap: 20px;
+		padding: 30px 15px 18dvh 15px;
+
+		@include MX.GlassBackgroundBlack;
+		&-link {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			width: 100%;
+			font-size: 20px;
+			color: #272727;
+			background-color: rgba($color: #c7c7c7, $alpha: 0.3);
+			border-radius: 10px;
+			height: 50px;
+			transition: all 0.3s ease;
+			&:hover {
+				filter: brightness(70%);
+				-webkit-filter: brightness(70%);
+			}
+		}
+		&.Active {
+			animation: OpenBlockMenuMobile 1s forwards;
+		}
+		&.Close {
+			animation: CloseBlockMenuMobile 1s forwards;
+		}
+	}
+	&--MenuMobile {
+		@media (min-width: 700px) {
+			display: none;
+		}
+		display: flex;
+		flex-direction: row;
+		justify-content: space-around;
+		align-items: center;
+		position: fixed;
+		bottom: 10px;
+		left: 10px;
+		right: 10px;
+		height: 8dvh;
+		border-radius: 10px;
+		background: rgba(54, 50, 49, 0.9);
+		z-index: 11;
+		backdrop-filter: blur(3px);
+		-webkit-backdrop-filter: blur(3px);
+		&--Order {
+			@include BtnMobile();
+			color: CS.$ColorFon;
+			font-size: 35px;
+		}
+		&--Burger {
+			.burger-checkbox {
+				position: absolute;
+				visibility: hidden;
+			}
+			.burger {
+				cursor: pointer;
+				display: block;
+				position: relative;
+				border: none;
+				background: transparent;
+				width: 40px;
+				height: 26px;
+				margin: 30px auto;
+			}
+			.burger::before,
+			.burger::after {
+				content: '';
+				left: 0;
+				position: absolute;
+				display: block;
+				width: 100%;
+				height: 4px;
+				border-radius: 10px;
+				background: CS.$ColorBrownLithe;
+			}
+			.burger::before {
+				top: 0;
+				box-shadow: 0 11px 0 CS.$ColorBrownLithe;
+				transition: box-shadow 0.3s 0.15s, top 0.3s 0.15s, transform 0.3s;
+			}
+			.burger::after {
+				bottom: 0;
+				transition: bottom 0.3s 0.15s, transform 0.3s;
+			}
+			.burger-checkbox:checked + .burger::before {
+				top: 11px;
+				transform: rotate(45deg);
+				box-shadow: 0 6px 0 rgba(0, 0, 0, 0);
+				transition: box-shadow 0.15s, top 0.3s, transform 0.3s 0.15s;
+				background: CS.$ColorAccent;
+			}
+			.burger-checkbox:checked + .burger::after {
+				bottom: 11px;
+				transform: rotate(-45deg);
+				transition: bottom 0.3s, transform 0.3s 0.15s;
+				background: CS.$ColorAccent;
+			}
+		}
+		&--Calculator {
+			@include BtnMobile();
+			color: CS.$ColorFon;
+			font-size: 35px;
 		}
 	}
 }
@@ -224,6 +367,31 @@
 	}
 	100% {
 		top: -1000%;
+		opacity: 0;
+		z-index: -1;
+	}
+}
+
+@keyframes OpenBlockMenuMobile {
+	0% {
+		bottom: -100%;
+		opacity: 0;
+		z-index: -1;
+	}
+	100% {
+		opacity: 1;
+		bottom: 0;
+		z-index: 10;
+	}
+}
+@keyframes CloseBlockMenuMobile {
+	0% {
+		opacity: 1;
+		bottom: 0;
+		z-index: 10;
+	}
+	100% {
+		bottom: -100%;
 		opacity: 0;
 		z-index: -1;
 	}

@@ -13,7 +13,13 @@ const FeedBack = () => {
 				/>
 				<form action='#' className='feedback-home-content--forms'>
 					<div className='feedback-home-content--forms--name'>
-						<input type='text' name='Name' id='FeedbackName' placeholder='' />
+						<input
+							type='text'
+							name='Name'
+							id='FeedbackName'
+							placeholder=''
+							required
+						/>
 						<label htmlFor='FeedbackName'>Как к вам обращаться?</label>
 					</div>
 					<div className='feedback-home-content--forms--tel'>
@@ -24,10 +30,11 @@ const FeedBack = () => {
 							name='tel'
 							id='FeedbackTel'
 							placeholder=''
+							required
 						/>
 						<label htmlFor='FeedbackTel'>Ваш номер телефона</label>
 					</div>
-					<button type='button'>Отправить</button>
+					<button type='submit'>Отправить</button>
 					<p>
 						Нажимая на кнопку “Отправить” вы соглашаетесь с политикой обработки
 						<span> персональных данных</span>
