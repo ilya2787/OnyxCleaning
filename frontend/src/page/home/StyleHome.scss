@@ -545,7 +545,9 @@
 				background-color: CS.$ColorFonDark_Transparency;
 				color: CS.$ColorFon;
 				border-radius: 5px;
-				font-size: 23px;
+				font-size: 17px;
+				letter-spacing: 2px;
+				text-transform: uppercase;
 				transition: all 0.3s ease;
 				&:hover {
 					background-color: CS.$ColorFonDark;

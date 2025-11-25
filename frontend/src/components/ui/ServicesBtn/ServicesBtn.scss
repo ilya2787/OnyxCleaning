@@ -65,4 +65,98 @@
 			@include SettingBtnItem();
 		}
 	}
+	&_modalForm {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		align-items: center;
+		row-gap: 40px;
+		margin: 40px 0;
+		&_User {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			align-items: center;
+			flex-wrap: wrap;
+			width: 100%;
+			column-gap: 10px;
+			row-gap: 40px;
+			&--Name {
+				flex: 1 1 300px;
+				position: relative;
+				height: 60px;
+				label {
+					@include MX.SettingLabelFeedback;
+				}
+				input[type='text'] {
+					@include MX.SettingInputFeedback;
+				}
+				@include MX.SettingLabelActiveFeedback;
+			}
+			&--Tel {
+				flex: 1 1 300px;
+				position: relative;
+				height: 60px;
+				label {
+					@include MX.SettingLabelFeedback;
+				}
+				input[type='text'] {
+					@include MX.SettingInputFeedback;
+				}
+				@include MX.SettingLabelActiveFeedback;
+			}
+		}
+		&--message {
+			width: 100%;
+			position: relative;
+			textarea {
+				@include MX.SettingInputFeedback;
+				resize: none;
+			}
+			label {
+				@include MX.SettingLabelFeedback;
+			}
+			textarea:focus ~ label,
+			textarea:not(:placeholder-shown) ~ label {
+				top: -32px;
+				font-size: 22px;
+				color: CS.$ColorAccent;
+			}
+		}
+		&--PersonalDate {
+			width: 100%;
+			font-size: clamp(14px, 1.5vw, 18px);
+			margin-top: -30px;
+			color: #515151;
+			span {
+				color: CS.$ColorBrownLithe;
+				cursor: pointer;
+				transition: all 0.3s ease;
+				&:hover {
+					filter: brightness(90%);
+					-webkit-filter: brightness(90%);
+				}
+			}
+		}
+		&--Submit {
+			display: flex;
+			flex-direction: column;
+			align-items: flex-end;
+			width: 100%;
+			button {
+				width: 300px;
+				height: 50px;
+				background-color: CS.$ColorFonDark_Transparency;
+				color: CS.$ColorFon;
+				border-radius: 5px;
+				font-size: 17px;
+				letter-spacing: 2px;
+				text-transform: uppercase;
+				transition: all 0.3s ease;
+				&:hover {
+					background-color: CS.$ColorFonDark;
+				}
+			}
+		}
+	}
 }
