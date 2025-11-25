@@ -162,84 +162,88 @@
 		}
 	}
 	&_BlockMenu {
-		@media (min-width: 700px) {
+		@media (max-width: 700px) {
+			display: none;
+		}
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		row-gap: 10px;
+		position: absolute;
+		top: 5%;
+		left: 0;
+		right: 0;
+		margin: 0 auto;
+		width: 400px;
+		padding: 20px 10px;
+		border-radius: 15px;
+		z-index: -1;
+		transition: all 0.3s ease;
+		@include MX.GlassBackground;
+		&-link {
 			display: flex;
 			flex-direction: column;
 			justify-content: center;
 			align-items: center;
-			row-gap: 10px;
-			position: absolute;
-			top: 5%;
-			left: 0;
-			right: 0;
-			margin: 0 auto;
-			width: 400px;
-			padding: 20px 10px;
-			border-radius: 15px;
-			z-index: -1;
+			width: 100%;
+			font-size: 20px;
+			color: #272727;
+			background-color: rgba($color: #c7c7c7, $alpha: 0.3);
+			border-radius: 10px;
+			height: 50px;
 			transition: all 0.3s ease;
-			@include MX.GlassBackground;
-			&-link {
-				display: flex;
-				flex-direction: column;
-				justify-content: center;
-				align-items: center;
-				width: 100%;
-				font-size: 20px;
-				color: #272727;
-				background-color: rgba($color: #c7c7c7, $alpha: 0.3);
-				border-radius: 10px;
-				height: 50px;
-				transition: all 0.3s ease;
-				&:hover {
-					filter: brightness(70%);
-					-webkit-filter: brightness(70%);
-				}
-			}
-			&.Active {
-				animation: OpenBlockMenu 1s forwards;
-			}
-			&.Close {
-				animation: CloseBlockMenu 1s forwards;
+			&:hover {
+				filter: brightness(70%);
+				-webkit-filter: brightness(70%);
 			}
 		}
-		@media (max-width: 700px) {
-			position: fixed;
-			bottom: -100%;
-			left: 0;
-			right: 0;
-			z-index: -1;
+		&.Active {
+			animation: OpenBlockMenu 1s forwards;
+		}
+		&.Close {
+			animation: CloseBlockMenu 1s forwards;
+		}
+	}
+	&_BlockMenu_Burger {
+		@media (min-width: 700px) {
+			display: none;
+		}
+		position: fixed;
+		bottom: -100%;
+		left: 0;
+		right: 0;
+		z-index: -1;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		align-items: center;
+		row-gap: 20px;
+		padding: 30px 15px 18dvh 15px;
+
+		@include MX.GlassBackgroundBlack;
+		&-link {
 			display: flex;
 			flex-direction: column;
-			justify-content: flex-start;
+			justify-content: center;
 			align-items: center;
-			row-gap: 20px;
-			padding: 30px 15px 18dvh 15px;
-
-			@include MX.GlassBackgroundBlack;
-			&-link {
-				display: flex;
-				flex-direction: column;
-				justify-content: center;
-				align-items: center;
-				width: 100%;
-				font-size: 20px;
-				color: #272727;
-				background-color: rgba($color: #c7c7c7, $alpha: 0.3);
-				border-radius: 10px;
-				height: 50px;
-				transition: all 0.3s ease;
-				&:hover {
-					filter: brightness(70%);
-					-webkit-filter: brightness(70%);
-				}
+			width: 100%;
+			font-size: 20px;
+			color: #272727;
+			background-color: rgba($color: #c7c7c7, $alpha: 0.3);
+			border-radius: 10px;
+			height: 50px;
+			transition: all 0.3s ease;
+			&:hover {
+				filter: brightness(70%);
+				-webkit-filter: brightness(70%);
 			}
-			&.Active {
-				animation: OpenBlockMenuMobile 1s forwards;
-			}
-			&.Close {
-				animation: CloseBlockMenuMobile 1s forwards;
-			}
+		}
+		&.Active {
+			animation: OpenBlockMenuMobile 1s forwards;
+		}
+		&.Close {
+			animation: CloseBlockMenuMobile 1s forwards;
 		}
 	}
 	&--MenuMobile {

@@ -14,6 +14,7 @@ const HeaderMenu: FC = () => {
 	const [ListMenu, setListMenu] = useState<TypeListMenu[]>(ItemsMenu)
 	const BtnNavMenu = useRef<HTMLSpanElement>(null)
 	const BlockMenu = useRef<HTMLDivElement>(null)
+	const BlockMenu_Burger = useRef<HTMLDivElement>(null)
 	const [show, handleShow] = useState(false)
 
 	useEffect(() => {
@@ -45,30 +46,47 @@ const HeaderMenu: FC = () => {
 	const CheckedBurger = () => {
 		if (OpenBurger) {
 			setOpenBurger(false)
-			BlockMenu.current?.classList.remove('Active')
-			BlockMenu.current?.classList.add('Close')
+			BlockMenu_Burger.current?.classList.remove('Active')
+			BlockMenu_Burger.current?.classList.add('Close')
 		} else {
 			setOpenBurger(true)
-			BlockMenu.current?.classList.add('Active')
-			BlockMenu.current?.classList.remove('Close')
+			BlockMenu_Burger.current?.classList.add('Active')
+			BlockMenu_Burger.current?.classList.remove('Close')
 		}
 	}
 
 	useEffect(() => {
 		if (!OpenBurger) {
-			BlockMenu.current?.classList.remove('Active')
-			BlockMenu.current?.classList.add('Close')
+			BlockMenu_Burger.current?.classList.remove('Active')
+			BlockMenu_Burger.current?.classList.add('Close')
 		}
 	}, [OpenBurger])
 
+	//Закрытие по тапу вне меню
 	UseClickOut(BlockMenu, () => {
 		if (OpenNav) {
-			setTimeout(() => setOpenNav(false), 100)
-		}
-		if (OpenBurger) {
-			setTimeout(() => setOpenBurger(false), 100)
+			setTimeout(() => setOpenNav(false), 150)
 		}
 	})
+
+	//Закрытие бургер меню свайпом
+	useEffect(() => {
+		let startTouchY = 0
+		let endTouchY = 0
+		let startTouchX = 0
+		let endTouchX = 0
+
+		document.addEventListener('touchstart', event => {
+			startTouchY = event.changedTouches[0].pageY
+			startTouchX = event.changedTouches[0].pageX
+		})
+		document.addEventListener('touchend', event => {
+			endTouchY = event.changedTouches[0].pageY
+			endTouchX = event.changedTouches[0].pageX
+			if (Math.abs(endTouchX - startTouchX) < 30 && endTouchY > startTouchY)
+				setOpenBurger(false)
+		})
+	}, [])
 
 	return (
 		<nav className={!show ? 'nav' : 'nav Scroll'}>
@@ -129,6 +147,28 @@ const HeaderMenu: FC = () => {
 						to={data.link}
 						key={data.id}
 						className='nav_BlockMenu-link'
+						onClick={() => {
+							if (data.name === 'Химчистка') {
+								setOpenNav(!OpenNav)
+								setOpenBurger(false)
+								warning()
+							} else {
+								setOpenBurger(false)
+								setOpenNav(!OpenNav)
+							}
+						}}
+					>
+						{data.name}
+					</Link>
+				))}
+			</div>
+
+			<div className={'nav_BlockMenu_Burger'} ref={BlockMenu_Burger}>
+				{ListMenu.map(data => (
+					<Link
+						to={data.link}
+						key={data.id}
+						className='nav_BlockMenu_Burger-link'
 						onClick={() => {
 							if (data.name === 'Химчистка') {
 								setOpenNav(!OpenNav)
