@@ -1,4 +1,4 @@
-const TOKEN = '8588149569:AAGle-TOuQfw3kgjagw03NSSNDw2OLHvKko'
+const TOKEN = ''
 const baseUrl = `https://api.telegram.org/bot${TOKEN}`
 export const sendMessage = async (message: string): Promise<void> => {
 	const url = `${baseUrl}/sendMessage`
