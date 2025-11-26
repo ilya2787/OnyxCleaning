@@ -31,6 +31,8 @@ interface TypeProps {
 	Date: string
 	Time: string
 	ValueStreet: string
+	ValueName: string
+	ValueTel: string
 }
 
 const FinalPrice: FC<TypeProps> = ({
@@ -51,6 +53,8 @@ const FinalPrice: FC<TypeProps> = ({
 	Date,
 	Time,
 	ValueStreet,
+	ValueName,
+	ValueTel,
 }) => {
 	const [PriceQuadratureNew, setPriceQuadratureNew] = useState<number>(0)
 	const [FinalPrice, setFinalPrice] = useState<number>(CurrentPrice)
@@ -272,6 +276,12 @@ const FinalPrice: FC<TypeProps> = ({
 								</span>
 							</p>
 							<p>{PriceFormat(PriceQuadratureNew)}</p>
+						</section>
+						<section className='Calculator--content--BlockResult--item--ModalOrder--BlockMain--DateUser'>
+							<p>Имя:</p>
+							<p> {ValueName} </p>
+							<p>Телефон: </p>
+							<p>{ValueTel}</p>
 						</section>
 						<section className='Calculator--content--BlockResult--item--ModalOrder--BlockMain--DateAndTime'>
 							<p>Дата / Время : </p>

@@ -1,3 +1,4 @@
+import { InputMask } from '@react-input/mask'
 import axios from 'axios'
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { useParams } from 'react-router'
@@ -103,6 +104,10 @@ const Calculator = () => {
 
 	//Наименование для одной доп услуги из мойке окон
 	const [DegreeTitle, setDegreeTitle] = useState<string>('')
+
+	//Данные пользователя
+	const [ValueName, setValueName] = useState<string>('')
+	const [ValueTel, setValueTel] = useState<string>('')
 
 	//Выбор даты и времени
 	const [ValueDate, setValueDate] = useState<string>('')
@@ -461,7 +466,19 @@ const Calculator = () => {
 	}
 
 	const FunctionValidNext = () => {
-		if (!ValueDate || !ValueTime || !ValueStreet) {
+		if (!ValueName || !ValueTel || !ValueDate || !ValueTime || !ValueStreet) {
+			if (!ValueName) {
+				ErrorOrderNewt('Имя')
+				FunctionValidField(setErrorNameValue, 'Red')
+			} else {
+				FunctionValidField(setErrorNameValue, '#cccccc')
+			}
+			if (!ValueTel) {
+				ErrorOrderNewt('Телефон')
+				FunctionValidField(setErrorTelValue, 'Red')
+			} else {
+				FunctionValidField(setErrorTelValue, '#cccccc')
+			}
 			if (!ValueDate) {
 				ErrorOrderNewt('Дата')
 				FunctionValidField(setErrorDateValue, 'Red')
@@ -488,7 +505,12 @@ const Calculator = () => {
 			return true
 		}
 	}
-
+	const [ErrorNameValue, setErrorNameValue] = useState<
+		React.CSSProperties | undefined
+	>()
+	const [ErrorTelValue, setErrorTelValue] = useState<
+		React.CSSProperties | undefined
+	>()
 	const [ErrorStreetValue, setErrorStreetValue] = useState<
 		React.CSSProperties | undefined
 	>()
@@ -563,6 +585,31 @@ const Calculator = () => {
 							</p>
 						)}
 					</div>
+					{ParamsOrder && (
+						<div className='Calculator--content--BlockPosition--User'>
+							<h2>Данные пользователя</h2>
+							<div className='Calculator--content--BlockPosition--User--Date'>
+								<input
+									type='text'
+									name='Name'
+									placeholder='Ваше имя'
+									onChange={event => setValueName(event.target.value)}
+									value={ValueName}
+									style={ErrorNameValue}
+								/>
+								<InputMask
+									mask='+7 (___) ___-__-__'
+									replacement={{ _: /\d/ }}
+									type='text'
+									name='Tel'
+									placeholder='Ваш телефон'
+									onChange={event => setValueTel(event.target.value)}
+									value={ValueTel}
+									style={ErrorTelValue}
+								/>
+							</div>
+						</div>
+					)}
 					<div className='Calculator--content--BlockPosition--Cities'>
 						<h2>Ваш адрес</h2>
 						<div className='Calculator--content--BlockPosition--Cities--content'>
@@ -776,6 +823,8 @@ const Calculator = () => {
 							Date={ValueDate}
 							Time={ValueTime}
 							ValueStreet={ValueStreet}
+							ValueName={ValueName}
+							ValueTel={ValueTel}
 						/>
 					)}
 					{CurrentServicesSingle === 'CleaningOffice' && (
@@ -798,6 +847,8 @@ const Calculator = () => {
 							Date={ValueDate}
 							Time={ValueTime}
 							ValueStreet={ValueStreet}
+							ValueName={ValueName}
+							ValueTel={ValueTel}
 						/>
 					)}
 					{CurrentServicesSingle === 'CleaningWindows' && (
@@ -819,6 +870,8 @@ const Calculator = () => {
 							Date={ValueDate}
 							Time={ValueTime}
 							ValueStreet={ValueStreet}
+							ValueName={ValueName}
+							ValueTel={ValueTel}
 						/>
 					)}
 					<BTNFinalPrice

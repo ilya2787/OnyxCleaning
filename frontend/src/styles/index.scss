@@ -3,9 +3,9 @@
 @forward './config/_reset';
 
 body {
-	background-color: CS.$ColorFon;
-	font-family: Kurale;
-	overflow-x: hidden;
+	background-color: CS.$ColorFon !important;
+	font-family: Kurale !important;
+	overflow-x: hidden !important;
 	.MainBlock {
 		&--BTNScrollTop {
 			position: fixed;

@@ -169,6 +169,27 @@
 					font-size: 15px;
 				}
 			}
+			&--User {
+				@include H2Style();
+				&--Date {
+					display: flex;
+					flex-direction: row;
+					justify-content: space-between;
+					align-items: center;
+					flex-wrap: wrap;
+					column-gap: 20px;
+					row-gap: 30px;
+					input[type='text'] {
+						flex: 1 1 250px;
+						background-color: CS.$ColorFon;
+						padding: 5px 20px;
+						font-size: 18px;
+						color: CS.$ColorBrown;
+						border-radius: 10px;
+						border: 1px solid #cccccc;
+					}
+				}
+			}
 			&--Cities {
 				@include H2Style();
 				&--content {
@@ -519,6 +540,9 @@
 							@include SettingModalContentItem();
 						}
 						&--Quadrature {
+							@include SettingModalContentItem();
+						}
+						&--DateUser {
 							@include SettingModalContentItem();
 						}
 						&--DateAndTime {

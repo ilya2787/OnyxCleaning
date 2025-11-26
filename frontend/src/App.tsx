@@ -1,5 +1,6 @@
+import { MantineProvider } from '@mantine/core'
+import { Notifications } from '@mantine/notifications'
 import { useEffect, useState } from 'react'
-import { ReactNotifications } from 'react-notifications-component'
 import { Outlet } from 'react-router-dom'
 import Footer from './components/Footer/Footer'
 import HeaderMenu from './components/HeaderMenu/HeaderMenu'
@@ -7,6 +8,9 @@ import TitlePage from './components/Title/TitlePage'
 import { IconList } from './components/ui/IconList'
 import ScrollTop from './components/ui/ScrollTop/ScrollTop'
 import './styles/config/notification/notification.scss'
+
+import '@mantine/core/styles.css'
+import '@mantine/notifications/styles.css'
 
 const App = () => {
 	const [show, handleShow] = useState(false)
@@ -29,7 +33,9 @@ const App = () => {
 		<div className='MainBlock'>
 			<ScrollTop />
 			<TitlePage Title='OnyxCleaning' />
-			<ReactNotifications />
+			<MantineProvider>
+				<Notifications />
+			</MantineProvider>
 			{show && (
 				<div className='backToTop text-center'>
 					<button
