@@ -1,0 +1,55 @@
+@use '../../styles/config/color' as CS;
+.Content_404 {
+	width: 100dvw;
+	height: 100dvh;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+	background: CS.$ColorFonDark;
+	column-gap: 100px;
+	padding: 0 15px;
+	position: relative;
+	z-index: 1;
+	&_title {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		font-size: clamp(150px, 30vw, 300px);
+		text-transform: uppercase;
+		font-family: DaysOne;
+		height: 300px;
+		h1 {
+			color: CS.$ColorFon;
+		}
+		h2 {
+			color: CS.$ColorBrownLithe;
+		}
+	}
+	&_menu {
+		flex: 1 1 400px;
+		display: flex;
+		flex-direction: column;
+		row-gap: 20px;
+		max-width: 500px;
+		color: CS.$ColorAccent;
+		h2 {
+			font-size: 30px;
+		}
+		p {
+			color: CS.$ColorFon;
+			font-size: 20px;
+		}
+		.Content_404_menu--Link {
+			border-radius: 10px;
+			background: CS.$ColorBrown;
+			padding: 10px 30px;
+			font-size: 20px;
+			color: CS.$ColorFon;
+			width: 100%;
+			text-align: center;
+		}
+	}
+}

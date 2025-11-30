@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom'
 import App from './App'
 import { ROUTES } from './model/routes'
+import Error404 from './page/404/404'
 import ApartmentCleaning from './page/ApartmentCleaning/ApartmentCleaning'
 import Calculator from './page/Calculator/Calculator'
 import Home from './page/home/home'
@@ -10,6 +11,7 @@ import WindowsCleaning from './page/WindowsCleaning/WindowsCleaning'
 export const router = createBrowserRouter([
 	{
 		Component: App,
+		errorElement: <Error404 />,
 		children: [
 			{
 				path: ROUTES.HOME,
