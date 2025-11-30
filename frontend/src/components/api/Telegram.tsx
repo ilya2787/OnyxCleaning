@@ -1,5 +1,5 @@
 // const Token = process.env.REACT_APP_API_TOKEN
-const Token = '8588149569:AAGle-TOuQfw3kgjagw03NSSNDw2OLHvKko'
+const Token = ''
 const baseUrl = `https://api.telegram.org/bot${Token}`
 export const sendMessage = async (message: string): Promise<void> => {
 	const url = `${baseUrl}/sendMessage`
