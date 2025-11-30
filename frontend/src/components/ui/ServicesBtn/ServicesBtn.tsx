@@ -41,6 +41,7 @@ const ServicesBtn: FC<TypeProps> = ({ params }) => {
 			await sendMessage(message)
 			MessageQuestion()
 			ClearForm()
+			setOpenModal(false)
 		} catch {
 		} finally {
 		}

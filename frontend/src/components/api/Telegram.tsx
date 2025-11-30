@@ -1,8 +1,9 @@
-const TOKEN = '8588149569:AAGle-TOuQfw3kgjagw03NSSNDw2OLHvKko'
-const baseUrl = `https://api.telegram.org/bot${TOKEN}`
+// const Token = process.env.REACT_APP_API_TOKEN
+const Token = '8588149569:AAGle-TOuQfw3kgjagw03NSSNDw2OLHvKko'
+const baseUrl = `https://api.telegram.org/bot${Token}`
 export const sendMessage = async (message: string): Promise<void> => {
 	const url = `${baseUrl}/sendMessage`
-
+	console.log(url)
 	const response = await fetch(url, {
 		method: 'POST',
 		headers: {

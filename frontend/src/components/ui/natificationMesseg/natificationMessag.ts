@@ -41,3 +41,13 @@ export const MessageQuestion = () => {
 		autoClose: 5000,
 	})
 }
+
+export const MessageOrders = () => {
+	notifications.show({
+		title: 'ВАШ ЗАКАЗ',
+		message: 'Заказ успешно оформлен, в ближайшее время с вами свяжутся',
+		color: 'green',
+		position: 'top-right',
+		autoClose: 5000,
+	})
+}
