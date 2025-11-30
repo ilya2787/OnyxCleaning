@@ -86,6 +86,10 @@
 		&_Icon {
 			color: CS.$ColorFon;
 			font-size: 30px;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
 			&.Active {
 				animation: OpenBTNMenu 1s forwards;
 			}

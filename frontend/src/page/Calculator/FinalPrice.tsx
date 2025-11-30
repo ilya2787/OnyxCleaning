@@ -1,4 +1,5 @@
 import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react'
+import { sendMessage } from '../../components/api/Telegram'
 import { InitialQuadrature } from '../../components/type/Parameter.type'
 import {
 	TCitiesDistancePrice,
@@ -11,6 +12,7 @@ import {
 	CatCleaning,
 	Services,
 } from '../../components/ui/SelectItems/ListSelectCleaning'
+import { MessageOrders } from '../../components/ui/natificationMesseg/natificationMessag'
 
 interface TypeProps {
 	NumberArea: number
@@ -31,6 +33,8 @@ interface TypeProps {
 	Date: string
 	Time: string
 	ValueStreet: string
+	ValueName: string
+	ValueTel: string
 }
 
 const FinalPrice: FC<TypeProps> = ({
@@ -51,6 +55,8 @@ const FinalPrice: FC<TypeProps> = ({
 	Date,
 	Time,
 	ValueStreet,
+	ValueName,
+	ValueTel,
 }) => {
 	const [PriceQuadratureNew, setPriceQuadratureNew] = useState<number>(0)
 	const [FinalPrice, setFinalPrice] = useState<number>(CurrentPrice)
@@ -120,6 +126,79 @@ const FinalPrice: FC<TypeProps> = ({
 			return DegreeTitle
 		} else {
 			return quantity
+		}
+	}
+
+	const sendingOrder = async () => {
+		try {
+			let message = `
+&#128203; <b>Поступил заказа с сайта</b>	&#128203;\n
+<b><i>Заказчик</i></b>
+&#129464; ${ValueName}
+&#128241; ${ValueTel} \n
+<b><i>Дата и время</i></b>
+&#128198; ${Date}
+&#128349; ${Time}\n
+<b><i>Адрес</i></b>
+&#127970; ${CurrentDistance?.map(data => data.Name)}
+&#129517; ${ValueStreet} 
+Выезд: ${CurrentDistance?.map(
+				data =>
+					`&#128181; ${
+						data.price ? PriceFormat(data.price) : 'Бесплатно'
+					} &#128665; (${data.Distance} км.)`
+			)}\n
+<b><i>Данные по выбранной уборке</i></b>
+${Services.map(data =>
+	CurrentServices === data.value ? `${data.label} ` : ''
+).join('')} ${
+				CurrentCatCleaning
+					? CatCleaning.map(data =>
+							CurrentCatCleaning === data.value ? `(${data.label})` : ''
+					  ).join('')
+					: ''
+			}
+ ${C_Windows ? 'Количество створок :' : 'Квадратура : '} ${NumberArea}
+ &#128181; ${PriceFormat(PriceQuadratureNew)}\n
+&#127775;<b><i>Выбранные дополнительные услуги</i></b>&#127775;			
+${DopCurrentPrice?.map(
+	data =>
+		`&#9989;${data.value} ${
+			data.unit
+				? `\n${data.unit} x ${SearchUnit(data.unit, data.quantity)}`
+				: ''
+		}
+		&#128181;${PriceFormat(data.FinalPriceDop ? data.FinalPriceDop : data.MinPrice)}
+		\n`
+).join('')}
+	${ArrayIdDopWindows?.map(
+		data =>
+			`&#9989;${data.value} ${
+				data.unit
+					? `\n${data.unit} x ${SearchUnit(data.unit, data.quantity)}`
+					: ''
+			}
+		&#128181;${PriceFormat(data.FinalPriceDop ? data.FinalPriceDop : data.MinPrice)}
+		\n`
+	).join('')}	
+	${
+		DopCurrentPrice &&
+		DopCurrentPrice?.length <= 0 &&
+		ArrayIdDopWindows &&
+		ArrayIdDopWindows?.length <= 0
+			? '&#10060; Нет необходимости в дополнительных услугах'
+			: ''
+	}\n						
+&#9201;<i>Примерное время уборки ${FinalTimeCleaning} ч.</i>
+
+<b><i>Сумма заказа</i></b>
+&#128176;${PriceFormat(FinalPrice)}
+					`
+			await sendMessage(message)
+			MessageOrders()
+			setOpenModal(false)
+		} catch {
+		} finally {
 		}
 	}
 
@@ -273,6 +352,12 @@ const FinalPrice: FC<TypeProps> = ({
 							</p>
 							<p>{PriceFormat(PriceQuadratureNew)}</p>
 						</section>
+						<section className='Calculator--content--BlockResult--item--ModalOrder--BlockMain--DateUser'>
+							<p>Имя:</p>
+							<p> {ValueName} </p>
+							<p>Телефон: </p>
+							<p>{ValueTel}</p>
+						</section>
 						<section className='Calculator--content--BlockResult--item--ModalOrder--BlockMain--DateAndTime'>
 							<p>Дата / Время : </p>
 							<p>
@@ -363,7 +448,7 @@ const FinalPrice: FC<TypeProps> = ({
 					</div>
 					<div className='Calculator--content--BlockResult--item--ModalOrder--BTN'>
 						<button onClick={() => setOpenModal(false)}>Изменить</button>
-						<button>Отправить</button>
+						<button onClick={() => sendingOrder()}>Отправить</button>
 					</div>
 				</div>
 			</ModalWindows>

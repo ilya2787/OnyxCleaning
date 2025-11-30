@@ -49,3 +49,9 @@ export interface TTimeCleaning {
 	id: number
 	quantity: number
 }
+
+export interface TvalueMassage {
+	Name: string
+	Tel: string
+	Message?: string
+}
