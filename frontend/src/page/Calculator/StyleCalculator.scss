@@ -1,0 +1,665 @@
+@use '../../styles/config/color' as CS;
+@use '../../styles/config/mixin' as MX;
+
+@mixin H2Style {
+	h2 {
+		font-size: 19px;
+		color: CS.$ColorBrown;
+		margin-bottom: 10px;
+	}
+}
+
+@mixin BTNCalc {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 0;
+	height: 15px;
+	width: 12%;
+	font-size: 28px;
+	transition: all 0.3s ease;
+	&:hover {
+		color: #6c6c6c;
+	}
+}
+
+@mixin H2StyleFinalPrice($BR, $BC) {
+	h2 {
+		background: $BC;
+		text-align: center;
+		padding: 10px 0;
+		font-size: 20px;
+		border-radius: $BR;
+		margin-left: -20px;
+		font-family: Gabriela;
+		color: CS.$ColorFon;
+	}
+}
+
+@mixin SettingLinkFinalPrice {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	p {
+		max-width: 380px;
+		font-size: 19px;
+		color: #484848;
+	}
+	&--price {
+		width: 150px;
+		text-align: right;
+		padding: 15px 0 15px 20px;
+		border-left: 2px dotted #5f5f5f;
+	}
+}
+
+@mixin SettingModalContentItem {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: flex-start;
+	width: 100%;
+	padding: 0 20px;
+	border-bottom: 3px dotted #ccc;
+	p {
+		font-size: 20px;
+	}
+}
+
+.Calculator {
+	margin: 200px 0 100px 0;
+	padding: 0 10px 50px 10px;
+	border-radius: 15px;
+	min-width: 582px;
+	&--h1 {
+		@include MX.TitleText;
+		font-size: 30px !important;
+		@media (max-width: 600px) {
+			text-align: center;
+		}
+	}
+	&--content {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: flex-start;
+		flex-wrap: wrap;
+		row-gap: 30px;
+		column-gap: 30px;
+		&--BlockPosition {
+			flex: 1 1 550px;
+			display: flex;
+			flex-direction: column;
+			row-gap: 20px;
+			background-color: #dcd4ca;
+			padding: 10px 20px 0 20px;
+			border-radius: 10px;
+
+			&--Services {
+				@include H2Style();
+			}
+			&--CatServices {
+				@include H2Style();
+			}
+			&--quadrature {
+				@include H2Style();
+				&--content {
+					display: flex;
+					flex-direction: row;
+					justify-content: space-between;
+					align-items: center;
+					background: CS.$ColorFon;
+					padding: 5px 10px;
+					border-radius: 10px;
+					border: 1px solid hsl(0, 0%, 80%);
+					&:hover {
+						border: 1px solid hsl(0, 0%, 70%);
+					}
+					&--BTNMinus {
+						@include BTNCalc;
+					}
+					&--number {
+						display: flex;
+						flex-direction: row;
+						justify-content: center;
+						align-items: center;
+						font-family: Gabriela;
+						font-size: 18px;
+						input::-webkit-outer-spin-button,
+						input::-webkit-inner-spin-button {
+							-webkit-appearance: none;
+							margin: 0;
+						}
+						input[type='number'] {
+							text-align: right;
+							width: 50px;
+							margin-right: 10px;
+						}
+						p {
+						}
+					}
+					&--BTNPlus {
+						@include BTNCalc;
+					}
+				}
+				p {
+					margin-top: 5px;
+					span {
+						color: CS.$ColorAccent;
+						font-size: 20px;
+						padding: 0 5px;
+					}
+					text-align: justify;
+					color: #484848;
+					line-height: 17px;
+					font-size: 15px;
+				}
+			}
+			&--User {
+				@include H2Style();
+				&--Date {
+					display: flex;
+					flex-direction: row;
+					justify-content: space-between;
+					align-items: center;
+					flex-wrap: wrap;
+					column-gap: 20px;
+					row-gap: 30px;
+					input[type='text'] {
+						flex: 1 1 250px;
+						background-color: CS.$ColorFon;
+						padding: 5px 20px;
+						font-size: 18px;
+						color: CS.$ColorBrown;
+						border-radius: 10px;
+						border: 1px solid #cccccc;
+					}
+				}
+			}
+			&--Cities {
+				@include H2Style();
+				&--content {
+					display: flex;
+					flex-direction: row;
+					justify-content: space-between;
+					align-items: flex-start;
+					flex-wrap: wrap;
+					row-gap: 20px;
+					&--SelectCities {
+						min-width: 400px;
+						p {
+							margin-top: 5px;
+							span {
+								color: CS.$ColorAccent;
+								font-size: 20px;
+								padding: 0 5px;
+							}
+							text-align: justify;
+							color: #484848;
+							line-height: 17px;
+							font-size: 15px;
+							max-width: 390px;
+						}
+					}
+					&--street {
+						input[type='text'] {
+							background: CS.$ColorFon;
+							min-width: 400px;
+							padding: 5px 10px;
+							border-radius: 10px;
+							border: 1px solid #cccccc;
+							color: #333;
+						}
+					}
+				}
+			}
+			&--Date {
+				@include H2Style();
+				input[type='date'] {
+					background-color: CS.$ColorFon;
+					padding: 5px 20px;
+					font-size: 18px;
+					color: CS.$ColorBrown;
+					border-radius: 10px;
+					border: 1px solid #cccccc;
+					margin-right: 20px;
+					&::-webkit-calendar-picker-indicator {
+						padding: 5px;
+						border-radius: 5px;
+					}
+				}
+				input[type='time'] {
+					background-color: CS.$ColorFon;
+					padding: 5px 20px;
+					font-size: 18px;
+					color: CS.$ColorBrown;
+					border-radius: 10px;
+					border: 1px solid #cccccc;
+					min-width: 200px;
+					&::-webkit-calendar-picker-indicator {
+						padding: 5px;
+						border-radius: 5px;
+					}
+				}
+			}
+			&--CleaningWinDop {
+				&--checkbox {
+					background-color: CS.$ColorFon;
+					width: max-content;
+					padding: 10px 20px 10px 20px;
+					border-radius: 10px;
+					margin-bottom: 20px;
+					margin-top: 20px;
+					input[type='checkbox'] {
+						position: absolute;
+						z-index: -1;
+						opacity: 0;
+					}
+					input[type='checkbox'] + label {
+						display: inline-flex;
+						align-items: center;
+						user-select: none;
+						font-size: 19px;
+						color: CS.$ColorBrown;
+						&:before {
+							content: '';
+							height: 22px;
+							width: 22px;
+							margin-right: 15px;
+							border-radius: 5px;
+							position: relative;
+							background-color: #dcd4ca;
+						}
+						&:after {
+							content: ' ';
+							font-size: 20px;
+							width: 12px;
+							height: 12px;
+							position: absolute;
+							background: transparent;
+							margin: 5px;
+							border-radius: 0 50% 50% 50%;
+							transform: rotate(45deg);
+							transition: all 0.3s ease;
+						}
+					}
+					input[type='checkbox']:checked + label {
+						&:after {
+							background: CS.$ColorAccent;
+						}
+					}
+				}
+				&--ListDop {
+					&--h3 {
+						padding: 10px 0;
+						text-align: center;
+						font-size: 19px;
+						color: CS.$ColorBrown;
+					}
+					&--content {
+						display: flex;
+						flex-direction: row;
+						justify-content: flex-start;
+						align-items: flex-start;
+						flex-wrap: wrap;
+						row-gap: 10px;
+						column-gap: 10px;
+					}
+				}
+			}
+
+			&--structure {
+				background-color: CS.$ColorAccent;
+				margin-right: -20px;
+				border-radius: 8px 0 0 8px;
+				color: CS.$ColorBrown;
+				font-size: 22px;
+				padding: 22px 0 22px 10px;
+				transition: all 0.3s ease;
+				cursor: pointer;
+				text-align: left;
+				&:hover {
+					filter: brightness(90%);
+					-webkit-filter: brightness(90%);
+				}
+			}
+			&--h2 {
+				background-color: CS.$ColorFonDark_Transparency;
+				margin-left: -20px;
+				border-radius: 0 8px 8px 0;
+				color: CS.$ColorFon;
+				font-size: 23px;
+				padding: 30px 0;
+				text-align: center;
+			}
+			&--DopServices {
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+				align-items: flex-start;
+				flex-wrap: wrap;
+				row-gap: 20px;
+				column-gap: 20px;
+				padding-bottom: 50px;
+				&--item {
+					flex: 1 1 250px;
+					display: flex;
+					flex-direction: column;
+					justify-content: flex-start;
+					align-items: center;
+					position: relative;
+					z-index: 1;
+					height: 200px;
+					padding: 10px 10px 90px 10px;
+					border-radius: 10px;
+					box-shadow: inset 0px 1px 2px #f6f4eb, 0px 1px 2px #dcdad1,
+						0px 2px 4px #c3c1b9;
+					&--PriceBD {
+						position: absolute;
+						bottom: 10px;
+						left: 10px;
+						font-size: 18px;
+						padding: 3px 5px;
+						color: #919090;
+						width: 100px;
+						text-align: center;
+					}
+					h3 {
+						color: CS.$ColorBrown;
+						text-align: center;
+						width: 100%;
+					}
+					&--Quantity {
+						position: absolute;
+						right: 10px;
+						bottom: 10px;
+						display: flex;
+						flex-direction: row;
+						justify-content: space-between;
+						align-items: center;
+						width: 100px;
+						padding: 3px 10px;
+						background-color: CS.$ColorFon;
+						box-shadow: inset 0px 1px 2px #dcd4ca;
+						border-radius: 10px;
+						color: #767468;
+						&--BTNMinus {
+							font-size: 25px;
+						}
+						&--BTNPlus {
+							font-size: 25px;
+						}
+						input::-webkit-outer-spin-button,
+						input::-webkit-inner-spin-button {
+							-webkit-appearance: none;
+							margin: 0;
+						}
+						input[type='number'] {
+							text-align: right;
+							width: 30px;
+							margin-right: 10px;
+						}
+					}
+					&--BTNYesNo {
+						position: absolute;
+						right: 20px;
+						bottom: 10px;
+						font-size: 25px;
+						color: CS.$ColorAccent;
+						// @include SettingInputRadio();
+					}
+					&--degree {
+						display: flex;
+						flex-direction: row;
+						justify-content: flex-end;
+						align-items: center;
+						position: absolute;
+						column-gap: 20px;
+						right: 10px;
+						left: 0;
+						bottom: 10px;
+						border-radius: 0 0 10px 10px;
+						row-gap: 10px;
+						font-size: clamp(13px, 1.3vw, 17px);
+					}
+				}
+			}
+		}
+		&--BlockResult {
+			flex: 1 1 400px;
+			&--item {
+				background-color: #dcd4ca;
+				border-radius: 10px;
+				padding: 0 20px;
+				&--MinimumPrice {
+					@include SettingLinkFinalPrice();
+					border-bottom: 3px dotted #eae7db;
+				}
+				&--quadrature {
+					@include SettingLinkFinalPrice();
+					p {
+						span {
+							margin-left: 10px;
+						}
+					}
+				}
+				&--Distance {
+					@include SettingLinkFinalPrice();
+				}
+				&--DopServices {
+					@include H2StyleFinalPrice(
+						0 10px 10px 0,
+						CS.$ColorFonDark_Transparency
+					);
+					&--item {
+						border-bottom: 3px dotted #eae7db;
+						margin: 0 0 10px 0;
+						@include SettingLinkFinalPrice();
+						&:last-child {
+							border-bottom: none;
+						}
+					}
+				}
+				&--FinalPrice {
+					@include H2StyleFinalPrice(
+						0 10px 10px 0,
+						CS.$ColorFonDark_Transparency
+					);
+					p {
+						text-align: center;
+						font-size: 28px;
+						color: CS.$ColorBrown;
+						padding: 15px 0;
+					}
+				}
+				&--TimeCleaning {
+					display: flex;
+					flex-direction: row;
+					justify-content: space-between;
+					align-items: center;
+					margin: 0 -20px;
+					padding: 5px 20px;
+					color: CS.$ColorFon;
+					background-color: #beb7ad;
+					border-radius: 0 0 10px 10px;
+				}
+				&--ModalOrder {
+					display: flex;
+					flex-direction: column;
+					&--BlockMain {
+						display: flex;
+						flex-direction: column;
+						justify-content: space-between;
+						align-items: center;
+						row-gap: 10px;
+						&--Services {
+							@include SettingModalContentItem();
+						}
+						&--CatServices {
+							width: 100%;
+							&--item {
+								@include SettingModalContentItem();
+							}
+						}
+						&--MinPrice {
+							@include SettingModalContentItem();
+						}
+						&--Quadrature {
+							@include SettingModalContentItem();
+						}
+						&--DateUser {
+							@include SettingModalContentItem();
+						}
+						&--DateAndTime {
+							@include SettingModalContentItem();
+						}
+						&--Cites {
+							width: 100%;
+							padding: 0 20px;
+							h2 {
+								text-align: center;
+								font-size: 22px;
+								font-style: italic;
+								font-weight: bold;
+								color: CS.$ColorBrown;
+							}
+							&--item {
+								display: flex;
+								flex-direction: row;
+								justify-content: space-between;
+								align-items: flex-start;
+								font-size: 20px;
+								&--inform {
+									display: flex;
+									flex-direction: column;
+									justify-content: flex-start;
+									align-items: flex-start;
+								}
+							}
+						}
+					}
+					&--BlockDop {
+						display: flex;
+						flex-direction: column;
+						justify-content: space-between;
+						align-items: center;
+						row-gap: 10px;
+						& h2 {
+							width: 100%;
+							background-color: CS.$ColorFonDark_Transparency;
+							padding: 15px 0;
+							font-size: 24px;
+							color: CS.$ColorFon;
+							text-align: center;
+							border-radius: 10px;
+						}
+						&--item {
+							@include SettingModalContentItem();
+							&--inform {
+								display: flex;
+								flex-direction: column;
+							}
+							p {
+								min-width: 110px;
+							}
+						}
+						& h3 {
+							font-size: 25px;
+							color: CS.$ColorBrown;
+							font-style: italic;
+						}
+					}
+					&--TimeCleaning {
+						display: flex;
+						flex-direction: row;
+						justify-content: space-between;
+						align-items: center;
+						margin-top: 20px;
+						font-size: 23px;
+						color: CS.$ColorBrown;
+						margin-top: 30px;
+					}
+					&--FinalPrice {
+						display: flex;
+						flex-direction: column;
+						justify-content: center;
+						align-items: center;
+						row-gap: 15px;
+						font-size: 30px;
+						margin-top: 30px;
+						color: CS.$ColorBrown;
+						p {
+							font-weight: bold;
+						}
+					}
+					&--BTN {
+						display: flex;
+						flex-direction: row;
+						justify-content: space-around;
+						align-items: center;
+						column-gap: 150px;
+						margin-top: 50px;
+						button {
+							padding: 15px 30px;
+							font-size: 17px;
+							text-transform: uppercase;
+							color: CS.$ColorBrown;
+							border-radius: 5px;
+							transition: all 0.3s ease;
+							&:hover {
+								filter: brightness(90%);
+							}
+						}
+						button:nth-child(1) {
+							background-color: CS.$ColorAccent;
+						}
+						button:nth-child(2) {
+							background-color: #fff;
+						}
+					}
+				}
+				&--FinalPriceMobile {
+					display: none;
+					position: fixed;
+					bottom: 10dvh;
+					right: 15px;
+					left: 15px;
+					background: CS.$ColorFonDark_Transparency;
+					padding: 10px 20px;
+					z-index: 10;
+					backdrop-filter: blur(5px);
+					-webkit-backdrop-filter: blur(5px);
+					border-radius: 20px;
+					@media (min-width: 700px) {
+						bottom: 0;
+					}
+					p {
+						font-size: 20px;
+						color: CS.$ColorFon;
+					}
+					@media (max-width: 1030px) {
+						display: block;
+					}
+				}
+			}
+			&--BTN {
+				display: inline-block;
+				margin-top: 20px;
+				padding: 10px;
+				width: 100%;
+				color: CS.$ColorBrown;
+				background: CS.$ColorAccent;
+				text-align: center;
+				text-transform: uppercase;
+				font-size: 20px;
+				border-radius: 10px;
+				transition: all 0.3s ease;
+				&:hover {
+					filter: brightness(90%);
+					-webkit-filter: brightness(90%);
+				}
+			}
+		}
+	}
+}

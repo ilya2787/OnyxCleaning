@@ -1,0 +1,46 @@
+@use '../../styles/config/color' as CS;
+
+.PersonalData {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin: 20px 10px;
+	&--content {
+		max-width: 1200px;
+		background-color: CS.$ColorWhiteLite;
+		border-radius: 20px;
+		position: relative;
+		padding: 0 40px 40px 40px;
+		text-align: justify;
+		font-size: 17px;
+		&--title {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-around;
+			align-items: center;
+			margin-bottom: 50px;
+			img {
+				width: clamp(150px, 20vw, 200px);
+				background-color: CS.$ColorFon;
+				border-radius: 0 0 20px 20px;
+				color: CS.$ColorBrown;
+			}
+			h1 {
+				text-align: center;
+				font-size: clamp(17px, 2.3vw, 24px);
+			}
+		}
+		ol li {
+			margin: 10px 0;
+			color: CS.$ColorBrown;
+			font-size: 20px;
+		}
+		ul li {
+			list-style: square outside;
+			margin: 0;
+			color: #000;
+			font-size: 17px;
+		}
+	}
+}

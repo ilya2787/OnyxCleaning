@@ -1,0 +1,120 @@
+@use '../../styles/config/color' as CS;
+footer {
+	background-color: CS.$ColorFonDark;
+	position: relative;
+	padding: 0 30px 10px 30px;
+	border-radius: 20px 20px 0 0;
+	margin: 0 15px 0 15px;
+	min-width: 582px;
+	@media (max-width: 1050px) {
+		padding: 20px 0;
+		margin: 100px 0 0 0;
+	}
+	@media (max-width: 700px) {
+		padding: 20px 0 100px 0;
+	}
+	.content {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		row-gap: 30px;
+		@media (max-width: 1050px) {
+			flex-direction: column;
+		}
+		&-contact {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			row-gap: 10px;
+			a {
+				color: CS.$ColorFon;
+			}
+			&-tel {
+				font-size: Clamp(19px, 1.8vw, 23px);
+				letter-spacing: 2px;
+			}
+			&-social {
+				display: flex;
+				flex-direction: row;
+				justify-content: center;
+				align-items: center;
+				column-gap: 20px;
+				a {
+					font-size: 28px;
+					transition: all 0.3s ease;
+					&:hover {
+						color: CS.$ColorAccent;
+						filter: brightness(90%);
+						-webkit-filter: brightness(90%);
+					}
+				}
+			}
+		}
+		&-menu {
+			ul {
+				display: flex;
+				flex-direction: column;
+				justify-content: flex-start;
+				flex-wrap: wrap;
+				column-gap: clamp(20px, 5.5vw, 100px);
+				row-gap: 13px;
+				max-height: 120px;
+				li {
+					.content-menu--Link {
+						font-family: Gabriela;
+						font-size: clamp(14px, 1.3vw, 18px);
+						text-transform: uppercase;
+						letter-spacing: 2px;
+						transition: all 0.2s ease;
+						cursor: pointer;
+						color: CS.$ColorFon;
+						&:hover {
+							color: CS.$ColorAccent;
+							filter: brightness(80%);
+						}
+					}
+				}
+			}
+			@media (max-width: 500px) {
+				display: none;
+			}
+		}
+		&-LogoAndCopyright {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			row-gap: 30px;
+			&-logo {
+				width: 200px;
+				padding: 5px 0;
+				background-color: CS.$ColorFon;
+				border-radius: 0 0 20px 20px;
+				img {
+					width: 100%;
+				}
+				@media (max-width: 1050px) {
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					align-items: center;
+					width: 150px;
+					border-radius: 50%;
+					height: 150px;
+				}
+			}
+			&-copyright {
+				display: flex;
+				flex-direction: row;
+				justify-content: center;
+				align-items: center;
+				column-gap: 10px;
+				font-size: 17px;
+				text-transform: uppercase;
+				color: CS.$ColorFon;
+			}
+		}
+	}
+}

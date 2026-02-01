@@ -1,0 +1,41 @@
+@forward './fonts/fonts';
+@use './config/color' as CS;
+@forward './config/_reset';
+@use './config/mixin' as MX;
+
+body {
+	background-color: CS.$ColorFon !important;
+	font-family: Kurale !important;
+	overflow-x: hidden !important;
+	@include MX.SettingMaxWidth;
+	.MainBlock {
+		&--BTNScrollTop {
+			position: fixed;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			bottom: 180px;
+			right: 55px;
+			width: 50px;
+			height: 50px;
+			border-radius: 5px 20px 5px 20px;
+			background-color: CS.$ColorBrownLithe;
+			filter: opacity(70%);
+			z-index: 50;
+			color: CS.$ColorFon;
+			font-size: 40px;
+			transition: all 0.3s ease;
+			&:hover {
+				filter: opacity(100%);
+			}
+		}
+	}
+	.App_loading {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		height: 100dvh;
+	}
+}

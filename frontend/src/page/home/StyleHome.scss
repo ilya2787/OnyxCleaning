@@ -1,0 +1,675 @@
+@use '../../styles/config/color' as CS;
+@use '../../styles/config/mixin' as MX;
+@forward '../../styles/fonts/fonts';
+
+@mixin BTNSetting {
+	height: 55px;
+	width: 250px;
+	font-size: 19px;
+	font-family: Gabriela;
+	color: #fff;
+	transition: all 0.3s ease;
+	cursor: pointer;
+	border: 1px solid #78736d;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	@media (max-width: 800px) {
+		width: clamp(250px, 45vw, 350px);
+		height: 55px;
+		text-align: center;
+	}
+}
+
+.header_home {
+	background-color: CS.$ColorFonDark;
+	padding: 130px 20px 20px 20px;
+	position: relative;
+	height: 100dvh;
+	width: 100%;
+	min-width: 582px;
+	min-height: max-content;
+	&_h1 {
+		text-transform: uppercase;
+		font-family: DaysOne;
+		color: CS.$ColorFon;
+		font-size: 15.1vw;
+		position: relative;
+		text-align: center;
+		left: 0;
+		right: 0;
+		z-index: 8;
+		@media (min-width: 2500px) {
+			font-size: 400px;
+		}
+		@media (max-width: 650px) {
+			font-size: 85px;
+		}
+	}
+	&_center {
+		&_text {
+			font-family: Gabriela;
+			h1 {
+				font-size: clamp(17px, 3vw, 38px);
+				color: CS.$ColorBrownLithe;
+				@media (max-height: 550px) and (max-width: 850px) {
+					font-size: 17px;
+				}
+			}
+			h2 {
+				font-size: clamp(22px, 3vw, 35px);
+				color: CS.$ColorFon;
+				margin-top: 15px;
+				@media (max-height: 550px) and (max-width: 850px) {
+					font-size: 18px;
+				}
+			}
+			h3 {
+				font-size: clamp(17px, 3vw, 30px);
+				color: CS.$ColorBrownLithe;
+				margin-top: 15px;
+				margin-left: 30%;
+				text-transform: uppercase;
+				@media (max-width: 1300px) {
+					margin-left: 22%;
+				}
+				@media (max-width: 1036px) {
+					margin-left: 15%;
+				}
+				@media (max-height: 550px) and (max-width: 850px) {
+					font-size: 18px;
+					margin-top: 5px;
+				}
+			}
+			p:nth-child(2n + 2) {
+				font-size: clamp(17px, 3vw, 32px);
+				color: CS.$ColorFon;
+				margin-top: 10px;
+				@media (max-width: 1140px) {
+					max-width: 450px;
+				}
+				@media (max-width: 920px) {
+					max-width: 300px;
+				}
+				@media (max-height: 550px) and (max-width: 850px) {
+					font-size: 18px;
+					margin-top: 10px;
+				}
+			}
+		}
+		&_img {
+			position: absolute;
+			z-index: 8;
+			bottom: 0;
+			right: 0;
+			width: clamp(300px, 45vw, 590px);
+			max-height: 85%;
+			@media (max-height: 800px) and (min-width: 1000px) {
+				width: auto;
+				z-index: 10;
+			}
+			@media (max-height: 700px) and (max-width: 1000px) {
+				width: clamp(250px, 35vw, 390px);
+			}
+		}
+	}
+	&_Btn {
+		margin-top: 30px;
+		display: flex;
+		flex-direction: row;
+		justify-content: flex-start;
+		align-items: center;
+		z-index: 8;
+		@media (max-width: 800px) {
+			position: absolute;
+			justify-content: center;
+			width: 100%;
+			left: 0;
+			right: 0;
+			bottom: 20px;
+			z-index: 11;
+		}
+		&--Order {
+			display: inline-block;
+			background: #78736d;
+			border-radius: 5px 0 0 5px;
+			@include BTNSetting();
+			&:hover {
+				background-color: CS.$ColorAccent;
+			}
+			@media (max-width: 800px) {
+				background: CS.$ColorFon;
+				color: CS.$ColorBrown;
+			}
+		}
+		&--Calculator {
+			@include BTNSetting();
+			column-gap: 20px;
+			border-left: none;
+			border-radius: 0 5px 5px 0;
+			@media (max-width: 800px) {
+				column-gap: 5px;
+				@include MX.GlassBackground;
+				color: CS.$ColorBrown;
+			}
+			&:hover {
+				background-color: CS.$ColorAccent;
+			}
+			span {
+				display: flex;
+				flex-direction: row;
+				justify-content: center;
+				align-items: center;
+				font-size: 22px;
+			}
+		}
+		@media (max-width: 700px) {
+			display: none;
+		}
+	}
+}
+
+.services-home {
+	margin: 100px 15px 0 15px;
+	min-width: 582px;
+	@media (max-width: 600px) {
+		margin: 100px 0 0 0;
+	}
+	&-h1 {
+		@include MX.TitleText;
+		@media (max-width: 600px) {
+			text-align: center;
+		}
+	}
+	&-content {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(890px, 1fr));
+		grid-template-rows: repeat(2, 1fr);
+		gap: 10px;
+		@media (max-width: 1290px) {
+			grid-template-columns: repeat(auto-fit, minmax(570px, 1fr));
+		}
+		&-apartments {
+			@include MX.SettingFonServices(
+				'../../../public/img/poster/CleaningRooms.jpg'
+			);
+			grid-row: span 2;
+			min-height: 700px;
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-start;
+			align-items: center;
+			&_items {
+				border-radius: 15px;
+				width: 100%;
+				background: linear-gradient(
+					180deg,
+					rgba(26, 13, 4, 0.603),
+					transparent
+				);
+				height: 100%;
+				padding: 20px;
+				color: #fff;
+				position: relative;
+				&--h2 {
+					font-family: Gabriela;
+					font-size: clamp(25px, 3.3vw, 33px);
+					float: right;
+					margin-right: 40px;
+					color: CS.$ColorFon;
+				}
+				ul {
+					margin: 60px 0 40px 0;
+					font-size: clamp(18px, 1.8vw, 22px);
+					li {
+						margin: 10px 0;
+					}
+				}
+				&--BTN {
+					position: absolute;
+					bottom: 20px;
+					right: 20px;
+					@include MX.SettingButtonServices();
+				}
+			}
+		}
+		&-topLeft {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+			gap: 10px;
+			&-office {
+				@include MX.SettingFonServices(
+					'../../../public/img/poster/CleaningOffice.jpg'
+				);
+				min-height: 350px;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				&_items {
+					position: relative;
+					border-radius: 15px;
+					width: 100%;
+					height: 100%;
+					padding: 20px;
+					color: #fff;
+					background: linear-gradient(
+						180deg,
+						rgba(26, 13, 4, 0.603),
+						transparent
+					);
+					&--h2 {
+						font-family: Gabriela;
+						font-size: clamp(25px, 3.3vw, 33px);
+						text-align: center;
+						color: CS.$ColorFon;
+					}
+					ul {
+						margin: 10px 0 40px 0;
+						font-size: clamp(18px, 1.8vw, 22px);
+						li {
+							margin: 10px 0;
+						}
+					}
+					&--BTN {
+						position: absolute;
+						bottom: 20px;
+						right: 20px;
+						@include MX.SettingButtonServices();
+					}
+				}
+			}
+			&-windows {
+				@include MX.SettingFonServices(
+					'../../../public/img/poster/CleaningWindows.jpg'
+				);
+				min-height: 350px;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				&_items {
+					position: relative;
+					border-radius: 15px;
+					width: 100%;
+					height: 100%;
+					padding: 20px;
+					color: #fff;
+					background: linear-gradient(
+						180deg,
+						rgba(26, 13, 4, 0.603),
+						transparent
+					);
+					&--h2 {
+						font-family: Gabriela;
+						font-size: clamp(25px, 3.3vw, 33px);
+						text-align: center;
+						color: CS.$ColorFon;
+					}
+					ul {
+						margin: 10px 0 40px 0;
+						font-size: clamp(18px, 1.8vw, 22px);
+						li {
+							margin: 10px 0;
+						}
+					}
+					&--BTN {
+						@include MX.SettingButtonServices();
+						position: absolute;
+						bottom: 20px;
+						right: 20px;
+					}
+				}
+			}
+		}
+		&-cleaning {
+			@include MX.SettingFonServices('../../../public/img/poster/Cleaning.jpg');
+			min-height: 340px;
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-end;
+			align-items: center;
+			&_items {
+				position: relative;
+				border-radius: 15px;
+				width: 100%;
+				height: 100%;
+				padding: 20px;
+				color: #fff;
+				background: linear-gradient(
+					180deg,
+					rgba(26, 13, 4, 0.603),
+					transparent
+				);
+				&--h2 {
+					font-family: Gabriela;
+					font-size: clamp(25px, 3.3vw, 33px);
+					float: right;
+					margin-right: 40px;
+					color: CS.$ColorFon;
+				}
+				ul {
+					display: flex;
+					flex-direction: column;
+					justify-content: flex-start;
+					flex-wrap: wrap;
+					max-width: 300px;
+					margin: 20px 0 20px 0;
+					max-height: 130px;
+					row-gap: 10px;
+					li {
+						font-size: clamp(18px, 1.8vw, 22px);
+					}
+				}
+				button {
+					position: absolute;
+					bottom: 20px;
+					right: 20px;
+					@include MX.SettingButtonServices();
+				}
+			}
+		}
+	}
+}
+
+.advantages-home {
+	margin: 100px 15px 0 15px;
+	@media (max-width: 600px) {
+		margin: 100px 0 0 0;
+	}
+	min-width: 582px;
+	h1 {
+		@include MX.TitleText;
+		text-align: right;
+		@media (max-width: 600px) {
+			text-align: center;
+		}
+	}
+	&-content {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		row-gap: 50px;
+		&--item-1 {
+			@keyframes show-animation-item1 {
+				from {
+					opacity: 0;
+					transform: translateX(-100%);
+				}
+				to {
+					opacity: 1;
+					transform: translateX(0px);
+				}
+			}
+			animation: show-animation-item1 linear;
+			animation-timeline: view();
+			animation-range: entry 0% cover 40%;
+			@include MX.SettingBlockAdvantages(-90deg);
+			&-number {
+				@include MX.SettingNumberAdvantages(auto, 15%);
+			}
+			h2 {
+				display: inline-block;
+				padding: 30px 15px;
+				writing-mode: sideways-rl;
+				border-radius: 10px 0 0 10px;
+			}
+		}
+		&--item-2 {
+			@keyframes show-animation-item2 {
+				from {
+					opacity: 0;
+					transform: translateX(100%);
+				}
+				to {
+					opacity: 1;
+					transform: translateX(0px);
+				}
+			}
+			animation: show-animation-item2 linear;
+			animation-timeline: view();
+			animation-range: entry 0% cover 40%;
+			@include MX.SettingBlockAdvantages(90deg);
+			h2 {
+				display: inline-block;
+				padding: 30px 15px;
+				writing-mode: sideways-lr;
+				border-radius: 0 10px 10px 0;
+				margin: 0;
+			}
+			&-text {
+				float: right;
+				margin-right: 10% !important;
+			}
+			&-number {
+				@include MX.SettingNumberAdvantages(15%, auto);
+			}
+		}
+		&--item-3 {
+			@keyframes show-animation-item3 {
+				from {
+					opacity: 0;
+					transform: translateX(-100%);
+				}
+				to {
+					opacity: 1;
+					transform: translateX(0px);
+				}
+			}
+			animation: show-animation-item3 linear;
+			animation-timeline: view();
+			animation-range: entry 0% cover 40%;
+			@include MX.SettingBlockAdvantages(-90deg);
+			&-number {
+				@include MX.SettingNumberAdvantages(auto, 15%);
+			}
+			h2 {
+				display: inline-block;
+				padding: 30px 15px;
+				writing-mode: sideways-rl;
+				border-radius: 10px 0 0 10px;
+			}
+		}
+	}
+}
+
+.Reviews {
+	margin: 100px 15px 0 15px;
+	min-width: 582px;
+	@media (max-width: 600px) {
+		margin: 100px 0 0 0;
+	}
+	h1 {
+		@include MX.TitleText;
+		@media (max-width: 600px) {
+			text-align: center;
+		}
+	}
+
+	&_card-list {
+		margin: 0 15px;
+		.swiper {
+			padding: 0 0 50px 0;
+			&-pagination-bullet {
+				margin: 0 8px !important;
+				width: 10px !important;
+				height: 10px !important;
+				&-active {
+					background: CS.$ColorAccent;
+				}
+			}
+		}
+		&--item {
+			display: flex !important;
+			flex-direction: column !important;
+			justify-content: space-between !important;
+			align-items: flex-start !important;
+			height: 400px;
+			background-color: CS.$ColorFonDark;
+			border-radius: 10px;
+			padding: 10px 20px;
+			row-gap: 10px;
+			border: 2px solid rgba(255, 255, 255, 0.3);
+			&--title {
+				h2 {
+					font-size: 23px;
+					color: CS.$ColorBrownLithe;
+				}
+				&--rating {
+					display: inline-flex;
+					flex-direction: row-reverse;
+					&--star {
+						font-size: 18px;
+						color: #f2eadd;
+					}
+					&[data-total-value='1'] &--star:nth-child(n + 5),
+					&[data-total-value='2'] &--star:nth-child(n + 4),
+					&[data-total-value='3'] &--star:nth-child(n + 3),
+					&[data-total-value='4'] &--star:nth-child(n + 2),
+					&[data-total-value='5'] &--star:nth-child(n + 1) {
+						color: CS.$ColorAccent;
+					}
+				}
+			}
+			&--Text {
+				display: flex;
+				justify-content: flex-start;
+				align-items: flex-start;
+				margin: 20px 0;
+				color: CS.$ColorFon;
+				text-align: justify;
+				font-size: 15px;
+				min-height: 100px;
+				max-height: 200px;
+				overflow-y: scroll;
+				&::-webkit-scrollbar {
+					width: 5px; /* ширина scrollbar */
+				}
+				&::-webkit-scrollbar-track {
+					opacity: 0;
+				}
+				&::-webkit-scrollbar-thumb {
+					background-color: CS.$ColorAccent; /* цвет плашки */
+					border-radius: 20px; /* закругления плашки */
+					border: 3px solid CS.$ColorAccent; /* padding вокруг плашки */
+				}
+			}
+			&--inform {
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+				align-items: center;
+				width: 100%;
+				a {
+					color: CS.$ColorAccent;
+					font-size: 14px;
+				}
+				p {
+					color: #f2eadd;
+					font-size: 14px;
+				}
+			}
+		}
+	}
+}
+
+.feedback-home {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin: 100px 15px 0 15px;
+	min-width: 570px;
+	h1 {
+		@include MX.TitleText;
+		font-size: clamp(25px, 3vw, 33px) !important;
+		margin-bottom: 5px !important;
+		@media (max-width: 550px) {
+			text-align: center;
+		}
+	}
+	h3 {
+		font-size: clamp(20px, 2vw, 27px);
+		color: #434343;
+		@media (max-width: 550px) {
+			text-align: center;
+		}
+	}
+	&-content {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-around;
+		align-items: center;
+		margin-top: 40px;
+		&--img {
+			width: clamp(250px, 30vw, 500px);
+			@media (max-width: 800px) {
+				display: none;
+			}
+		}
+		&--forms {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			row-gap: 50px;
+			max-width: 700px;
+			@media (max-width: 600px) {
+				width: 80%;
+			}
+			&--name {
+				position: relative;
+				width: 100%;
+				height: 60px;
+				label {
+					@include MX.SettingLabelFeedback;
+				}
+				input[type='text'] {
+					@include MX.SettingInputFeedback;
+				}
+				@include MX.SettingLabelActiveFeedback;
+			}
+			&--tel {
+				position: relative;
+				width: 100%;
+				height: 60px;
+				label {
+					@include MX.SettingLabelFeedback;
+				}
+				input[type='text'] {
+					@include MX.SettingInputFeedback;
+				}
+				@include MX.SettingLabelActiveFeedback;
+			}
+			&--submit {
+				width: 100%;
+				height: 50px;
+				background-color: CS.$ColorFonDark_Transparency;
+				color: CS.$ColorFon;
+				border-radius: 5px;
+				font-size: 17px;
+				letter-spacing: 2px;
+				text-transform: uppercase;
+				transition: all 0.3s ease;
+				&:hover {
+					background-color: CS.$ColorFonDark;
+				}
+			}
+			p {
+				font-size: clamp(14px, 1.5vw, 18px);
+				margin-top: -30px;
+				span {
+					color: CS.$ColorBrownLithe;
+					cursor: pointer;
+					transition: all 0.3s ease;
+					&:hover {
+						filter: brightness(90%);
+						-webkit-filter: brightness(90%);
+					}
+				}
+			}
+		}
+	}
+}

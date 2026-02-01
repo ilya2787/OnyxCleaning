@@ -1,0 +1,134 @@
+import axios from 'axios'
+import { motion } from 'framer-motion'
+import { useEffect, useState } from 'react'
+import { WindowsList } from '../../components/ListDataCleaning/ListDataCleaning'
+import { TCategories, TListServices } from '../../components/type/Services.type'
+import BackBTN from '../../components/ui/BackBTN/BackBTN'
+import BlockInformText from '../../components/ui/BlockInfoServices/BlockInformText'
+import HeaderServices from '../../components/ui/HeaderServices/HeaderServices'
+import { IconList } from '../../components/ui/IconList'
+import ModalWindows from '../../components/ui/ModalWindows/ModalWindows'
+import { PriceFormat } from '../../components/ui/PriceFormat/PriceFormat'
+import './StyleWindowsCleaning.scss'
+
+const WindowsCleaning = () => {
+	const [ArrayData, setArrayData] = useState<TListServices[]>([])
+	const [OpenModal, setOpenModal] = useState<boolean>(false)
+	const [OpenModalDop, setOpenModalDop] = useState<boolean>(false)
+	const [TitleModalDop, setTitleModalDop] = useState<string>('')
+	const [ArrayDataDop, setArrayDataDop] = useState<TCategories[]>([])
+	const [ArrayFullListDop, setArrayFullListDop] = useState<TCategories[]>([])
+
+	useEffect(() => {
+		async function ListBD() {
+			axios
+				.get<TCategories[]>(
+					`${process.env.REACT_APP_SERVER}/DopCleaningWindows`
+				)
+				.then(res => {
+					setArrayFullListDop(res.data)
+				})
+				.catch(err => console.log(err))
+		}
+		ListBD()
+	}, [setArrayFullListDop])
+
+	return (
+		<motion.div
+			className='WindowsCleaning'
+			initial={{ opacity: 0 }}
+			animate={{ opacity: 1, transition: { duration: 0.3 } }}
+			exit={{ opacity: 0, transition: { duration: 0.3 } }}
+		>
+			<BackBTN />
+			<HeaderServices
+				title='Мойка окон'
+				BackgroundUrl='./img/poster/Windows/Header.jpg'
+				Tp={0.5}
+				params='CleaningWindows'
+			>
+				<div className='WindowsCleaning--headerText'>
+					<p>
+						От <span>{PriceFormat(350)}</span> / створка
+					</p>
+					<p>
+						Минимальный заказ <span>от {PriceFormat(2500)}</span>
+					</p>
+					<ul>
+						<li>
+							<span>{IconList.Check}</span>Используем только специализированные
+							профессиональные средства
+						</li>
+						<li>
+							<span>{IconList.Check}</span>
+							Обеспечиваем бережную работу с остеклением любой сложности
+						</li>
+					</ul>
+				</div>
+			</HeaderServices>
+			<div className='WindowsCleaning--content'>
+				<h1 className='WindowsCleaning--content--h1'>
+					Что входит в мойку окон
+				</h1>
+				<section>
+					<BlockInformText
+						positions='row-reverse'
+						deg={-90}
+						Title=''
+						LinkImg='./img/poster/Windows/WindowsList.jpg'
+						ArrayDataCleaning={WindowsList}
+						setArrayData={setArrayData}
+						setOpenModal={setOpenModal}
+						setOpenModalDop={setOpenModalDop}
+						setTitleModalDop={setTitleModalDop}
+						setArrayDataDop={setArrayDataDop}
+						ArrayDopServices={ArrayFullListDop}
+					/>
+				</section>
+			</div>
+			<ModalWindows
+				Title='Полный список'
+				modalIsOpen={OpenModal}
+				onClose={() => setOpenModal(false)}
+			>
+				<ul className='ModalContentUL'>
+					{ArrayData.map(data => (
+						<li key={data.id}>
+							<span className='ModalContentUL-Icon'>{IconList.Check}</span>
+							<p>{data.text}</p>
+						</li>
+					))}
+				</ul>
+			</ModalWindows>
+			<ModalWindows
+				Title={TitleModalDop}
+				modalIsOpen={OpenModalDop}
+				onClose={() => setOpenModalDop(false)}
+			>
+				<div className='ModalDopServices'>
+					<h2 className='ModalDopServices--title'>Дополнительные услуги</h2>
+					<div className='ModalDopServices--content'>
+						{ArrayDataDop.map(data => (
+							<div
+								key={data.id}
+								className='ModalDopServices--content--informBlock'
+							>
+								<p className='ModalDopServices--content--informBlock--text'>
+									{data.text}
+								</p>
+								<p className='ModalDopServices--content--informBlock--price'>
+									{data.price &&
+										` от ${PriceFormat(data.price ? data.price : 0)} `}
+									{!data.price ? ` ` : data.unit && '/ '}
+									{data.unit && `${data.unit}`}
+								</p>
+							</div>
+						))}
+					</div>
+				</div>
+			</ModalWindows>
+		</motion.div>
+	)
+}
+
+export default WindowsCleaning

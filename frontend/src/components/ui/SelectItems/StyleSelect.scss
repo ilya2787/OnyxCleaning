@@ -1,0 +1,62 @@
+@use '../../../styles/config/color' as CS;
+
+.custom-select {
+	&__control {
+		border-radius: 10px !important;
+		background: CS.$ColorFon !important;
+		box-shadow: none !important;
+		&--menu-is-open {
+			border-color: CS.$ColorAccent !important;
+			.custom-select__indicator {
+				svg {
+					transform: rotate(180deg);
+				}
+			}
+		}
+		&--is-focused {
+			border-color: CS.$ColorAccent !important;
+		}
+	}
+	&__value-container {
+		cursor: pointer !important;
+	}
+	&__input-container {
+		border: transparent !important;
+	}
+	&__indicator {
+		cursor: pointer !important;
+		svg {
+			transition: all 0.3s ease !important;
+		}
+	}
+	&__menu {
+		border-radius: 5px !important;
+		animation: isOpenMenu 0.35s ease-in-out;
+	}
+	&__option {
+		cursor: pointer !important;
+		&--is-focused {
+			background-color: lighten(
+				$color: CS.$ColorAccent,
+				$amount: 12%
+			) !important;
+		}
+		&--is-selected {
+			background: lighten($color: CS.$ColorAccent, $amount: 0) !important;
+		}
+	}
+}
+
+@keyframes isOpenMenu {
+	0% {
+		opacity: 0;
+		transform: scale(0.9);
+	}
+	50% {
+		opacity: 0.3;
+	}
+	100% {
+		opacity: 1;
+		transform: scale(1);
+	}
+}

@@ -1,0 +1,23 @@
+@use '../../../styles/config/color' as CS;
+
+.ModalCalculator_ListCleaning {
+	h2 {
+		color: CS.$ColorBrown;
+		font-size: 28px;
+		font-weight: bold;
+		margin: 10px 0;
+	}
+	ul {
+		li {
+			padding: 5px;
+			border-radius: 5px;
+			margin-bottom: 5px;
+		}
+		li:nth-child(even) {
+			background-color: #d8d1c5;
+		}
+		li:nth-child(odd) {
+			background-color: #efe8dc;
+		}
+	}
+}
