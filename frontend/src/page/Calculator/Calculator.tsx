@@ -38,7 +38,7 @@ import FinalPrice from './FinalPrice'
 import ItemDop from './ItemDop/ItemDop'
 import './StyleCalculator.scss'
 const ModalWindowsListCleaning = lazy(
-	() => import('./ModalWindows/ModalWindowsListCleaning')
+	() => import('./ModalWindows/ModalWindowsListCleaning'),
 )
 
 const Calculator = () => {
@@ -51,7 +51,7 @@ const Calculator = () => {
 		useState<boolean>(false)
 	//Состояния текущий значений
 	const [CurrentServicesSingle, setCurrentServicesSingle] = useState<string>(
-		params.NameCleaning ? params.NameCleaning : 'CleaningApartment'
+		params.NameCleaning ? params.NameCleaning : 'CleaningApartment',
 	)
 	const [CurrentCatCleaning, setCurrentCatCleaning] = useState<string>('Basic')
 	const [NumberArea, setNumberArea] = useState<number>(1)
@@ -252,7 +252,7 @@ const Calculator = () => {
 	const ArrayDopServicesBD = async () => {
 		await axios
 			.get<TCategories[]>(
-				`${process.env.REACT_APP_SERVER}/DopCleaningApartment`
+				`${process.env.REACT_APP_SERVER}/DopCleaningApartment`,
 			)
 			.then(res => {
 				setArrayBDApartment(res.data)
@@ -343,23 +343,27 @@ const Calculator = () => {
 	//Сортировка цен по позициям сервиса
 	const SortingPrices = () => {
 		Price.map(data => {
-			data.Name === 'CleaningApartment' &&
+			if (data.Name === 'CleaningApartment') {
 				setMinPriceCleaningApartment(data.MinPrice)
-			data.Name === 'Basic' &&
+			}
+			if (data.Name === 'Basic') {
 				setPriceCleaningApartment_DOP(PriceCleaningApartment_DOP => [
 					...PriceCleaningApartment_DOP,
 					{ Name: data.Name, price: data.price },
 				])
-			data.Name === 'General' &&
+			}
+			if (data.Name === 'General') {
 				setPriceCleaningApartment_DOP(PriceCleaningApartment_DOP => [
 					...PriceCleaningApartment_DOP,
 					{ Name: data.Name, price: data.price },
 				])
-			data.Name === 'Repair' &&
+			}
+			if (data.Name === 'Repair') {
 				setPriceCleaningApartment_DOP(PriceCleaningApartment_DOP => [
 					...PriceCleaningApartment_DOP,
 					{ Name: data.Name, price: data.price },
 				])
+			}
 			data.Name === 'CleaningOffice' && setMinPriceOffice(data.MinPrice)
 			data.Name === 'OfficeQuadrature' && setPriceQuadratureOffice(data.price)
 			data.Name === 'CleaningWindows' && setMinPriceWindows(data.MinPrice)
@@ -369,6 +373,13 @@ const Calculator = () => {
 	useEffect(() => {
 		SortingPrices()
 	}, [Price])
+
+	useEffect(() => {
+		Price.map(data => {
+			data.Name === CurrentCatCleaning &&
+				setMinPriceCleaningApartment(data.MinPrice)
+		})
+	}, [CurrentCatCleaning])
 
 	//Отчистка позиций
 	useEffect(() => {
@@ -431,7 +442,7 @@ const Calculator = () => {
 			if (CurrentServicesSingle === 'CleaningOffice') {
 				setCurrentPrice(
 					(NumberArea - InitialQuadrature.Quantity) * PriceQuadratureOffice +
-						MinPriceOffice
+						MinPriceOffice,
 				)
 			}
 			if (CurrentServicesSingle === 'CleaningApartment') {
@@ -439,7 +450,7 @@ const Calculator = () => {
 					data.Name === CurrentCatCleaning &&
 						setCurrentPrice(
 							(NumberArea - InitialQuadrature.Quantity) * data.price +
-								MinPriceCleaningApartment
+								MinPriceCleaningApartment,
 						)
 				})
 			}
@@ -536,7 +547,7 @@ const Calculator = () => {
 
 	const FunctionValidField = (
 		setDate: Dispatch<SetStateAction<React.CSSProperties | undefined>>,
-		Color: string
+		Color: string,
 	) => {
 		setDate({
 			border: `1px solid ${Color}`,
@@ -841,7 +852,7 @@ const Calculator = () => {
 							setOpenModal={setOpenModal}
 							CurrentServices={CurrentServicesSingle}
 							CurrentCatCleaning={CurrentCatCleaning}
-							Date={ValueDate}
+							CurrentDate={ValueDate}
 							Time={ValueTime}
 							ValueStreet={ValueStreet}
 							ValueName={ValueName}
@@ -865,7 +876,7 @@ const Calculator = () => {
 							setOpenModal={setOpenModal}
 							CurrentServices={CurrentServicesSingle}
 							CurrentCatCleaning={CurrentCatCleaning}
-							Date={ValueDate}
+							CurrentDate={ValueDate}
 							Time={ValueTime}
 							ValueStreet={ValueStreet}
 							ValueName={ValueName}
@@ -888,7 +899,7 @@ const Calculator = () => {
 							setOpenModal={setOpenModal}
 							CurrentServices={CurrentServicesSingle}
 							CurrentCatCleaning={CurrentCatCleaning}
-							Date={ValueDate}
+							CurrentDate={ValueDate}
 							Time={ValueTime}
 							ValueStreet={ValueStreet}
 							ValueName={ValueName}

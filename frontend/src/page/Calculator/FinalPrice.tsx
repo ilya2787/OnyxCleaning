@@ -1,18 +1,21 @@
 import axios from 'axios'
 import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react'
+import { sendMessage } from '../../components/api/Telegram'
 import { InitialQuadrature } from '../../components/type/Parameter.type'
 import {
+	TBasaCustomer,
 	TCitiesDistancePrice,
 	TDopCurrentPrice,
 	TTimeCleaning,
 } from '../../components/type/Services.type'
 import ModalWindows from '../../components/ui/ModalWindows/ModalWindows'
+import { FormNewDate } from '../../components/ui/NewDate/NewDate'
 import { PriceFormat } from '../../components/ui/PriceFormat/PriceFormat'
 import {
 	CatCleaning,
 	Services,
 } from '../../components/ui/SelectItems/ListSelectCleaning'
-import { MessageOrders } from '../../components/ui/natificationMesseg/natificationMessag'
+import { MessageOldUsers } from '../../components/ui/natificationMesseg/natificationMessag'
 
 interface TypeProps {
 	NumberArea: number
@@ -30,7 +33,7 @@ interface TypeProps {
 	setOpenModal: Dispatch<SetStateAction<boolean>>
 	CurrentServices: string
 	CurrentCatCleaning: string
-	Date: string
+	CurrentDate: string
 	Time: string
 	ValueStreet: string
 	ValueName: string
@@ -52,7 +55,7 @@ const FinalPrice: FC<TypeProps> = ({
 	setOpenModal,
 	CurrentServices,
 	CurrentCatCleaning,
-	Date,
+	CurrentDate,
 	Time,
 	ValueStreet,
 	ValueName,
@@ -62,11 +65,12 @@ const FinalPrice: FC<TypeProps> = ({
 	const [FinalPrice, setFinalPrice] = useState<number>(CurrentPrice)
 	const [TitleWindows, setTitleWindows] = useState<string>('')
 	const [FinalTimeCleaning, setFinalTimeCleaning] = useState<number>(0)
+
 	useEffect(() => {
 		if (C_Windows === false) {
 			if (NumberArea > InitialQuadrature.Quantity) {
 				setPriceQuadratureNew(
-					(NumberArea - InitialQuadrature.Quantity) * PriceQuadrature
+					(NumberArea - InitialQuadrature.Quantity) * PriceQuadrature,
 				)
 			} else {
 				setPriceQuadratureNew(0)
@@ -87,22 +91,22 @@ const FinalPrice: FC<TypeProps> = ({
 					CurrentPrice +
 						DopCurrentPrice?.reduce(
 							(a, v) => a + (v.quantity - 1) * v.price + v.MinPrice,
-							0
+							0,
 						) +
 						ArrayIdDopWindows?.reduce(
 							(a, v) => a + (v.quantity - 1) * v.price + v.MinPrice,
-							0
+							0,
 						) +
-						CurrentDistance?.reduce((a, v) => a + v.price, 0)
+						CurrentDistance?.reduce((a, v) => a + v.price, 0),
 				)
 			} else {
 				setFinalPrice(
 					CurrentPrice +
 						DopCurrentPrice?.reduce(
 							(a, v) => a + (v.quantity - 1) * v.price + v.MinPrice,
-							0
+							0,
 						) +
-						CurrentDistance?.reduce((a, v) => a + v.price, 0)
+						CurrentDistance?.reduce((a, v) => a + v.price, 0),
 				)
 			}
 		} else {
@@ -132,70 +136,70 @@ const FinalPrice: FC<TypeProps> = ({
 	const sendingOrder = async () => {
 		try {
 			let message = `
-&#128203; <b>Поступил заказа с сайта</b>	&#128203;\n
-<b><i>Заказчик</i></b>
-&#129464; ${ValueName}
-&#128241; ${ValueTel} \n
-<b><i>Дата и время</i></b>
-&#128198; ${Date}
-&#128349; ${Time}\n
-<b><i>Адрес</i></b>
-&#127970; ${CurrentDistance?.map(data => data.Name)}
-&#129517; ${ValueStreet} 
-Выезд: ${CurrentDistance?.map(
-				data =>
-					`&#128181; ${
-						data.price ? PriceFormat(data.price) : 'Бесплатно'
-					} &#128665; (${data.Distance} км.)`
-			)}\n
-<b><i>Данные по выбранной уборке</i></b>
-${Services.map(data =>
-	CurrentServices === data.value ? `${data.label} ` : ''
-).join('')} ${
-				CurrentCatCleaning
-					? CatCleaning.map(data =>
-							CurrentCatCleaning === data.value ? `(${data.label})` : ''
-					  ).join('')
-					: ''
-			}
- ${C_Windows ? 'Количество створок :' : 'Квадратура : '} ${NumberArea}
- &#128181; ${PriceFormat(PriceQuadratureNew)}\n
-&#127775;<b><i>Выбранные дополнительные услуги</i></b>&#127775;			
-${DopCurrentPrice?.map(
-	data =>
-		`&#9989;${data.value} ${
-			data.unit
-				? `\n${data.unit} x ${SearchUnit(data.unit, data.quantity)}`
-				: ''
-		}
-		&#128181;${PriceFormat(data.FinalPriceDop ? data.FinalPriceDop : data.MinPrice)}
-		\n`
-).join('')}
-	${ArrayIdDopWindows?.map(
+	&#128203; <b>Поступил заказа с сайта</b>	&#128203;\n
+	<b><i>Заказчик</i></b>
+	&#129464; ${ValueName}
+	&#128241; ${ValueTel} \n
+	<b><i>Дата и время</i></b>
+	&#128198; ${CurrentDate}
+	&#128349; ${Time}\n
+	<b><i>Адрес</i></b>
+	&#127970; ${CurrentDistance?.map(data => data.Name)}
+	&#129517; ${ValueStreet}
+	Выезд: ${CurrentDistance?.map(
+		data =>
+			`&#128181; ${
+				data.price ? PriceFormat(data.price) : 'Бесплатно'
+			} &#128665; (${data.Distance} км.)`,
+	)}\n
+	<b><i>Данные по выбранной уборке</i></b>
+	${Services.map(data =>
+		CurrentServices === data.value ? `${data.label} ` : '',
+	).join('')} ${
+		CurrentCatCleaning
+			? CatCleaning.map(data =>
+					CurrentCatCleaning === data.value ? `(${data.label})` : '',
+				).join('')
+			: ''
+	}
+	 ${C_Windows ? 'Количество створок :' : 'Квадратура : '} ${NumberArea}
+	 &#128181; ${PriceFormat(PriceQuadratureNew)}\n
+	&#127775;<b><i>Выбранные дополнительные услуги</i></b>&#127775;
+	${DopCurrentPrice?.map(
 		data =>
 			`&#9989;${data.value} ${
 				data.unit
 					? `\n${data.unit} x ${SearchUnit(data.unit, data.quantity)}`
 					: ''
 			}
-		&#128181;${PriceFormat(data.FinalPriceDop ? data.FinalPriceDop : data.MinPrice)}
-		\n`
-	).join('')}	
-	${
-		DopCurrentPrice &&
-		DopCurrentPrice?.length <= 0 &&
-		ArrayIdDopWindows &&
-		ArrayIdDopWindows?.length <= 0
-			? '&#10060; Нет необходимости в дополнительных услугах'
-			: ''
-	}\n						
-&#9201;<i>Примерное время уборки ${FinalTimeCleaning} ч.</i>
+			&#128181;${PriceFormat(data.FinalPriceDop ? data.FinalPriceDop : data.MinPrice)}
+			\n`,
+	).join('')}
+		${ArrayIdDopWindows?.map(
+			data =>
+				`&#9989;${data.value} ${
+					data.unit
+						? `\n${data.unit} x ${SearchUnit(data.unit, data.quantity)}`
+						: ''
+				}
+			&#128181;${PriceFormat(data.FinalPriceDop ? data.FinalPriceDop : data.MinPrice)}
+			\n`,
+		).join('')}
+		${
+			DopCurrentPrice &&
+			DopCurrentPrice?.length <= 0 &&
+			ArrayIdDopWindows &&
+			ArrayIdDopWindows?.length <= 0
+				? '&#10060; Нет необходимости в дополнительных услугах'
+				: ''
+		}\n
+	&#9201;<i>Примерное время уборки ${FinalTimeCleaning} ч.</i>
 
-<b><i>Сумма заказа</i></b>
-&#128176;${PriceFormat(FinalPrice)}
-					`
-			// await sendMessage(message)
-			MessageOrders()
+	<b><i>Сумма заказа</i></b>
+	&#128176;${PriceFormat(FinalPrice)}
+						`
+			await sendMessage(message)
+
 			setOpenModal(false)
 			AddUser()
 		} catch {
@@ -203,16 +207,40 @@ ${DopCurrentPrice?.map(
 		}
 	}
 
-	const AddUser = () => {
+	const AddUser = (): void => {
+		let valueAdd: TBasaCustomer = {
+			Name: ValueName,
+			Phone: ValueTel,
+			Name_cleaning: CurrentServices,
+			Date: FormNewDate,
+			OrderQuantity: 1,
+		}
+
 		axios
-			.post(
-				`${process.env.REACT_APP_SERVER}/base`,
-				{ name: ValueName },
-				{
-					headers: { 'Content-Type': 'application/json' },
+			.post<TBasaCustomer[]>(`${process.env.REACT_APP_SERVER}/baseSearch`, {
+				Phone: ValueTel,
+			})
+			.then(res => {
+				if (res.data.length > 0) {
+					const User = res.data[0]
+					axios
+						.post(`${process.env.REACT_APP_SERVER}/baseUpdateOrder`, {
+							OrderQuantity: User.OrderQuantity + 1,
+							id: User.id,
+						})
+						.then(res => {
+							MessageOldUsers(ValueName)
+						})
+						.catch(err => console.log(err))
+				} else {
+					axios
+						.post(`${process.env.REACT_APP_SERVER}/base`, valueAdd)
+						.then(res => {
+							MessageOldUsers(ValueName)
+						})
+						.catch(err => console.log(err))
 				}
-			)
-			.then(res => console.log(res))
+			})
 			.catch(err => console.log(err))
 	}
 
@@ -279,7 +307,7 @@ ${DopCurrentPrice?.map(
 							</div>
 							<div className='Calculator--content--BlockResult--item--DopServices--item--price'>
 								{PriceFormat(
-									data.FinalPriceDop ? data.FinalPriceDop : data.MinPrice
+									data.FinalPriceDop ? data.FinalPriceDop : data.MinPrice,
 								)}
 							</div>
 						</div>
@@ -300,7 +328,7 @@ ${DopCurrentPrice?.map(
 							</div>
 							<div className='Calculator--content--BlockResult--item--DopServices--item--price'>
 								{PriceFormat(
-									data.FinalPriceDop ? data.FinalPriceDop : data.MinPrice
+									data.FinalPriceDop ? data.FinalPriceDop : data.MinPrice,
 								)}
 							</div>
 						</div>
@@ -328,7 +356,7 @@ ${DopCurrentPrice?.map(
 							<p>Выбранная услуга:</p>
 							{Services.map(
 								(data, i) =>
-									data.value === CurrentServices && <p key={i}>{data.label}</p>
+									data.value === CurrentServices && <p key={i}>{data.label}</p>,
 							)}
 						</section>
 						<section className='Calculator--content--BlockResult--item--ModalOrder--BlockMain--CatServices'>
@@ -343,7 +371,7 @@ ${DopCurrentPrice?.map(
 												<p>Вид уборки:</p>
 												<p>{data.label}</p>
 											</div>
-										)
+										),
 								)}
 						</section>
 						<section className='Calculator--content--BlockResult--item--ModalOrder--BlockMain--MinPrice'>
@@ -375,7 +403,7 @@ ${DopCurrentPrice?.map(
 						<section className='Calculator--content--BlockResult--item--ModalOrder--BlockMain--DateAndTime'>
 							<p>Дата / Время : </p>
 							<p>
-								{Date} / {Time}
+								{CurrentDate} / {Time}
 							</p>
 						</section>
 						<section className='Calculator--content--BlockResult--item--ModalOrder--BlockMain--Cites'>
@@ -417,7 +445,7 @@ ${DopCurrentPrice?.map(
 									</div>
 									<p>
 										{PriceFormat(
-											data.FinalPriceDop ? data.FinalPriceDop : data.MinPrice
+											data.FinalPriceDop ? data.FinalPriceDop : data.MinPrice,
 										)}
 									</p>
 								</div>
@@ -434,13 +462,13 @@ ${DopCurrentPrice?.map(
 											{data.unit &&
 												`${data.unit} x ${SearchUnit(
 													data.unit,
-													data.quantity
+													data.quantity,
 												)}`}
 										</p>
 									</div>
 									<p>
 										{PriceFormat(
-											data.FinalPriceDop ? data.FinalPriceDop : data.MinPrice
+											data.FinalPriceDop ? data.FinalPriceDop : data.MinPrice,
 										)}
 									</p>
 								</div>

@@ -52,10 +52,10 @@ export const MessageQuestion = () => {
 	})
 }
 
-export const MessageOrders = () => {
+export const MessageOldUsers = (Name: string) => {
 	notifications.show({
 		title: 'ВАШ ЗАКАЗ',
-		message: 'Заказ успешно оформлен, в ближайшее время с вами свяжутся',
+		message: `${Name} Спасибо что выбираете нас! Ваш заказ успешно оформлен, в ближайшее время с вами свяжутся`,
 		color: 'green',
 		position: 'top-right',
 		autoClose: 5000,

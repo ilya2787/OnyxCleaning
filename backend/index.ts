@@ -6,20 +6,22 @@ const cors = require('cors')
 const app = express()
 app.use(
 	cors({
-		origin: ['http://localhost:3000', 'http://127.0.0.1:3000'],
+		origin: ['http://localhost:3004'],
 		methods: ['POST', 'GET'],
 		credentials: true,
-	})
+	}),
 )
+app.use(express.json())
+app.use(express.static('public'))
 
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 3004
 
 const DB = mysql.createConnection({
 	host: 'localhost',
-	port: '3307',
-	user: 'Ilya',
-	password: 'Admin1994@!',
-	database: 'onyxcleaning',
+	port: '3306',
+	user: 'root',
+	password: process.env.PASSWORD,
+	database: process.env.DB_NAME,
 })
 
 app.get('/DopCleaningApartment', (req, res) => {
@@ -70,9 +72,34 @@ app.get('/ReviewsUser', (req, res) => {
 	})
 })
 
+app.post('/baseSearch', (req, res) => {
+	const sql = 'SELECT * FROM base WHERE `Phone` = ?'
+	DB.query(sql, [req.body.Phone], (err, data) => {
+		if (err) return res.json(err)
+		return res.json(data)
+	})
+})
+
+app.post('/baseUpdateOrder', (req, res) => {
+	const sql = 'UPDATE base SET OrderQuantity = ? WHERE id = ?'
+	const value = [req.body.OrderQuantity, req.body.id]
+	DB.query(sql, value, (err, data) => {
+		if (err) return res.json(err)
+		return res.json({ Status: 'Success' })
+	})
+})
+
 app.post('/base', (req, res) => {
-	const sql = 'SELECT * FROM base WHERE name = ?'
-	DB.query(sql, [req.body.Name], (err, data) => {
+	const sql =
+		'INSERT INTO base (`Name`, `Phone`, `Name_cleaning`, `Date`, `OrderQuantity`) VALUE (?)'
+	const value = [
+		req.body.Name,
+		req.body.Phone,
+		req.body.Name_cleaning,
+		req.body.Date,
+		req.body.OrderQuantity,
+	]
+	DB.query(sql, [value], (err, data) => {
 		if (err) return res.json(err)
 		return res.json(data)
 	})

@@ -64,3 +64,12 @@ export interface TReviews {
 	LinkName: string
 	Date: Date
 }
+
+export interface TBasaCustomer {
+	id?: Number
+	Name: string
+	Phone: string
+	Name_cleaning: string
+	Date: string
+	OrderQuantity: number
+}

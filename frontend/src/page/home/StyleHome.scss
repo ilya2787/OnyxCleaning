@@ -104,7 +104,7 @@
 			bottom: 0;
 			right: 0;
 			width: clamp(300px, 45vw, 590px);
-			max-height: 85%;
+			max-height: calc(100% - 140px);
 			@media (max-height: 800px) and (min-width: 1000px) {
 				width: auto;
 				z-index: 10;
