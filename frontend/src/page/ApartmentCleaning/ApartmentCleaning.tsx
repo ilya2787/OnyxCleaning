@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
-import { TCategories } from '../../components/type/Services.type'
+import { TCategories, TListServices } from '../../components/type/Services.type'
 import BackBTN from '../../components/ui/BackBTN/BackBTN'
 import HeaderServices from '../../components/ui/HeaderServices/HeaderServices'
 import { IconList } from '../../components/ui/IconList'
@@ -18,12 +18,18 @@ const ApartmentCleaning = () => {
 	const [ArrayDopBasic, setArrayDopBasic] = useState<TCategories[]>([])
 	const [ArrayDopGeneral, setArrayDopGeneral] = useState<TCategories[]>([])
 	const [ArrayDopRepair, setArrayDopRepair] = useState<TCategories[]>([])
+	const [ArrayListCleaning, setArrayListCleaning] = useState<TListServices[]>(
+		[],
+	)
+	const [BasicList, setBasicList] = useState<TListServices[]>([])
+	const [GeneralList, setGeneralList] = useState<TListServices[]>([])
+	const [RepairList, setRepairList] = useState<TListServices[]>([])
 
 	useEffect(() => {
 		async function ListBDDop() {
 			axios
 				.get<TCategories[]>(
-					`${process.env.REACT_APP_SERVER}/DopCleaningApartment`
+					`${process.env.REACT_APP_SERVER}/DopCleaningApartment`,
 				)
 				.then(res => {
 					setArrayBd(res.data)
@@ -35,7 +41,7 @@ const ApartmentCleaning = () => {
 
 	useEffect(() => {
 		async function ListDop() {
-			ArrayBD.map(data => {
+			await ArrayBD.map(data => {
 				data.NameCatCleaning === 'Basic' &&
 					setArrayDopBasic(ArrayDopBasic => [...ArrayDopBasic, data])
 				data.NameCatCleaning === 'General' &&
@@ -46,6 +52,31 @@ const ApartmentCleaning = () => {
 		}
 		ListDop()
 	}, [ArrayBD])
+
+	useEffect(() => {
+		async function ArrayDataList() {
+			await axios
+				.get<TListServices[]>(`${process.env.REACT_APP_SERVER}/ListCleaning`)
+				.then(res => setArrayListCleaning(res.data))
+				.catch(err => console.log(err))
+		}
+		ArrayDataList()
+	}, [setArrayListCleaning])
+
+	useEffect(() => {
+		async function ListCleaning() {
+			await ArrayListCleaning.map(data => {
+				data.Name_cleaning === 'Basic' &&
+					setBasicList(BasicList => [...BasicList, data])
+				data.Name_cleaning === 'General' &&
+					setGeneralList(GeneralList => [...GeneralList, data])
+				data.Name_cleaning === 'Repair' &&
+					setRepairList(RepairList => [...RepairList, data])
+			})
+		}
+		ListCleaning()
+	}, [ArrayListCleaning])
+
 	return (
 		<motion.div
 			className='ApartmentCleaning'
@@ -81,11 +112,18 @@ const ApartmentCleaning = () => {
 			<div className='ApartmentCleaning-content'>
 				<h1 className='ApartmentCleaning-content--h1'>Что входит в уборку ?</h1>
 				<CategoryCleaning setCatCleaning={setCatCleaning} />
-				{CatCleaning === 'Basic' && <Basic ArrayDopBasic={ArrayDopBasic} />}
-				{CatCleaning === 'General' && (
-					<General ArrayDopGeneral={ArrayDopGeneral} />
+				{CatCleaning === 'Basic' && (
+					<Basic ArrayDopBasic={ArrayDopBasic} ArrayCleaning={BasicList} />
 				)}
-				{CatCleaning === 'Repair' && <Repair ArrayDopRepair={ArrayDopRepair} />}
+				{CatCleaning === 'General' && (
+					<General
+						ArrayDopGeneral={ArrayDopGeneral}
+						ArrayCleaning={GeneralList}
+					/>
+				)}
+				{CatCleaning === 'Repair' && (
+					<Repair ArrayDopRepair={ArrayDopRepair} ArrayCleaning={RepairList} />
+				)}
 			</div>
 		</motion.div>
 	)

@@ -10,6 +10,7 @@ import {
 	FaRubleSign,
 	FaStar,
 	FaTelegramPlane,
+	FaUserAlt,
 } from 'react-icons/fa'
 import { FaCheck, FaLocationDot } from 'react-icons/fa6'
 import { GiFamilyHouse, GiOfficeChair, GiVacuumCleaner } from 'react-icons/gi'
@@ -31,7 +32,8 @@ import {
 } from 'react-icons/io5'
 import { LuCopyright, LuMousePointerClick } from 'react-icons/lu'
 import { MdDeleteForever, MdSmartphone } from 'react-icons/md'
-import { TbChecklist, TbMessageUser } from 'react-icons/tb'
+import { RiEdit2Fill, RiEdit2Line } from 'react-icons/ri'
+import { TbChecklist, TbMessageUser, TbWindow } from 'react-icons/tb'
 
 export const IconList = {
 	Location: <FaLocationDot />,
@@ -67,4 +69,8 @@ export const IconList = {
 	JobOfficially: <TbChecklist />,
 	Mail: <IoMailOpenOutline />,
 	global: <IoGlobeOutline />,
+	User: <FaUserAlt />,
+	Window: <TbWindow />,
+	Edit_YES: <RiEdit2Fill />,
+	Edit_ON: <RiEdit2Line />,
 }

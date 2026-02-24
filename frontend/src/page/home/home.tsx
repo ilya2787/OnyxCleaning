@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { lazy } from 'react'
 import { Link } from 'react-router-dom'
+import Snowfall from 'react-snowfall'
 import { IconList } from '../../components/ui/IconList'
 import Reviews from './Reviews'
 import './StyleHome.scss'
@@ -16,6 +17,7 @@ const Home = () => {
 			exit={{ opacity: 0, transition: { duration: 0.1 } }}
 		>
 			<div className='header_home'>
+				<Snowfall />
 				<h1 className='header_home_h1'>Cleaning</h1>
 				<div className='header_home_center'>
 					<div className='header_home_center_text'>

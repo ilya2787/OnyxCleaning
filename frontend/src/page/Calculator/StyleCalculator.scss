@@ -353,7 +353,9 @@
 					height: 200px;
 					padding: 10px 10px 90px 10px;
 					border-radius: 10px;
-					box-shadow: inset 0px 1px 2px #f6f4eb, 0px 1px 2px #dcdad1,
+					box-shadow:
+						inset 0px 1px 2px #f6f4eb,
+						0px 1px 2px #dcdad1,
 						0px 2px 4px #c3c1b9;
 					&--PriceBD {
 						position: absolute;
@@ -432,10 +434,6 @@
 				background-color: #dcd4ca;
 				border-radius: 10px;
 				padding: 0 20px;
-				&--MinimumPrice {
-					@include SettingLinkFinalPrice();
-					border-bottom: 3px dotted #eae7db;
-				}
 				&--quadrature {
 					@include SettingLinkFinalPrice();
 					p {
@@ -501,9 +499,6 @@
 							&--item {
 								@include SettingModalContentItem();
 							}
-						}
-						&--MinPrice {
-							@include SettingModalContentItem();
 						}
 						&--Quadrature {
 							@include SettingModalContentItem();

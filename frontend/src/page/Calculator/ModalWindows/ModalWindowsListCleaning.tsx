@@ -1,11 +1,6 @@
-import { Dispatch, FC, SetStateAction } from 'react'
-import {
-	BasicList,
-	GeneralList,
-	OfficeList,
-	RepairList,
-	WindowsList,
-} from '../../../components/ListDataCleaning/ListDataCleaning'
+import axios from 'axios'
+import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react'
+import { TListServices } from '../../../components/type/Services.type'
 import ModalWindows from '../../../components/ui/ModalWindows/ModalWindows'
 import './StyleModalWindows.scss'
 
@@ -22,6 +17,20 @@ const ModalWindowsListCleaning: FC<TypeProps> = ({
 	CurrentServicesSingle,
 	CurrentCatCleaning,
 }) => {
+	const [ArrayListCleaning, setArrayListCleaning] = useState<TListServices[]>(
+		[],
+	)
+
+	useEffect(() => {
+		async function ArrayDataList() {
+			await axios
+				.get<TListServices[]>(`${process.env.REACT_APP_SERVER}/ListCleaning`)
+				.then(res => setArrayListCleaning(res.data))
+				.catch(err => console.log(err))
+		}
+		ArrayDataList()
+	}, [setArrayListCleaning])
+
 	return (
 		<ModalWindows
 			Title='Что входит в уборку'
@@ -32,59 +41,18 @@ const ModalWindowsListCleaning: FC<TypeProps> = ({
 				<ul>
 					{CurrentServicesSingle === 'CleaningApartment' && (
 						<>
-							{CurrentCatCleaning === 'Basic' &&
-								BasicList.map((data, i) => (
-									<section key={i}>
-										<h2>Комнаты</h2>
-										{data.AllRoom.List.map(List => (
-											<li key={List.id}>{List.text}</li>
-										))}
-										<h2>Кухня</h2>
-										{data.Food.List.map(List => (
-											<li key={List.id}>{List.text}</li>
-										))}
-										<h2>Санузел</h2>
-										{data.WC.List.map(List => (
-											<li key={List.id}>{List.text}</li>
-										))}
-									</section>
-								))}
-
-							{CurrentCatCleaning === 'General' &&
-								GeneralList.map((data, i) => (
-									<section key={i}>
-										<h2>Комнаты</h2>
-										{data.AllRoom.List.map(List => (
-											<li key={List.id}>{List.text}</li>
-										))}
-										<h2>Кухня</h2>
-										{data.Food.List.map(List => (
-											<li key={List.id}>{List.text}</li>
-										))}
-										<h2>Санузел</h2>
-										{data.WC.List.map(List => (
-											<li key={List.id}>{List.text}</li>
-										))}
-									</section>
-								))}
-
-							{CurrentCatCleaning === 'Repair' &&
-								RepairList.map((data, i) => (
-									<section key={i}>
-										<h2>Комнаты</h2>
-										{data.AllRoom.List.map(List => (
-											<li key={List.id}>{List.text}</li>
-										))}
-										<h2>Кухня</h2>
-										{data.Food.List.map(List => (
-											<li key={List.id}>{List.text}</li>
-										))}
-										<h2>Санузел</h2>
-										{data.WC.List.map(List => (
-											<li key={List.id}>{List.text}</li>
-										))}
-									</section>
-								))}
+							<h2>Уборка в квартирах и домах</h2>
+							<h3>
+								{CurrentCatCleaning === 'Basic' && 'Базовая уборка'}
+								{CurrentCatCleaning === 'General' && 'Генеральная уборка'}
+								{CurrentCatCleaning === 'Repair' && 'После ремонта'}
+							</h3>
+							{ArrayListCleaning.map(
+								data =>
+									CurrentCatCleaning === data.Name_cleaning && (
+										<li key={data.id}>{data.Text}</li>
+									),
+							)}
 							{CurrentCatCleaning === '' && <h2>Вы не выбрали тип уборки</h2>}
 						</>
 					)}
@@ -92,18 +60,24 @@ const ModalWindowsListCleaning: FC<TypeProps> = ({
 					{CurrentServicesSingle === 'CleaningOffice' && (
 						<>
 							<h2>Уборка офисных помещений</h2>
-							{OfficeList.map(data => (
-								<li key={data.id}>{data.text}</li>
-							))}
+							{ArrayListCleaning.map(
+								data =>
+									data.Name_cleaning === 'Office' && (
+										<li key={data.id}>{data.Text}</li>
+									),
+							)}
 						</>
 					)}
 
 					{CurrentServicesSingle === 'CleaningWindows' && (
 						<>
 							<h2>Мойка окон</h2>
-							{WindowsList.map(data => (
-								<li key={data.id}>{data.text}</li>
-							))}
+							{ArrayListCleaning.map(
+								data =>
+									data.Name_cleaning === 'Windows' && (
+										<li key={data.id}>{data.Text}</li>
+									),
+							)}
 						</>
 					)}
 

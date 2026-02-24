@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react'
 import { sendMessage } from '../../components/api/Telegram'
-import { InitialQuadrature } from '../../components/type/Parameter.type'
 import {
 	TBasaCustomer,
 	TCitiesDistancePrice,
@@ -38,6 +37,7 @@ interface TypeProps {
 	ValueStreet: string
 	ValueName: string
 	ValueTel: string
+	InitialQuadrature: number
 }
 
 const FinalPrice: FC<TypeProps> = ({
@@ -60,6 +60,7 @@ const FinalPrice: FC<TypeProps> = ({
 	ValueStreet,
 	ValueName,
 	ValueTel,
+	InitialQuadrature,
 }) => {
 	const [PriceQuadratureNew, setPriceQuadratureNew] = useState<number>(0)
 	const [FinalPrice, setFinalPrice] = useState<number>(CurrentPrice)
@@ -68,22 +69,21 @@ const FinalPrice: FC<TypeProps> = ({
 
 	useEffect(() => {
 		if (C_Windows === false) {
-			if (NumberArea > InitialQuadrature.Quantity) {
+			if (NumberArea > InitialQuadrature) {
 				setPriceQuadratureNew(
-					(NumberArea - InitialQuadrature.Quantity) * PriceQuadrature,
+					(NumberArea - InitialQuadrature) * PriceQuadrature + MinimumPrice,
 				)
 			} else {
-				setPriceQuadratureNew(0)
+				setPriceQuadratureNew(MinimumPrice)
 			}
 		} else {
 			if (NumberArea > 1) {
-				setPriceQuadratureNew((NumberArea - 1) * PriceQuadrature)
+				setPriceQuadratureNew((NumberArea - 1) * PriceQuadrature + MinimumPrice)
 			} else {
-				setPriceQuadratureNew(0)
+				setPriceQuadratureNew(MinimumPrice)
 			}
 		}
 	}, [NumberArea, PriceQuadrature, C_Windows])
-
 	useEffect(() => {
 		if (DopCurrentPrice && CurrentDistance) {
 			if (ArrayIdDopWindows) {
@@ -93,10 +93,7 @@ const FinalPrice: FC<TypeProps> = ({
 							(a, v) => a + (v.quantity - 1) * v.price + v.MinPrice,
 							0,
 						) +
-						ArrayIdDopWindows?.reduce(
-							(a, v) => a + (v.quantity - 1) * v.price + v.MinPrice,
-							0,
-						) +
+						ArrayIdDopWindows?.reduce((a, v) => a + v.quantity * v.price, 0) +
 						CurrentDistance?.reduce((a, v) => a + v.price, 0),
 				)
 			} else {
@@ -225,7 +222,10 @@ const FinalPrice: FC<TypeProps> = ({
 					const User = res.data[0]
 					axios
 						.post(`${process.env.REACT_APP_SERVER}/baseUpdateOrder`, {
+							Name: ValueName,
 							OrderQuantity: User.OrderQuantity + 1,
+							Name_cleaning: CurrentServices,
+							Date: FormNewDate,
 							id: User.id,
 						})
 						.then(res => {
@@ -250,12 +250,6 @@ const FinalPrice: FC<TypeProps> = ({
 				<p>К оплате: {PriceFormat(FinalPrice)}</p>
 			</div>
 
-			<div className='Calculator--content--BlockResult--item--MinimumPrice'>
-				<p>Минимальная стоимость</p>
-				<div className='Calculator--content--BlockResult--item--MinimumPrice--price'>
-					{PriceFormat(MinimumPrice)}
-				</div>
-			</div>
 			{PriceQuadrature ? (
 				<div className='Calculator--content--BlockResult--item--quadrature'>
 					<p>
@@ -306,9 +300,7 @@ const FinalPrice: FC<TypeProps> = ({
 								</p>
 							</div>
 							<div className='Calculator--content--BlockResult--item--DopServices--item--price'>
-								{PriceFormat(
-									data.FinalPriceDop ? data.FinalPriceDop : data.MinPrice,
-								)}
+								{PriceFormat(data.price * data.quantity)}
 							</div>
 						</div>
 					))}
@@ -373,10 +365,6 @@ const FinalPrice: FC<TypeProps> = ({
 											</div>
 										),
 								)}
-						</section>
-						<section className='Calculator--content--BlockResult--item--ModalOrder--BlockMain--MinPrice'>
-							<p>Минимальная сумма заказа: </p>
-							<p>{PriceFormat(MinimumPrice)}</p>
 						</section>
 						<section className='Calculator--content--BlockResult--item--ModalOrder--BlockMain--Quadrature'>
 							<p>

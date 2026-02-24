@@ -1,11 +1,33 @@
+import axios from 'axios'
 import { motion } from 'framer-motion'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router'
-import { CONTACT } from '../../components/ContactData/ContactData'
 import HeaderMenu from '../../components/HeaderMenu/HeaderMenu'
 import TitlePage from '../../components/Title/TitlePage'
+import { TContact } from '../../components/type/Services.type'
+import { FormatPhone } from '../../components/ui/FormatPhone/FormatPhone'
 import './style.scss'
 
 const Error404 = () => {
+	const [Contact, setContact] = useState<TContact[]>([])
+	const [Telephone, setTelephone] = useState<string>('')
+
+	useEffect(() => {
+		const ContactAll = async () => {
+			await axios
+				.get<TContact[]>(`${process.env.REACT_APP_SERVER}/Contact`)
+				.then(res => setContact(res.data))
+				.catch(err => console.log(err))
+		}
+		ContactAll()
+	}, [setContact])
+
+	useEffect(() => {
+		Contact.map(data => {
+			data.Name === 'Telephone' && setTelephone(data.Value)
+		})
+	}, [Contact])
+
 	return (
 		<motion.div
 			className='Content_404'
@@ -60,7 +82,7 @@ const Error404 = () => {
 					<div className='Content_404_menu--UL--item'>
 						<span>4</span>
 						<h2>Позвонить менеджеру для поиска</h2>
-						<a href='tel:+79937730011'>{CONTACT.Telephone}</a>
+						<a href={`tel:${FormatPhone(Telephone)}`}>{Telephone}</a>
 					</div>
 				</div>
 			</div>

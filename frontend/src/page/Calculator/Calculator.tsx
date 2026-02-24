@@ -11,17 +11,15 @@ import React, {
 import { useParams } from 'react-router'
 import TitlePage from '../../components/Title/TitlePage'
 import {
-	DistancePrice,
-	InitialQuadrature,
-} from '../../components/type/Parameter.type'
-import type {
-	TCategories,
-	TCities,
-	TCitiesDistancePrice,
-	TDopCurrentPrice,
-	TPriceBD,
-	TRootPrice,
-	TTimeCleaning,
+	TDegree,
+	type TCategories,
+	type TCities,
+	type TCitiesDistancePrice,
+	type TDopCurrentPrice,
+	type TParametersBD,
+	type TPriceBD,
+	type TRootPrice,
+	type TTimeCleaning,
 } from '../../components/type/Services.type'
 import BTNFinalPrice from '../../components/ui/BTNFinalPrice/BTNFinalPrice'
 import { IconList } from '../../components/ui/IconList'
@@ -110,9 +108,14 @@ const Calculator = () => {
 	const onChangeValueStreet = (street: string) => {
 		setValueStreet(street)
 	}
+	//Параметры из базы данных
+	const [AllParametersBD, setAllParametersBD] = useState<TParametersBD[]>([])
+	const [InitialQuadrature, setInitialQuadrature] = useState<number>(0)
+	const [DistancePrice, setDistancePrice] = useState<number>(0)
 
 	//Наименование для одной доп услуги из мойке окон
 	const [DegreeTitle, setDegreeTitle] = useState<string>('')
+	const [DegreePrice, setDegreePrice] = useState<TDegree[]>([])
 
 	//Данные пользователя
 	const [ValueName, setValueName] = useState<string>('')
@@ -133,6 +136,16 @@ const Calculator = () => {
 	const [TimeCleaning, setTimeCleaning] = useState<TTimeCleaning[]>([
 		{ id: 0, quantity: 1.3 },
 	])
+
+	useEffect(() => {
+		async function Degree() {
+			await axios
+				.get<TDegree[]>(`${process.env.REACT_APP_SERVER}/DegreeCleaning`)
+				.then(res => setDegreePrice(res.data))
+				.catch(err => console.log(err))
+		}
+		Degree()
+	}, [setDegreePrice])
 
 	useEffect(() => {
 		if (CurrentServicesSingle != 'CleaningWindows') {
@@ -239,6 +252,24 @@ const Calculator = () => {
 	}, [params.Title])
 
 	//Выгрузка данных из БД
+	//Выгрузка минимальной квадратуры и цены за км
+	useEffect(() => {
+		async function Parameters() {
+			await axios
+				.get<TParametersBD[]>(`${process.env.REACT_APP_SERVER}/Parameters`)
+				.then(res => setAllParametersBD(res.data))
+				.catch(err => console.log(err))
+		}
+		Parameters()
+	}, [setAllParametersBD])
+
+	useEffect(() => {
+		AllParametersBD.map(data => {
+			data.Name === 'InitialQuadrature' && setInitialQuadrature(data.Value)
+			data.Name === 'DistancePrice' && setDistancePrice(data.Value)
+		})
+	}, [AllParametersBD])
+	///
 	const ArrayBDPrice = async () => {
 		await axios
 			.get<TPriceBD[]>(`${process.env.REACT_APP_SERVER}/PriceCleaning`)
@@ -333,7 +364,7 @@ const Calculator = () => {
 					{
 						Name: data.Name,
 						Distance: data.Distance,
-						price: data.Distance * DistancePrice.Price,
+						price: data.Distance * DistancePrice,
 					},
 				])
 			}
@@ -438,10 +469,10 @@ const Calculator = () => {
 
 	//Производимые расчеты количества на сумму из БД
 	const CalculatorPriceAndQuantity = () => {
-		if (NumberArea > InitialQuadrature.Quantity) {
+		if (NumberArea > InitialQuadrature) {
 			if (CurrentServicesSingle === 'CleaningOffice') {
 				setCurrentPrice(
-					(NumberArea - InitialQuadrature.Quantity) * PriceQuadratureOffice +
+					(NumberArea - InitialQuadrature) * PriceQuadratureOffice +
 						MinPriceOffice,
 				)
 			}
@@ -449,7 +480,7 @@ const Calculator = () => {
 				PriceCleaningApartment_DOP.map(data => {
 					data.Name === CurrentCatCleaning &&
 						setCurrentPrice(
-							(NumberArea - InitialQuadrature.Quantity) * data.price +
+							(NumberArea - InitialQuadrature) * data.price +
 								MinPriceCleaningApartment,
 						)
 				})
@@ -609,7 +640,7 @@ const Calculator = () => {
 						/>
 						{CurrentServicesSingle !== 'CleaningWindows' && (
 							<p>
-								<span>{IconList.Warning}</span> До 30 m<sup>2</sup> входит в
+								<span>{IconList.Warning}</span> До 20 m<sup>2</sup> входит в
 								минимальную стоимость, далее цена зависит и выбранной услуги или
 								типа уборки
 							</p>
@@ -735,6 +766,7 @@ const Calculator = () => {
 													minW={150}
 													fsH3={18}
 													setDegreeTitle={setDegreeTitle}
+													DegreePrice={DegreePrice}
 												/>
 											))}
 										</div>
@@ -830,6 +862,7 @@ const Calculator = () => {
 									minW={200}
 									fsH3={20}
 									setDegreeTitle={setDegreeTitle}
+									DegreePrice={DegreePrice}
 								/>
 							))}
 					</div>
@@ -857,6 +890,7 @@ const Calculator = () => {
 							ValueStreet={ValueStreet}
 							ValueName={ValueName}
 							ValueTel={ValueTel}
+							InitialQuadrature={InitialQuadrature}
 						/>
 					)}
 					{CurrentServicesSingle === 'CleaningOffice' && (
@@ -881,6 +915,7 @@ const Calculator = () => {
 							ValueStreet={ValueStreet}
 							ValueName={ValueName}
 							ValueTel={ValueTel}
+							InitialQuadrature={InitialQuadrature}
 						/>
 					)}
 					{CurrentServicesSingle === 'CleaningWindows' && (
@@ -904,6 +939,7 @@ const Calculator = () => {
 							ValueStreet={ValueStreet}
 							ValueName={ValueName}
 							ValueTel={ValueTel}
+							InitialQuadrature={InitialQuadrature}
 						/>
 					)}
 					<BTNFinalPrice

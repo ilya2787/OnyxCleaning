@@ -1,8 +1,12 @@
 import axios from 'axios'
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
-import { WindowsList } from '../../components/ListDataCleaning/ListDataCleaning'
-import { TCategories, TListServices } from '../../components/type/Services.type'
+import {
+	TCategories,
+	TListServices,
+	TListServicesRoom,
+	TPriceBD,
+} from '../../components/type/Services.type'
 import BackBTN from '../../components/ui/BackBTN/BackBTN'
 import BlockInformText from '../../components/ui/BlockInfoServices/BlockInformText'
 import HeaderServices from '../../components/ui/HeaderServices/HeaderServices'
@@ -12,18 +16,42 @@ import { PriceFormat } from '../../components/ui/PriceFormat/PriceFormat'
 import './StyleWindowsCleaning.scss'
 
 const WindowsCleaning = () => {
-	const [ArrayData, setArrayData] = useState<TListServices[]>([])
+	const [ArrayData, setArrayData] = useState<TListServicesRoom[]>([])
 	const [OpenModal, setOpenModal] = useState<boolean>(false)
 	const [OpenModalDop, setOpenModalDop] = useState<boolean>(false)
 	const [TitleModalDop, setTitleModalDop] = useState<string>('')
 	const [ArrayDataDop, setArrayDataDop] = useState<TCategories[]>([])
 	const [ArrayFullListDop, setArrayFullListDop] = useState<TCategories[]>([])
+	const [ArrayListCleaning, setArrayListCleaning] = useState<TListServices[]>(
+		[],
+	)
+	const [ArrayWindowsList, setArrayWindowsList] = useState<TListServices[]>([])
+	const [PriceAll, setPriceAll] = useState<TPriceBD[]>([])
+	const [MinPrice, setMinPrice] = useState<number>(0)
+	const [PriceDoor, setPriceDoor] = useState<number>(0)
+
+	useEffect(() => {
+		async function ArrayDataList() {
+			await axios
+				.get<TListServices[]>(`${process.env.REACT_APP_SERVER}/ListCleaning`)
+				.then(res => setArrayListCleaning(res.data))
+				.catch(err => console.log(err))
+		}
+		ArrayDataList()
+	}, [setArrayListCleaning])
+
+	useEffect(() => {
+		ArrayListCleaning.map(data => {
+			data.Name_cleaning === 'Windows' &&
+				setArrayWindowsList(ArrayWindowsList => [...ArrayWindowsList, data])
+		})
+	}, [ArrayListCleaning])
 
 	useEffect(() => {
 		async function ListBD() {
 			axios
 				.get<TCategories[]>(
-					`${process.env.REACT_APP_SERVER}/DopCleaningWindows`
+					`${process.env.REACT_APP_SERVER}/DopCleaningWindows`,
 				)
 				.then(res => {
 					setArrayFullListDop(res.data)
@@ -32,6 +60,23 @@ const WindowsCleaning = () => {
 		}
 		ListBD()
 	}, [setArrayFullListDop])
+
+	useEffect(() => {
+		async function PriceAllBD() {
+			await axios
+				.get<TPriceBD[]>(`${process.env.REACT_APP_SERVER}/PriceCleaning`)
+				.then(res => setPriceAll(res.data))
+				.catch(err => console.log(err))
+		}
+		PriceAllBD()
+	}, [setPriceAll])
+
+	useEffect(() => {
+		PriceAll.map(data => {
+			data.Name === 'CleaningWindows' && setMinPrice(data.MinPrice)
+			data.Name === 'Door' && setPriceDoor(data.price)
+		})
+	}, [PriceAll])
 
 	return (
 		<motion.div
@@ -49,10 +94,10 @@ const WindowsCleaning = () => {
 			>
 				<div className='WindowsCleaning--headerText'>
 					<p>
-						От <span>{PriceFormat(350)}</span> / створка
+						От <span>{PriceFormat(PriceDoor)}</span> / створка
 					</p>
 					<p>
-						Минимальный заказ <span>от {PriceFormat(2500)}</span>
+						Минимальный заказ <span>от {PriceFormat(MinPrice)}</span>
 					</p>
 					<ul>
 						<li>
@@ -76,7 +121,7 @@ const WindowsCleaning = () => {
 						deg={-90}
 						Title=''
 						LinkImg='./img/poster/Windows/WindowsList.jpg'
-						ArrayDataCleaning={WindowsList}
+						ArrayDataCleaning={ArrayWindowsList}
 						setArrayData={setArrayData}
 						setOpenModal={setOpenModal}
 						setOpenModalDop={setOpenModalDop}
@@ -95,7 +140,7 @@ const WindowsCleaning = () => {
 					{ArrayData.map(data => (
 						<li key={data.id}>
 							<span className='ModalContentUL-Icon'>{IconList.Check}</span>
-							<p>{data.text}</p>
+							<p>{data.Text}</p>
 						</li>
 					))}
 				</ul>

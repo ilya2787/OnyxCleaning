@@ -7,8 +7,10 @@ import {
 	useRef,
 	useState,
 } from 'react'
-import { DegreePrice } from '../../../components/type/Parameter.type'
-import { TDopCurrentPrice } from '../../../components/type/Services.type'
+import {
+	TDegree,
+	TDopCurrentPrice,
+} from '../../../components/type/Services.type'
 import { UpdateFinalPriceDop } from '../../../components/ui/Function/function'
 import { IconList } from '../../../components/ui/IconList'
 import { PriceFormat } from '../../../components/ui/PriceFormat/PriceFormat'
@@ -25,6 +27,7 @@ interface TypeProps {
 	minW: number
 	fsH3: number
 	setDegreeTitle?: Dispatch<SetStateAction<string>>
+	DegreePrice?: TDegree[]
 }
 
 const ItemDop: FC<TypeProps> = ({
@@ -37,6 +40,7 @@ const ItemDop: FC<TypeProps> = ({
 	minW,
 	fsH3,
 	setDegreeTitle,
+	DegreePrice,
 }) => {
 	const [QuantityDop, setQuantityDop] = useState<number>(0)
 	const [ActiveBlockDop, setActiveBlockDop] = useState<boolean>(false)
@@ -46,6 +50,20 @@ const ItemDop: FC<TypeProps> = ({
 		useState<string>('Del')
 	const inputNumber = useRef<HTMLInputElement>(null)
 	const [FocusInput, setFocusInput] = useState<boolean>(false)
+
+	const [Degree_Low, setDegree_Low] = useState<number>(0)
+	const [Degree_Average, setDegree_Average] = useState<number>(0)
+	const [Degree_Hard, setDegree_Hard] = useState<number>(0)
+
+	useEffect(() => {
+		if (DegreePrice) {
+			DegreePrice.map(data => {
+				data.Name === 'Low_price' && setDegree_Low(data.Price)
+				data.Name === 'Average_price' && setDegree_Average(data.Price)
+				data.Name === 'Hard_price' && setDegree_Hard(data.Price)
+			})
+		}
+	}, [DegreePrice])
 
 	const Plus = () => {
 		setQuantityDop(QuantityDop + 1)
@@ -104,7 +122,7 @@ const ItemDop: FC<TypeProps> = ({
 				value: Text,
 				quantity: 1,
 				unit: unit ? unit : '',
-				price: 1,
+				price: price,
 				MinPrice: price,
 			},
 		])
@@ -172,8 +190,8 @@ const ItemDop: FC<TypeProps> = ({
 				value: Text,
 				quantity: 1,
 				unit: unit ? unit : '',
-				price: 1,
-				MinPrice: price,
+				price: Number(price),
+				MinPrice: Number(price),
 			},
 		])
 	}
@@ -185,15 +203,15 @@ const ItemDop: FC<TypeProps> = ({
 		}
 		if (CurrentStatusCleaning === 'Low') {
 			setActiveBlockDop(true)
-			PlusDopDegree('Низкий', DegreePrice.Low_price, id)
+			PlusDopDegree('Низкий', Degree_Low, id)
 		}
 		if (CurrentStatusCleaning === 'Average') {
 			setActiveBlockDop(true)
-			PlusDopDegree('Средний', DegreePrice.Average_price, id)
+			PlusDopDegree('Средний', Degree_Average, id)
 		}
 		if (CurrentStatusCleaning === 'Hard') {
 			setActiveBlockDop(true)
-			PlusDopDegree('Высокая', DegreePrice.Hard_price, id)
+			PlusDopDegree('Высокая', Degree_Hard, id)
 		}
 	}, [CurrentStatusCleaning])
 

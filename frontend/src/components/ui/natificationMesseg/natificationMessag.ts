@@ -61,3 +61,51 @@ export const MessageOldUsers = (Name: string) => {
 		autoClose: 5000,
 	})
 }
+
+export const DeleteUsersMessage = (id: number) => {
+	notifications.show({
+		title: 'Удаление данных пользователя',
+		message: `Пользователь с идентификатором "${id}"  успешно удален`,
+		color: 'green',
+		position: 'top-right',
+		autoClose: 5000,
+	})
+}
+
+export const DeleteLineBasic = () => {
+	notifications.show({
+		title: 'Удаление строки',
+		message: `Строка успешно удалена`,
+		color: 'green',
+		position: 'top-right',
+		autoClose: 5000,
+	})
+}
+
+export const UpdateLineBasic = () => {
+	notifications.show({
+		title: 'Обновление строки',
+		message: `Строка успешно обновлена`,
+		color: 'green',
+		position: 'top-right',
+		autoClose: 5000,
+	})
+}
+export const AddStringBasicSuccess = () => {
+	notifications.show({
+		title: 'Добавление записи',
+		message: `Строка успешно добавлена`,
+		color: 'green',
+		position: 'top-right',
+		autoClose: 5000,
+	})
+}
+export const AddDopSuccess = () => {
+	notifications.show({
+		title: 'Добавление записи',
+		message: `Дополнительная услуга успешно добавлена`,
+		color: 'green',
+		position: 'top-right',
+		autoClose: 5000,
+	})
+}

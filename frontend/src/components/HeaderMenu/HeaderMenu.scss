@@ -123,6 +123,7 @@
 			}
 		}
 		&_tel {
+			color: CS.$ColorFon;
 			letter-spacing: 1px;
 			font-size: clamp(14px, 1.3vw, 18px);
 			margin: 0;
@@ -151,6 +152,11 @@
 				transition: all 0.3s ease;
 				&:hover {
 					color: CS.$ColorAccent;
+				}
+				img {
+					width: 30px;
+					height: 30px;
+					color: CS.$ColorBrown;
 				}
 			}
 			@media (min-width: 700px) {
@@ -277,7 +283,8 @@
 				column-gap: 20px;
 				padding: 10px;
 				border-radius: 15px;
-				box-shadow: inset 0 1px 4px rgba(255, 255, 255, 0.4),
+				box-shadow:
+					inset 0 1px 4px rgba(255, 255, 255, 0.4),
 					0 1px 4px rgba(132, 132, 132, 0.2);
 				border: 1px solid rgba(255, 255, 255, 0.2);
 				width: 400px;
@@ -303,7 +310,8 @@
 				column-gap: 20px;
 				padding: 10px;
 				border-radius: 15px;
-				box-shadow: inset 0 1px 4px rgba(255, 255, 255, 0.4),
+				box-shadow:
+					inset 0 1px 4px rgba(255, 255, 255, 0.4),
 					0 1px 4px rgba(132, 132, 132, 0.2);
 				border: 1px solid rgba(255, 255, 255, 0.2);
 				width: 400px;
@@ -319,7 +327,7 @@
 				font-size: 20px;
 				letter-spacing: 2px;
 			}
-			&--WhatsApp {
+			&--Max {
 				display: flex;
 				flex-direction: row;
 				justify-content: center;
@@ -327,7 +335,8 @@
 				column-gap: 20px;
 				padding: 10px;
 				border-radius: 15px;
-				box-shadow: inset 0 1px 4px rgba(255, 255, 255, 0.4),
+				box-shadow:
+					inset 0 1px 4px rgba(255, 255, 255, 0.4),
 					0 1px 4px rgba(132, 132, 132, 0.2);
 				border: 1px solid rgba(255, 255, 255, 0.2);
 				width: 400px;
@@ -337,7 +346,8 @@
 					justify-content: center;
 					align-items: center;
 					color: CS.$ColorFon;
-					font-size: 30px;
+					width: 30px;
+					height: 30px;
 				}
 				color: #fff;
 				font-size: 20px;
@@ -386,53 +396,7 @@
 			}
 		}
 		&--Burger {
-			.burger-checkbox {
-				position: absolute;
-				visibility: hidden;
-			}
-			.burger {
-				cursor: pointer;
-				display: block;
-				position: relative;
-				border: none;
-				background: transparent;
-				width: 40px;
-				height: 26px;
-				margin: 30px auto;
-			}
-			.burger::before,
-			.burger::after {
-				content: '';
-				left: 0;
-				position: absolute;
-				display: block;
-				width: 100%;
-				height: 4px;
-				border-radius: 20px;
-				background: #292929;
-			}
-			.burger::before {
-				top: 0;
-				box-shadow: 0 11px 0 #292929;
-				transition: box-shadow 0.3s 0.15s, top 0.3s 0.15s, transform 0.3s;
-			}
-			.burger::after {
-				bottom: 0;
-				transition: bottom 0.3s 0.15s, transform 0.3s;
-			}
-			.burger-checkbox:checked + .burger::before {
-				top: 11px;
-				transform: rotate(45deg);
-				box-shadow: 0 6px 0 rgba(0, 0, 0, 0);
-				transition: box-shadow 0.15s, top 0.3s, transform 0.3s 0.15s;
-				background: #292929;
-			}
-			.burger-checkbox:checked + .burger::after {
-				bottom: 11px;
-				transform: rotate(-45deg);
-				transition: bottom 0.3s, transform 0.3s 0.15s;
-				background: #292929;
-			}
+			@include MX.SettingBurger;
 		}
 		&--Calculator {
 			@include BtnMobile();

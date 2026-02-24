@@ -1,8 +1,10 @@
+import axios from 'axios'
 import { FC, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { IconList } from '../../components/ui/IconList'
 import { ROUTES } from '../../model/routes'
-import { CONTACT } from '../ContactData/ContactData'
+import { TContact } from '../type/Services.type'
+import { FormatPhone } from '../ui/FormatPhone/FormatPhone'
 import { warning } from '../ui/natificationMesseg/natificationMessag'
 import { UseClickOut } from '../ui/UseClickOut/UseClickOut'
 import './HeaderMenu.scss'
@@ -19,6 +21,29 @@ const HeaderMenu: FC = () => {
 	const [show, handleShow] = useState(false)
 	const [OpenBlockContact, setOpenBlockContact] = useState<boolean>(false)
 	const BtnOpenContact = useRef<HTMLButtonElement>(null)
+
+	const [Contact, setContact] = useState<TContact[]>([])
+	const [Telephone, setTelephone] = useState<string>('')
+	const [TelegramLink, setTelegramLink] = useState<string>('')
+	const [MaxLink, setMaxLink] = useState<string>('')
+
+	useEffect(() => {
+		const ContactAll = async () => {
+			await axios
+				.get<TContact[]>(`${process.env.REACT_APP_SERVER}/Contact`)
+				.then(res => setContact(res.data))
+				.catch(err => console.log(err))
+		}
+		ContactAll()
+	}, [setContact])
+
+	useEffect(() => {
+		Contact.map(data => {
+			data.Name === 'Telephone' && setTelephone(data.Value)
+			data.Name === 'Telegram' && setTelegramLink(data.Value)
+			data.Name === 'Max' && setMaxLink(data.Value)
+		})
+	}, [Contact])
 
 	useEffect(() => {
 		if (OpenNav) {
@@ -108,7 +133,6 @@ const HeaderMenu: FC = () => {
 			}
 		})
 	}, [])
-
 	return (
 		<nav className={!show ? 'nav' : 'nav Scroll'}>
 			<div className={!show ? 'nav_logo' : 'nav_logo ScrollActive'}>
@@ -127,14 +151,18 @@ const HeaderMenu: FC = () => {
 				<div className='nav_contact_location'>
 					<span>{IconList.Location}</span> <p>Калининград</p>
 				</div>
-				<p className='nav_contact_tel'>{CONTACT.Telephone}</p>
+				<a href={`tel:${FormatPhone(Telephone)}`} className='nav_contact_tel'>
+					{Telephone}
+				</a>
 				<div
 					className={
 						!show ? 'nav_contact_social' : 'nav_contact_social ScrollActive'
 					}
 				>
-					<a href='/#'>{IconList.WhatsApp}</a>
-					<a href='/#'>{IconList.Telegram}</a>
+					<a href={`${MaxLink}`}>
+						<img src='/img/max.png' alt='' />
+					</a>
+					<a href={`${TelegramLink}`}>{IconList.Telegram}</a>
 				</div>
 			</div>
 
@@ -211,22 +239,25 @@ const HeaderMenu: FC = () => {
 				<div className='nav_BlockContactsMobile_content'>
 					<div className='nav_BlockContactsMobile_content--Phone'>
 						<span>{IconList.Phone}</span>
-						<a href='tel:+79937730011'>{CONTACT.Telephone}</a>
+						<a href={`tel:${FormatPhone(Telephone)}`}>{Telephone}</a>
 					</div>
 
 					<a
-						href='http://'
+						href={TelegramLink}
 						target='_blank'
 						className='nav_BlockContactsMobile_content--telegram'
 					>
 						<span>{IconList.Telegram}</span> Telegram
 					</a>
 					<a
-						href='http://'
+						href={MaxLink}
 						target='_blank'
-						className='nav_BlockContactsMobile_content--WhatsApp'
+						className='nav_BlockContactsMobile_content--Max'
 					>
-						<span>{IconList.WhatsApp}</span> WhatsApp
+						<span>
+							<img src='/img/max.png' alt='' />
+						</span>{' '}
+						Max
 					</a>
 				</div>
 			</div>

@@ -8,6 +8,11 @@ export const ROUTES = {
 	Calculator: '/Calculator/:NameCleaning/:Title',
 	PersonalDataPolicy: '/privacy',
 	About: '/About',
+	AdminPanel: '/AdminPanel',
+	AdminHome: '/AdminPanel/',
+	UserData: '/AdminPanel/UserData',
+	CleaningData: '/AdminPanel/CleaningData',
+	ApartmentData: '/AdminPanel/CleaningData/Apartment',
 } as const
 
 export type PathParams = {

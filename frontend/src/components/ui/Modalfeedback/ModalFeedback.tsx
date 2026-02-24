@@ -27,7 +27,7 @@ const ModalFeedback: FC<Props> = ({ OpenModal, setOpenModal }) => {
 	}
 
 	const handelSubmit = async (
-		event: React.SyntheticEvent<HTMLFormElement, SubmitEvent>
+		event: React.SyntheticEvent<HTMLFormElement, SubmitEvent>,
 	): Promise<void> => {
 		event.preventDefault()
 		try {

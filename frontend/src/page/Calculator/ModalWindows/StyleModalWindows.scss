@@ -5,7 +5,13 @@
 		color: CS.$ColorBrown;
 		font-size: 28px;
 		font-weight: bold;
-		margin: 10px 0;
+		margin: 10px 0 0 0;
+	}
+	h3 {
+		font-size: 23px;
+		color: CS.$ColorBrownLithe;
+		margin: 0 0 10px 0;
+		font-style: italic;
 	}
 	ul {
 		li {

@@ -1,11 +1,20 @@
-//Типизация для списка доп услуг
+//Типизация для списка услуг входящих
 export interface TListServices {
 	id: number
-	text: string
+	Name_cleaning: string
+	Name_Room: string
+	Text: string
+}
+
+export interface TListServicesRoom {
+	id: number
+	Text: string
 }
 
 //Типизация для выгрузки данных дополнительных услуг из БД
-export interface TCategories extends TListServices {
+export interface TCategories {
+	id: number
+	text: string
 	price: number
 	unit?: string
 	NameCatRooms?: string
@@ -72,4 +81,26 @@ export interface TBasaCustomer {
 	Name_cleaning: string
 	Date: string
 	OrderQuantity: number
+}
+
+export interface TAllListUser extends TBasaCustomer {
+	id: number
+}
+
+export interface TParametersBD {
+	id: number
+	Name: string
+	Value: number
+}
+
+export interface TDegree {
+	id: number
+	Name: string
+	Price: number
+}
+
+export interface TContact {
+	id: number
+	Name: string
+	Value: string
 }

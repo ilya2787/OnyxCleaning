@@ -3,6 +3,11 @@ import App from './App'
 import { ROUTES } from './model/routes'
 import Error404 from './page/404/404'
 import About from './page/About/About'
+import AdminPanel from './page/Administrator/Administrator'
+import AdminHome from './page/Administrator/DataPage/AdminHome'
+import Apartment from './page/Administrator/DataPage/Cleaning/Apartment'
+import DataCleaning from './page/Administrator/DataPage/DataCleaning'
+import DataUser from './page/Administrator/DataPage/DataUsers'
 import ApartmentCleaning from './page/ApartmentCleaning/ApartmentCleaning'
 import Calculator from './page/Calculator/Calculator'
 import Home from './page/home/home'
@@ -44,5 +49,27 @@ export const router = createBrowserRouter([
 	{
 		path: ROUTES.PersonalDataPolicy,
 		element: <PersonalDataPolis />,
+	},
+	{
+		Component: AdminPanel,
+		errorElement: <Error404 />,
+		children: [
+			{
+				path: ROUTES.AdminHome,
+				element: <AdminHome />,
+			},
+			{
+				path: ROUTES.UserData,
+				element: <DataUser />,
+			},
+			{
+				path: ROUTES.CleaningData,
+				element: <DataCleaning />,
+			},
+			{
+				path: ROUTES.ApartmentData,
+				element: <Apartment />,
+			},
+		],
 	},
 ])

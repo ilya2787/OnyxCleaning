@@ -29,6 +29,20 @@ export const CatCleaning: IOption[] = [
 		label: 'После ремонта',
 	},
 ]
+export const RoomCleaning: IOption[] = [
+	{
+		value: 'AllRoom',
+		label: 'Комната',
+	},
+	{
+		value: 'Food',
+		label: 'Кухня',
+	},
+	{
+		value: 'WC',
+		label: 'Санузел',
+	},
+]
 
 export const StatusCleaning: IOption[] = [
 	{
