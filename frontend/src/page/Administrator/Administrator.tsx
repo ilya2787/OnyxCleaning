@@ -71,6 +71,12 @@ const AdminPanel = () => {
 					<Link to={ROUTES.CleaningData} className='AdminPanel_Menu_Link'>
 						<li>Услуги</li>
 					</Link>
+					<Link to={ROUTES.ContactData} className='AdminPanel_Menu_Link'>
+						<li>Контакты</li>
+					</Link>
+					<Link to={ROUTES.ReviewsData} className='AdminPanel_Menu_Link'>
+						<li>Отзывы</li>
+					</Link>
 				</ul>
 				<div className='AdminPanel_Menu_user'>
 					<div className='AdminPanel_Menu_user_icon'>

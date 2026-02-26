@@ -86,6 +86,313 @@
 	border-radius: 5px;
 }
 
+@mixin SettingItemString {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: flex-start;
+	&_AllRoom {
+		@include SettingItem();
+	}
+	&_Food {
+		@include SettingItem();
+	}
+	&_WC {
+		@include SettingItem();
+	}
+	&_itemStrong {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		column-gap: 30px;
+		margin: 10px 0;
+		height: 50px;
+		padding: 0 10px;
+		border-radius: 5px;
+		p {
+			flex: 1 1 300px;
+			font-size: 20px;
+		}
+		input[type='text'] {
+			flex: 1 1 300px;
+			font-size: 20px;
+			border-bottom: 2px solid CS.$ColorBrownLithe;
+		}
+		&--button {
+			display: flex;
+			flex-direction: row;
+			justify-content: center;
+			align-items: center;
+			column-gap: 10px;
+			&--edit {
+				@include SettingBTN(CS.$ColorBrownLithe);
+			}
+			&--delete {
+				@include SettingBTN(#c64657);
+			}
+		}
+	}
+	&_itemStrong:nth-child(even) {
+		background-color: #f7f4ee;
+	}
+	&_itemStrong:nth-child(odd) {
+		background-color: #efe8dc;
+	}
+}
+@mixin SettingBlockSelect {
+	flex: 1 1 300px;
+	h2 {
+		color: CS.$ColorBrown;
+		font-size: 23px;
+	}
+}
+@mixin SettingModalWindows {
+	.ModalWindowsAdBasic {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		align-items: center;
+		padding: 10px;
+		width: 100%;
+		row-gap: 20px;
+		&--Select {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			align-items: center;
+			flex-wrap: wrap;
+			column-gap: 20px;
+			row-gap: 20px;
+			width: 100%;
+
+			&--NameCleaning {
+				@include SettingBlockSelect();
+			}
+			&--NameRoom {
+				@include SettingBlockSelect();
+			}
+		}
+		&--Text {
+			width: 100%;
+			position: relative;
+			margin-top: 20px;
+			textarea {
+				@include MX.SettingInputFeedback;
+				resize: none;
+			}
+			label {
+				@include MX.SettingLabelFeedback;
+			}
+			textarea:focus ~ label,
+			textarea:not(:placeholder-shown) ~ label {
+				top: -32px;
+				font-size: 22px;
+				color: CS.$ColorAccent;
+			}
+		}
+		&--AddBTN {
+			width: 100%;
+			display: flex;
+			flex-direction: row;
+			justify-content: flex-end;
+			align-items: center;
+			margin: 10px 0;
+			button {
+				padding: 10px 30px;
+				font-size: 20px;
+				border-radius: 5px;
+				background-color: #b5dda6;
+				transition: all 0.3s ease;
+				&:hover {
+					filter: brightness(80%);
+				}
+			}
+		}
+	}
+	.ModalWindowsAddDop {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		align-items: center;
+		padding: 10px;
+		width: 100%;
+		row-gap: 20px;
+		&--Select {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			align-items: center;
+			flex-wrap: wrap;
+			column-gap: 20px;
+			row-gap: 20px;
+			width: 100%;
+
+			&--NameCleaning {
+				@include SettingBlockSelect();
+			}
+			&--NameRoom {
+				@include SettingBlockSelect();
+			}
+		}
+		&--content {
+			width: 100%;
+			position: relative;
+			margin-top: 20px;
+			&--text {
+				textarea {
+					@include MX.SettingInputFeedback;
+					resize: none;
+				}
+				label {
+					@include MX.SettingLabelFeedback;
+				}
+				textarea:focus ~ label,
+				textarea:not(:placeholder-shown) ~ label {
+					top: -32px;
+					font-size: 22px;
+					color: CS.$ColorAccent;
+				}
+			}
+			&--unitPrice {
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+				align-items: center;
+				flex-wrap: wrap;
+				margin-top: 30px;
+				column-gap: 20px;
+				row-gap: 20px;
+				&--unit {
+					display: flex;
+					flex-direction: row;
+					column-gap: 10px;
+					p {
+						font-size: 20px;
+					}
+					input[type='text'] {
+						border-bottom: 2px solid CS.$ColorBrown;
+						width: 100px;
+						font-size: 20px;
+					}
+				}
+				&--price {
+					display: flex;
+					flex-direction: row;
+					column-gap: 10px;
+					p {
+						font-size: 20px;
+					}
+					input[type='number'] {
+						font-size: 20px;
+						border-bottom: 2px solid CS.$ColorBrown;
+						text-align: right;
+						width: 100px;
+					}
+				}
+			}
+		}
+		&--AddBTN {
+			width: 100%;
+			display: flex;
+			flex-direction: row;
+			justify-content: flex-end;
+			align-items: center;
+			margin: 10px 0;
+			button {
+				padding: 10px 30px;
+				font-size: 20px;
+				border-radius: 5px;
+				background-color: #b5dda6;
+				transition: all 0.3s ease;
+				&:hover {
+					filter: brightness(80%);
+				}
+			}
+		}
+	}
+}
+
+@mixin SettingMinPrice {
+	flex: 1 1 400px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	background-color: CS.$ColorWhiteLite;
+	border-radius: 10px;
+	box-shadow: 1px 1px 1px #e7e7e7;
+	padding: 10px 15px;
+	h2 {
+		font-size: 23px;
+		color: CS.$ColorBrown;
+		border-bottom: 4px solid CS.$ColorBlockMenu;
+		margin-bottom: 15px;
+		width: 100%;
+		text-align: center;
+	}
+	.MinimalPrice--item {
+		margin-bottom: 10px;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		&--content {
+			h3 {
+				font-weight: bold;
+				font-size: 21px;
+			}
+			&--MinPrice {
+				display: flex;
+				flex-direction: row;
+				justify-content: flex-start;
+				align-items: center;
+				column-gap: 10px;
+				p {
+					font-size: 19px;
+					color: #222222;
+				}
+				span {
+					font-weight: bold;
+				}
+				input[type='number'] {
+					font-weight: bold;
+					width: 90px;
+					border-bottom: 1px solid CS.$ColorBrown;
+					text-align: right;
+				}
+			}
+			&--price {
+				display: flex;
+				flex-direction: row;
+				justify-content: flex-start;
+				align-items: center;
+				column-gap: 10px;
+				p {
+					font-size: 19px;
+					color: #222222;
+				}
+				span {
+					font-weight: bold;
+				}
+				input[type='number'] {
+					font-weight: bold;
+					width: 90px;
+					border-bottom: 1px solid CS.$ColorBrown;
+					text-align: right;
+				}
+			}
+		}
+		&--BTN {
+			button {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				font-size: 25px;
+			}
+		}
+	}
+}
+
 .AdminPanel {
 	display: flex;
 	flex-direction: row;
@@ -408,59 +715,7 @@
 				&__ListCleaningAll {
 					&--basic {
 						.ApartmentCleaningItem {
-							display: flex;
-							flex-direction: column;
-							justify-content: space-between;
-							align-items: flex-start;
-
-							&_AllRoom {
-								@include SettingItem();
-							}
-							&_Food {
-								@include SettingItem();
-							}
-							&_WC {
-								@include SettingItem();
-							}
-							&_itemStrong {
-								display: flex;
-								flex-direction: row;
-								justify-content: space-between;
-								align-items: center;
-								column-gap: 30px;
-								margin: 10px 0;
-								height: 50px;
-								padding: 0 10px;
-								border-radius: 5px;
-								p {
-									flex: 1 1 300px;
-									font-size: 20px;
-								}
-								input[type='text'] {
-									flex: 1 1 300px;
-									font-size: 20px;
-									border-bottom: 2px solid CS.$ColorBrownLithe;
-								}
-								&--button {
-									display: flex;
-									flex-direction: row;
-									justify-content: center;
-									align-items: center;
-									column-gap: 10px;
-									&--edit {
-										@include SettingBTN(CS.$ColorBrownLithe);
-									}
-									&--delete {
-										@include SettingBTN(#c64657);
-									}
-								}
-							}
-							&_itemStrong:nth-child(even) {
-								background-color: #f7f4ee;
-							}
-							&_itemStrong:nth-child(odd) {
-								background-color: #efe8dc;
-							}
+							@include SettingItemString();
 						}
 					}
 					&--Dop {
@@ -570,175 +825,593 @@
 					}
 				}
 			}
-			.ModalWindowsAdBasic {
+			@include SettingModalWindows();
+		}
+		.Office {
+			&_header {
 				display: flex;
-				flex-direction: column;
+				flex-direction: row;
 				justify-content: space-between;
 				align-items: center;
-				padding: 10px;
-				width: 100%;
-				row-gap: 20px;
-				&--Select {
+				&_BackLink {
+					@include MX.BackLinkAdmin;
+				}
+				&--title {
+					h1 {
+						font-size: 25px;
+						color: CS.$ColorBrown;
+						font-weight: bold;
+						text-transform: uppercase;
+					}
+				}
+			}
+			&_content {
+				margin-top: 30px;
+				&__ChoosingPositions {
 					display: flex;
 					flex-direction: row;
 					justify-content: space-between;
 					align-items: center;
 					flex-wrap: wrap;
-					column-gap: 20px;
-					row-gap: 20px;
-					width: 100%;
-					@mixin SettingBlockSelect {
-						flex: 1 1 300px;
-						h2 {
-							color: CS.$ColorBrown;
-							font-size: 23px;
+					background-color: CS.$ColorFonDark;
+					border-radius: 10px;
+					@include SettingRadio();
+					&--Basic {
+						@include SettingBlockRadio();
+					}
+					&--Dop {
+						@include SettingBlockRadio();
+					}
+				}
+				&_ListCleaningAll {
+					&--basic {
+						.OfficeListItem {
+							@include SettingItemString();
 						}
 					}
-					&--NameCleaning {
-						@include SettingBlockSelect();
+					&_BTNAddString {
+						display: flex;
+						flex-direction: row;
+						justify-content: flex-end;
+						align-items: center;
+						margin: 30px 0;
+						button {
+							padding: 10px 30px;
+							font-size: 23px;
+							border-radius: 5px;
+							background-color: #b5dda6;
+							transition: all 0.3s ease;
+							&:hover {
+								filter: brightness(80%);
+							}
+						}
 					}
-					&--NameRoom {
-						@include SettingBlockSelect();
-					}
-				}
-				&--Text {
-					width: 100%;
-					position: relative;
-					margin-top: 20px;
-					textarea {
-						@include MX.SettingInputFeedback;
-						resize: none;
-					}
-					label {
-						@include MX.SettingLabelFeedback;
-					}
-					textarea:focus ~ label,
-					textarea:not(:placeholder-shown) ~ label {
-						top: -32px;
-						font-size: 22px;
-						color: CS.$ColorAccent;
-					}
-				}
-				&--AddBTN {
-					width: 100%;
-					display: flex;
-					flex-direction: row;
-					justify-content: flex-end;
-					align-items: center;
-					margin: 10px 0;
-					button {
-						padding: 10px 30px;
-						font-size: 20px;
-						border-radius: 5px;
-						background-color: #b5dda6;
-						transition: all 0.3s ease;
-						&:hover {
-							filter: brightness(80%);
+					&--Dop {
+						.OfficeDopList {
+							display: flex;
+							flex-direction: row;
+							justify-content: space-between;
+							align-items: center;
+							border-radius: 5px;
+							padding: 10px 20px;
+							margin-top: 10px;
+							width: 100%;
+							column-gap: 20px;
+							&_item {
+								display: flex;
+								flex-direction: column;
+								justify-content: flex-start;
+								align-items: flex-start;
+								row-gap: 10px;
+								width: 100%;
+								&--text {
+									display: flex;
+									flex-direction: row;
+									justify-content: space-between;
+									align-items: center;
+									width: 100%;
+									p {
+										flex: 1 1 300px;
+										font-size: 20px;
+									}
+									input[type='text'] {
+										flex: 1 1 300px;
+										font-size: 20px;
+										border-bottom: 2px solid CS.$ColorBrownLithe;
+									}
+								}
+								&_unit {
+									width: 100%;
+									display: flex;
+									flex-direction: row;
+									justify-content: flex-start;
+									align-items: center;
+									column-gap: 10px;
+									&--title {
+										font-weight: bold;
+										color: #555555;
+									}
+									p {
+										font-size: 18px;
+									}
+									input[type='text'] {
+										width: 100px;
+										font-size: 18px;
+										border-bottom: 2px solid CS.$ColorBrownLithe;
+									}
+								}
+								&_Price {
+									width: 100%;
+									display: flex;
+									flex-direction: row;
+									justify-content: flex-start;
+									align-items: center;
+									column-gap: 10px;
+									&--title {
+										font-weight: bold;
+										color: #555555;
+									}
+									p {
+										font-size: 18px;
+									}
+									input[type='number'] {
+										width: 100px;
+										font-size: 18px;
+										border-bottom: 2px solid CS.$ColorBrownLithe;
+									}
+								}
+							}
+							&_BTN {
+								display: flex;
+								flex-direction: row;
+								justify-content: center;
+								align-items: center;
+								column-gap: 10px;
+								&--Edit {
+									@include SettingBTN(CS.$ColorBrownLithe);
+								}
+								&--Delete {
+									@include SettingBTN(#c64657);
+								}
+							}
+						}
+						.OfficeDopList:nth-child(even) {
+							background-color: #f7f4ee;
+						}
+						.OfficeDopList:nth-child(odd) {
+							background-color: #efe8dc;
 						}
 					}
 				}
 			}
-			.ModalWindowsAddDop {
+			@include SettingModalWindows;
+		}
+		.Windows {
+			&_header {
 				display: flex;
-				flex-direction: column;
+				flex-direction: row;
 				justify-content: space-between;
 				align-items: center;
-				padding: 10px;
-				width: 100%;
-				row-gap: 20px;
-				&--Select {
+				&_BackLink {
+					@include MX.BackLinkAdmin;
+				}
+				&--title {
+					h1 {
+						font-size: 25px;
+						color: CS.$ColorBrown;
+						font-weight: bold;
+						text-transform: uppercase;
+					}
+				}
+			}
+			&_content {
+				margin-top: 30px;
+				&__ChoosingPositions {
 					display: flex;
 					flex-direction: row;
 					justify-content: space-between;
 					align-items: center;
 					flex-wrap: wrap;
+					background-color: CS.$ColorFonDark;
+					border-radius: 10px;
+					@include SettingRadio();
+					&--Basic {
+						@include SettingBlockRadio();
+					}
+					&--Dop {
+						@include SettingBlockRadio();
+					}
+				}
+				&_ListCleaningAll {
+					&--basic {
+						.WindowsListItem {
+							@include SettingItemString();
+						}
+					}
+					&_BTNAddString {
+						display: flex;
+						flex-direction: row;
+						justify-content: flex-end;
+						align-items: center;
+						margin: 30px 0;
+						button {
+							padding: 10px 30px;
+							font-size: 23px;
+							border-radius: 5px;
+							background-color: #b5dda6;
+							transition: all 0.3s ease;
+							&:hover {
+								filter: brightness(80%);
+							}
+						}
+					}
+					&--Dop {
+						&--Degree {
+							margin: 30px 0;
+							h1 {
+								text-align: center;
+								font-size: 23px;
+								color: CS.$ColorBrown;
+							}
+							&--WindowsDegree {
+								display: flex;
+								flex-direction: row;
+								justify-content: space-between;
+								align-items: center;
+								flex-wrap: wrap;
+								background-color: CS.$ColorWhiteLite;
+								padding: 10px 20px;
+								border-radius: 5px;
+								column-gap: 20px;
+								row-gap: 20px;
+								.WindowsDegree--content {
+									flex: 1 1 300px;
+									display: flex;
+									flex-direction: row;
+									justify-content: space-around;
+									align-items: center;
+									background-color: CS.$ColorBlockMenu;
+									border-radius: 3px;
+									height: 50px;
+									h2 {
+										font-size: 19px;
+										font-weight: bold;
+									}
+									p {
+										font-size: 19px;
+									}
+									section {
+										display: flex;
+										flex-direction: row;
+									}
+									input[type='number'] {
+										font-size: 19px;
+										width: 120px;
+										text-align: right;
+										border-bottom: 1px solid CS.$ColorBrown;
+									}
+									button {
+										display: flex;
+										justify-content: center;
+										align-items: center;
+										font-size: 23px;
+									}
+								}
+							}
+						}
+						.WindowsDopList {
+							display: flex;
+							flex-direction: row;
+							justify-content: space-between;
+							align-items: center;
+							border-radius: 5px;
+							padding: 10px 20px;
+							margin-top: 10px;
+							width: 100%;
+							column-gap: 20px;
+							&_item {
+								display: flex;
+								flex-direction: column;
+								justify-content: flex-start;
+								align-items: flex-start;
+								row-gap: 10px;
+								width: 100%;
+								&--text {
+									display: flex;
+									flex-direction: row;
+									justify-content: space-between;
+									align-items: center;
+									width: 100%;
+									p {
+										flex: 1 1 300px;
+										font-size: 20px;
+									}
+									input[type='text'] {
+										flex: 1 1 300px;
+										font-size: 20px;
+										border-bottom: 2px solid CS.$ColorBrownLithe;
+									}
+								}
+								&_unit {
+									width: 100%;
+									display: flex;
+									flex-direction: row;
+									justify-content: flex-start;
+									align-items: center;
+									column-gap: 10px;
+									&--title {
+										font-weight: bold;
+										color: #555555;
+									}
+									p {
+										font-size: 18px;
+									}
+									input[type='text'] {
+										width: 100px;
+										font-size: 18px;
+										border-bottom: 2px solid CS.$ColorBrownLithe;
+									}
+								}
+								&_Price {
+									width: 100%;
+									display: flex;
+									flex-direction: row;
+									justify-content: flex-start;
+									align-items: center;
+									column-gap: 10px;
+									&--title {
+										font-weight: bold;
+										color: #555555;
+									}
+									p {
+										font-size: 18px;
+									}
+									input[type='number'] {
+										width: 100px;
+										font-size: 18px;
+										border-bottom: 2px solid CS.$ColorBrownLithe;
+									}
+								}
+							}
+							&_BTN {
+								display: flex;
+								flex-direction: row;
+								justify-content: center;
+								align-items: center;
+								column-gap: 10px;
+								&--Edit {
+									@include SettingBTN(CS.$ColorBrownLithe);
+								}
+								&--Delete {
+									@include SettingBTN(#c64657);
+								}
+							}
+						}
+						.WindowsDopList:nth-child(even) {
+							background-color: #f7f4ee;
+						}
+						.WindowsDopList:nth-child(odd) {
+							background-color: #efe8dc;
+						}
+					}
+				}
+			}
+			@include SettingModalWindows;
+		}
+		.Setting {
+			&_header {
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+				align-items: center;
+				&_BackLink {
+					@include MX.BackLinkAdmin;
+				}
+				&--title {
+					h1 {
+						font-size: 25px;
+						color: CS.$ColorBrown;
+						font-weight: bold;
+						text-transform: uppercase;
+					}
+				}
+			}
+			&_content {
+				h1 {
+					font-size: 25px;
+					color: CS.$ColorBrown;
+					text-align: center;
+					margin: 40px 0;
+				}
+				&--minimalPrice {
+					display: flex;
+					flex-direction: row;
+					justify-content: space-between;
+					align-items: flex-start;
+					flex-wrap: wrap;
+					column-gap: 30px;
+					row-gap: 30px;
+					&--Apartment {
+						@include SettingMinPrice();
+					}
+					&--Office {
+						@include SettingMinPrice();
+					}
+					&--Windows {
+						@include SettingMinPrice();
+					}
+				}
+				&--QuadratureDistance {
+					display: flex;
+					flex-direction: row;
+					justify-content: space-between;
+					align-items: center;
+					flex-wrap: wrap;
+					background-color: CS.$ColorWhiteLite;
+					padding: 10px 20px;
+					border-radius: 5px;
 					column-gap: 20px;
 					row-gap: 20px;
-					width: 100%;
-					@mixin SettingBlockSelect {
-						flex: 1 1 300px;
+					.ItemParams {
+						flex: 1 1 500px;
+						display: flex;
+						flex-direction: row;
+						justify-content: flex-start;
+						align-items: center;
+						background-color: CS.$ColorBlockMenu;
+						column-gap: 30px;
+						border-radius: 3px;
+						height: 50px;
+						padding: 10px 20px;
 						h2 {
-							color: CS.$ColorBrown;
+							font-size: 19px;
+							font-weight: bold;
+						}
+						p {
+							font-size: 19px;
+						}
+						section {
+							display: flex;
+							flex-direction: row;
+							column-gap: 10px;
+						}
+						input[type='number'] {
+							font-size: 19px;
+							width: 120px;
+							text-align: right;
+							border-bottom: 1px solid CS.$ColorBrown;
+						}
+						button {
+							display: flex;
+							justify-content: center;
+							align-items: center;
 							font-size: 23px;
 						}
 					}
-					&--NameCleaning {
-						@include SettingBlockSelect();
-					}
-					&--NameRoom {
-						@include SettingBlockSelect();
+				}
+			}
+		}
+		.DataContact {
+			&_header {
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+				align-items: center;
+				&_BackLink {
+					@include MX.BackLinkAdmin;
+				}
+				&--title {
+					h1 {
+						font-size: 25px;
+						color: CS.$ColorBrown;
+						font-weight: bold;
+						text-transform: uppercase;
 					}
 				}
-				&--content {
-					width: 100%;
-					position: relative;
-					margin-top: 20px;
-					&--text {
-						textarea {
-							@include MX.SettingInputFeedback;
-							resize: none;
+			}
+			&_content {
+				h1 {
+					font-size: 25px;
+					color: CS.$ColorBrown;
+					text-align: center;
+					margin: 40px 0;
+				}
+				&--phone {
+					display: flex;
+					flex-direction: row;
+					justify-content: flex-start;
+					align-items: center;
+					column-gap: 30px;
+					background-color: CS.$ColorWhiteLite;
+					padding: 20px 20px 10px 20px;
+					border-radius: 5px;
+					h2 {
+						font-size: 22px;
+						font-weight: bold;
+					}
+					section {
+						display: flex;
+						flex-direction: row;
+						justify-content: space-between;
+						align-items: center;
+						column-gap: 10px;
+						font-size: 20px;
+						input[type='text'] {
+							width: 200px;
+							text-align: right;
+							border-bottom: 1px solid CS.$ColorBrown;
 						}
-						label {
-							@include MX.SettingLabelFeedback;
-						}
-						textarea:focus ~ label,
-						textarea:not(:placeholder-shown) ~ label {
-							top: -32px;
-							font-size: 22px;
-							color: CS.$ColorAccent;
+						button {
+							display: flex;
+							flex-direction: column;
+							justify-content: center;
+							align-items: center;
+							font-size: 25px;
 						}
 					}
-					&--unitPrice {
+				}
+				&--social {
+					width: 100%;
+					&--item {
 						display: flex;
 						flex-direction: row;
 						justify-content: space-between;
 						align-items: center;
 						flex-wrap: wrap;
-						&--unit {
+						padding: 10px 20px;
+						background-color: CS.$ColorWhiteLite;
+						border-radius: 5px;
+						column-gap: 20px;
+						row-gap: 20px;
+						.SocialItem {
+							flex: 1 1 400px;
+							background-color: CS.$ColorBlockMenu;
+							padding: 10px 15px;
 							display: flex;
 							flex-direction: row;
+							justify-content: space-between;
+							align-items: center;
+							border-radius: 5px;
 							column-gap: 10px;
+							h2 {
+								font-size: 22px;
+								font-weight: bold;
+							}
 							p {
 								font-size: 20px;
 							}
 							input[type='text'] {
-								border-bottom: 2px solid CS.$ColorBrown;
-								width: 100px;
 								font-size: 20px;
+								border-bottom: 1px solid CS.$ColorBrown;
+								width: 80%;
 							}
-						}
-						&--price {
-							display: flex;
-							flex-direction: row;
-							column-gap: 10px;
-							p {
-								font-size: 20px;
-							}
-							input[type='number'] {
-								font-size: 20px;
-								border-bottom: 2px solid CS.$ColorBrown;
-								text-align: right;
-								width: 100px;
+							button {
+								display: flex;
+								flex-direction: column;
+								justify-content: center;
+								align-items: center;
+								font-size: 25px;
 							}
 						}
 					}
 				}
-				&--AddBTN {
-					width: 100%;
-					display: flex;
-					flex-direction: row;
-					justify-content: flex-end;
-					align-items: center;
-					margin: 10px 0;
-					button {
-						padding: 10px 30px;
-						font-size: 20px;
-						border-radius: 5px;
-						background-color: #b5dda6;
-						transition: all 0.3s ease;
-						&:hover {
-							filter: brightness(80%);
-						}
+			}
+		}
+		.ReviewsAdmin {
+			&_header {
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+				align-items: center;
+				&_BackLink {
+					@include MX.BackLinkAdmin;
+				}
+				&--title {
+					h1 {
+						font-size: 25px;
+						color: CS.$ColorBrown;
+						font-weight: bold;
+						text-transform: uppercase;
 					}
 				}
 			}

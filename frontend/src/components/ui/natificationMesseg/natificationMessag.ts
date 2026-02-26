@@ -109,3 +109,13 @@ export const AddDopSuccess = () => {
 		autoClose: 5000,
 	})
 }
+
+export const ErrorOrderAdd = () => {
+	notifications.show({
+		title: 'Ошибка записи',
+		message: `Заполните поля`,
+		position: 'top-right',
+		autoClose: 5000,
+		color: 'red',
+	})
+}

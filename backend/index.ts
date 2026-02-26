@@ -32,6 +32,15 @@ app.get('/Contact', (req, res) => {
 	})
 })
 
+app.post('/ContactUpdate', (req, res) => {
+	const sql = 'UPDATE Contact SET Value = ? WHERE id = ?'
+	const value = [req.body.Value, req.body.id]
+	DB.query(sql, value, (err, data) => {
+		if (err) return res.json(err)
+		return res.json({ Status: 'Success' })
+	})
+})
+
 app.get('/ListCleaning', (req, res) => {
 	const sql = 'SELECT * FROM list_cleaning'
 	DB.query(sql, (err, data) => {
@@ -72,6 +81,15 @@ app.get('/DegreeCleaning', (req, res) => {
 	})
 })
 
+app.post('/DegreeCleaningUpdate', (req, res) => {
+	const sql = 'UPDATE Degree_cleaning SET price = ? WHERE id = ?'
+	const value = [req.body.price, req.body.id]
+	DB.query(sql, value, (err, data) => {
+		if (err) return res.json(err)
+		return res.json({ Status: 'Success' })
+	})
+})
+
 app.get('/PriceCleaning', (req, res) => {
 	const sql = 'SELECT * FROM price'
 	DB.query(sql, (err, data) => {
@@ -80,11 +98,29 @@ app.get('/PriceCleaning', (req, res) => {
 	})
 })
 
+app.post('/PriceCleaningUpdate', (req, res) => {
+	const sql = 'UPDATE price SET MinPrice = ?, price = ? WHERE id = ?'
+	const value = [req.body.MinPrice, req.body.price, req.body.id]
+	DB.query(sql, value, (err, data) => {
+		if (err) return res.json(err)
+		return res.json({ Status: 'Success' })
+	})
+})
+
 app.get('/Parameters', (req, res) => {
 	const sql = 'SELECT * FROM General_parameters'
 	DB.query(sql, (err, data) => {
 		if (err) return res.json(err)
 		return res.json(data)
+	})
+})
+
+app.post('/ParametersUpdate', (req, res) => {
+	const sql = 'UPDATE General_parameters SET Value = ? WHERE id = ?'
+	const value = [req.body.Value, req.body.id]
+	DB.query(sql, value, (err, data) => {
+		if (err) return res.json(err)
+		return res.json({ Status: 'Success' })
 	})
 })
 
@@ -231,6 +267,76 @@ app.post('/AddDopCleaningApartment', (req, res) => {
 		req.body.NameCatRooms,
 		req.body.unit,
 	]
+	DB.query(sql, [value], (err, data) => {
+		if (err) return res.json(err)
+		return res.json({ Status: 'Success' })
+	})
+})
+
+app.post('/UpdateDopOffice', (req, res) => {
+	const sql =
+		'UPDATE DopServicesOffices SET text = ?, price = ?, unit = ? WHERE id = ?'
+	const value = [req.body.text, req.body.price, req.body.unit, req.body.id]
+	DB.query(sql, value, (err, data) => {
+		if (err) return res.json(err)
+		return res.json({ Status: 'Success' })
+	})
+})
+
+app.post('/DeleteDopOffice', (req, res) => {
+	const sql = 'DELETE FROM DopServicesOffices WHERE id = ?'
+	DB.query(sql, [req.body.id], (err, data) => {
+		if (err) return res.json(err)
+		return res.json({ Status: 'Success' })
+	})
+})
+
+app.post('/AutoIncrDopOffice', (req, res) => {
+	const sql = 'ALTER TABLE DopServicesOffices AUTO_INCREMENT = ?'
+	DB.query(sql, [req.body.value], (err, data) => {
+		if (err) return res.json(err)
+		return res.json(data)
+	})
+})
+
+app.post('/AddDopCleaningOffice', (req, res) => {
+	const sql = 'INSERT INTO DopServicesOffices (text, price, unit) VALUE (?)'
+	const value = [req.body.text, req.body.price, req.body.unit]
+	DB.query(sql, [value], (err, data) => {
+		if (err) return res.json(err)
+		return res.json({ Status: 'Success' })
+	})
+})
+
+app.post('/UpdateDopWindows', (req, res) => {
+	const sql =
+		'UPDATE DopServicesWindows SET text = ?, price = ?, unit = ? WHERE id = ?'
+	const value = [req.body.text, req.body.price, req.body.unit, req.body.id]
+	DB.query(sql, value, (err, data) => {
+		if (err) return res.json(err)
+		return res.json({ Status: 'Success' })
+	})
+})
+
+app.post('/DeleteDopWindows', (req, res) => {
+	const sql = 'DELETE FROM DopServicesWindows WHERE id = ?'
+	DB.query(sql, [req.body.id], (err, data) => {
+		if (err) return res.json(err)
+		return res.json({ Status: 'Success' })
+	})
+})
+
+app.post('/AutoIncrDopWindows', (req, res) => {
+	const sql = 'ALTER TABLE DopServicesWindows AUTO_INCREMENT = ?'
+	DB.query(sql, [req.body.value], (err, data) => {
+		if (err) return res.json(err)
+		return res.json(data)
+	})
+})
+
+app.post('/AddDopCleaningWindows', (req, res) => {
+	const sql = 'INSERT INTO DopServicesWindows (text, price, unit) VALUE (?)'
+	const value = [req.body.text, req.body.price, req.body.unit]
 	DB.query(sql, [value], (err, data) => {
 		if (err) return res.json(err)
 		return res.json({ Status: 'Success' })

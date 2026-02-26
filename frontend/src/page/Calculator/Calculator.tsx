@@ -495,8 +495,8 @@ const Calculator = () => {
 		}
 
 		if (CurrentServicesSingle === 'CleaningWindows') {
-			if (NumberArea > 1) {
-				setCurrentPrice((NumberArea - 1) * DoorPriceWindows + MinPriceWindows)
+			if (MinPriceWindows < NumberArea * DoorPriceWindows) {
+				setCurrentPrice(NumberArea * DoorPriceWindows)
 			} else {
 				setCurrentPrice(MinPriceWindows)
 			}
@@ -687,7 +687,7 @@ const Calculator = () => {
 								<p>
 									<span>{IconList.Warning}</span>В черте города Калининград
 									бесплатно, для других городов области транспортные расходы
-									составляют <br /> 25₽ за 1 км
+									составляют <br /> {DistancePrice}₽ за 1 км
 								</p>
 							</div>
 							<div className='Calculator--content--BlockPosition--Cities--content--street'>

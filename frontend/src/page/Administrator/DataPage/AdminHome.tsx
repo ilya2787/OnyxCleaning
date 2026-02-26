@@ -18,8 +18,14 @@ const AdminHome = () => {
 			/>
 			<ItemBlockHome
 				icon={IconList.Contact}
-				LinkRouts={``}
+				LinkRouts={ROUTES.ContactData}
 				title='Контактные данные'
+			/>
+
+			<ItemBlockHome
+				icon={IconList.UsedReviews}
+				LinkRouts={ROUTES.ReviewsData}
+				title='Отзывы клиентов'
 			/>
 		</div>
 	)

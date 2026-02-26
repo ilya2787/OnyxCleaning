@@ -13,6 +13,11 @@ export const ROUTES = {
 	UserData: '/AdminPanel/UserData',
 	CleaningData: '/AdminPanel/CleaningData',
 	ApartmentData: '/AdminPanel/CleaningData/Apartment',
+	OfficeData: '/AdminPanel/CleaningData/Office',
+	WindowsData: '/AdminPanel/CleaningData/Windows',
+	SettingAllData: '/AdminPanel/CleaningData/SettingAll',
+	ContactData: '/AdminPanel/ContactData',
+	ReviewsData: '/AdminPanel/Reviews',
 } as const
 
 export type PathParams = {

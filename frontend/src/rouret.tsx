@@ -6,8 +6,13 @@ import About from './page/About/About'
 import AdminPanel from './page/Administrator/Administrator'
 import AdminHome from './page/Administrator/DataPage/AdminHome'
 import Apartment from './page/Administrator/DataPage/Cleaning/Apartment'
+import Office from './page/Administrator/DataPage/Cleaning/Office'
+import SettingAll from './page/Administrator/DataPage/Cleaning/SettingAll'
+import Windows from './page/Administrator/DataPage/Cleaning/Windows'
 import DataCleaning from './page/Administrator/DataPage/DataCleaning'
+import DataContact from './page/Administrator/DataPage/DataContact'
 import DataUser from './page/Administrator/DataPage/DataUsers'
+import ReviewsAdmin from './page/Administrator/DataPage/ReviewsAdmin'
 import ApartmentCleaning from './page/ApartmentCleaning/ApartmentCleaning'
 import Calculator from './page/Calculator/Calculator'
 import Home from './page/home/home'
@@ -69,6 +74,26 @@ export const router = createBrowserRouter([
 			{
 				path: ROUTES.ApartmentData,
 				element: <Apartment />,
+			},
+			{
+				path: ROUTES.OfficeData,
+				element: <Office />,
+			},
+			{
+				path: ROUTES.WindowsData,
+				element: <Windows />,
+			},
+			{
+				path: ROUTES.SettingAllData,
+				element: <SettingAll />,
+			},
+			{
+				path: ROUTES.ContactData,
+				element: <DataContact />,
+			},
+			{
+				path: ROUTES.ReviewsData,
+				element: <ReviewsAdmin />,
 			},
 		],
 	},

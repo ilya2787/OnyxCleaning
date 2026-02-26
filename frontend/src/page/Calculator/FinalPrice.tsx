@@ -77,8 +77,8 @@ const FinalPrice: FC<TypeProps> = ({
 				setPriceQuadratureNew(MinimumPrice)
 			}
 		} else {
-			if (NumberArea > 1) {
-				setPriceQuadratureNew((NumberArea - 1) * PriceQuadrature + MinimumPrice)
+			if (MinimumPrice < NumberArea * PriceQuadrature) {
+				setPriceQuadratureNew(NumberArea * PriceQuadrature)
 			} else {
 				setPriceQuadratureNew(MinimumPrice)
 			}
