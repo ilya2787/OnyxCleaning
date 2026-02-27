@@ -74,8 +74,8 @@ export const DeleteUsersMessage = (id: number) => {
 
 export const DeleteLineBasic = () => {
 	notifications.show({
-		title: 'Удаление строки',
-		message: `Строка успешно удалена`,
+		title: 'Удаление данных',
+		message: `Удаление прошло успешно`,
 		color: 'green',
 		position: 'top-right',
 		autoClose: 5000,
@@ -84,8 +84,8 @@ export const DeleteLineBasic = () => {
 
 export const UpdateLineBasic = () => {
 	notifications.show({
-		title: 'Обновление строки',
-		message: `Строка успешно обновлена`,
+		title: 'Обновление данных',
+		message: `Данные успешно обновлены`,
 		color: 'green',
 		position: 'top-right',
 		autoClose: 5000,
@@ -93,8 +93,8 @@ export const UpdateLineBasic = () => {
 }
 export const AddStringBasicSuccess = () => {
 	notifications.show({
-		title: 'Добавление записи',
-		message: `Строка успешно добавлена`,
+		title: 'Добавление данных',
+		message: `Данные успешно добавлены`,
 		color: 'green',
 		position: 'top-right',
 		autoClose: 5000,

@@ -140,6 +140,57 @@ app.get('/ReviewsUser', (req, res) => {
 	})
 })
 
+app.post('/ReviewsUserUpdate', (req, res) => {
+	const sql =
+		'UPDATE Reviews SET Name = ?, QuantityStar = ?, Text = ?, Link = ?,Date = ?, LinkName = ? WHERE id = ?'
+	const value = [
+		req.body.Name,
+		req.body.QuantityStar,
+		req.body.Text,
+		req.body.Link,
+		req.body.Date,
+		req.body.LinkName,
+		req.body.id,
+	]
+	DB.query(sql, value, (err, data) => {
+		if (err) return res.json(err)
+		return res.json({ Status: 'Success' })
+	})
+})
+
+app.post('/DeleteReviews', (req, res) => {
+	const sql = 'DELETE FROM Reviews WHERE id= ?'
+	DB.query(sql, [req.body.id], (err, data) => {
+		if (err) return res.json(err)
+		return res.json({ STATUS: 'TRUE' })
+	})
+})
+
+app.post('/AddReviews', (req, res) => {
+	const sql =
+		'INSERT INTO Reviews (Name, QuantityStar, Text, Link, Date, LinkName) VALUE (?)'
+	const value = [
+		req.body.Name,
+		req.body.QuantityStar,
+		req.body.Text,
+		req.body.Link,
+		req.body.Date,
+		req.body.LinkName,
+	]
+	DB.query(sql, [value], (err, data) => {
+		if (err) return res.json(err)
+		return res.json({ Status: 'Success' })
+	})
+})
+
+app.post('/AutoIncrReviews', (req, res) => {
+	const sql = 'ALTER TABLE Reviews AUTO_INCREMENT = ?'
+	DB.query(sql, [req.body.value], (err, data) => {
+		if (err) return res.json(err)
+		return res.json(data)
+	})
+})
+
 app.get('/AllListUsers', (req, res) => {
 	const sql = 'SELECT * FROM base'
 	DB.query(sql, (err, data) => {

@@ -640,9 +640,9 @@ const Calculator = () => {
 						/>
 						{CurrentServicesSingle !== 'CleaningWindows' && (
 							<p>
-								<span>{IconList.Warning}</span> До 20 m<sup>2</sup> входит в
-								минимальную стоимость, далее цена зависит и выбранной услуги или
-								типа уборки
+								<span>{IconList.Warning}</span> До {InitialQuadrature} m
+								<sup>2</sup> входит в минимальную стоимость, далее цена зависит
+								и выбранной услуги или типа уборки
 							</p>
 						)}
 					</div>

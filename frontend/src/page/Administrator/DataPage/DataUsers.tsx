@@ -55,7 +55,15 @@ const DataUser = () => {
 					</p>
 					<button
 						className='DataUser_item_delete'
-						onClick={() => DeleteUser(data.id)}
+						onClick={() => {
+							if (
+								window.confirm(
+									`Вы действительно хотите удалить запись из списка`,
+								)
+							) {
+								DeleteUser(data.id)
+							}
+						}}
 					>
 						{IconList.Delete}
 					</button>

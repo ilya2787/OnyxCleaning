@@ -66,6 +66,7 @@ export interface TvalueMassage {
 }
 
 export interface TReviews {
+	id: number
 	Name: string
 	QuantityStar: number
 	Text: string
