@@ -119,3 +119,13 @@ export const ErrorOrderAdd = () => {
 		color: 'red',
 	})
 }
+
+export const ErrorAuthorization = () => {
+	notifications.show({
+		title: 'Авторизоваться не удалось',
+		message: `что-то пошло не так, проверти логин или пароль`,
+		position: 'top-right',
+		autoClose: 5000,
+		color: 'red',
+	})
+}

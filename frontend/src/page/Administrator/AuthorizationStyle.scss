@@ -1,0 +1,132 @@
+@use '../../styles/config/color' as CS;
+@use '../../styles/config/mixin' as MX;
+
+.Authorization {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	min-width: 540px;
+	@media (max-width: 1000px) {
+		flex-direction: column-reverse;
+		row-gap: 100px;
+	}
+	&--left {
+		flex: 1 1 500px;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		&_form {
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			align-items: center;
+			row-gap: 20px;
+			background-color: CS.$ColorWhiteLite;
+			border-radius: 10px;
+			box-shadow:
+				inset 0px 1px 2px #f6f4eb,
+				0px 1px 2px #dcdad1,
+				0px 2px 4px #c3c1b9;
+			min-height: 500px;
+			min-width: 500px;
+			&--header {
+				display: flex;
+				flex-direction: row;
+				justify-content: center;
+				align-items: center;
+				background-color: CS.$ColorFonDark;
+				border-radius: 10px 10px 0 0;
+				padding: 10px;
+				width: 100%;
+				h1 {
+					text-align: center;
+					width: 350px;
+					font-size: 25px;
+					color: CS.$ColorBlockMenu;
+				}
+			}
+			&--Login {
+				width: 80%;
+				position: relative;
+				height: 60px;
+				input {
+					@include MX.SettingInputFeedback;
+					resize: none;
+				}
+				label {
+					@include MX.SettingLabelFeedback;
+				}
+				input:focus ~ label,
+				input:not(:placeholder-shown) ~ label {
+					top: -32px;
+					font-size: 22px;
+					color: CS.$ColorAccent;
+				}
+			}
+			&--Password {
+				width: 80%;
+				position: relative;
+				height: 60px;
+				input {
+					@include MX.SettingInputFeedback;
+					resize: none;
+				}
+				label {
+					@include MX.SettingLabelFeedback;
+				}
+				input:focus ~ label,
+				input:not(:placeholder-shown) ~ label {
+					top: -32px;
+					font-size: 22px;
+					color: CS.$ColorAccent;
+				}
+				span {
+					position: absolute;
+					top: 20px;
+					right: -30px;
+					font-size: 25px;
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					align-items: center;
+					cursor: pointer;
+				}
+			}
+			&--SubmitBTN {
+				background-color: CS.$ColorBrownLithe;
+				width: 100%;
+				padding: 15px 0;
+				border-radius: 0 0 10px 10px;
+				font-size: 20px;
+				color: CS.$ColorBlockMenu;
+				transition: all 0.3s ease;
+				&:hover {
+					filter: brightness(80%);
+				}
+			}
+		}
+	}
+	&--right {
+		flex: 1 1 500px;
+		background-image: url('../../../public/img/image.jpeg');
+		background-color: rgba(29, 13, 2, 0.839);
+		background-position: 50% 50%;
+		background-repeat: no-repeat;
+		background-size: cover;
+		background-blend-mode: multiply;
+		height: 100dvh;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		@media (max-width: 1000px) {
+			padding: 20px 0;
+			flex: 1 1 100px;
+			img {
+				width: 200px;
+			}
+		}
+	}
+}

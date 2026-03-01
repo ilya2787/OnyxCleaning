@@ -49,6 +49,7 @@ export interface TCities {
 }
 
 export interface TCitiesDistancePrice {
+	id?: number
 	Name: string
 	Distance: number
 	price: number

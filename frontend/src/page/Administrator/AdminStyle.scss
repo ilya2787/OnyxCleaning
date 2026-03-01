@@ -1289,6 +1289,50 @@
 						}
 					}
 				}
+				&--CitiesAll {
+					display: flex;
+					flex-direction: row;
+					justify-content: flex-start;
+					align-items: flex-start;
+					flex-wrap: wrap;
+					column-gap: 20px;
+					row-gap: 20px;
+					&--CitiesItem {
+						flex: 1 1 350px;
+						display: flex;
+						flex-direction: row;
+						justify-content: space-between;
+						column-gap: 10px;
+						background-color: CS.$ColorWhiteLite;
+						padding: 10px 20px;
+						border-radius: 10px;
+						&--Name {
+							p {
+								font-size: 20px;
+							}
+						}
+						&--Distance {
+							display: flex;
+							flex-direction: row;
+							column-gap: 10px;
+							p {
+								font-size: 20px;
+							}
+							input[type='number'] {
+								width: 100px;
+								font-size: 20px;
+								border-bottom: 1px solid CS.$ColorBrown;
+								text-align: right;
+							}
+						}
+						&--BTN {
+							display: flex;
+							justify-content: center;
+							align-items: center;
+							font-size: 23px;
+						}
+					}
+				}
 			}
 		}
 		.DataContact {
@@ -1722,6 +1766,31 @@
 					}
 				}
 			}
+		}
+	}
+}
+.ErrorAuthorization {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	row-gap: 40px;
+	height: 100dvh;
+	h3 {
+		font-size: 25px;
+		color: CS.$ColorBrown;
+		width: 450px;
+		text-align: center;
+	}
+	&_button {
+		background-color: CS.$ColorBrownLithe;
+		padding: 20px 150px;
+		font-size: 23px;
+		color: CS.$ColorBlockMenu;
+		border-radius: 10px;
+		transition: all 0.3s ease;
+		&:hover {
+			filter: brightness(80%);
 		}
 	}
 }

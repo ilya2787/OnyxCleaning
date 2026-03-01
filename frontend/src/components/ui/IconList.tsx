@@ -32,6 +32,7 @@ import {
 } from 'react-icons/io5'
 import { LuCopyright, LuMousePointerClick } from 'react-icons/lu'
 import { MdDeleteForever, MdSmartphone } from 'react-icons/md'
+import { PiEyeClosed, PiEyeLight } from 'react-icons/pi'
 import { RiEdit2Fill, RiEdit2Line } from 'react-icons/ri'
 import { TbChecklist, TbMessageUser, TbWindow } from 'react-icons/tb'
 
@@ -73,4 +74,6 @@ export const IconList = {
 	Window: <TbWindow />,
 	Edit_YES: <RiEdit2Fill />,
 	Edit_ON: <RiEdit2Line />,
+	Eye_Off: <PiEyeClosed />,
+	Eye_On: <PiEyeLight />,
 }

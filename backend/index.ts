@@ -2,6 +2,10 @@ require('dotenv').config()
 const express = require('express')
 const mysql = require('mysql2')
 const cors = require('cors')
+const cookieParser = require('cookie-parser')
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt')
+const salt = 10
 
 const app = express()
 app.use(
@@ -12,6 +16,7 @@ app.use(
 	}),
 )
 app.use(express.json())
+app.use(cookieParser())
 app.use(express.static('public'))
 
 const PORT = process.env.PORT || 3000
@@ -22,6 +27,77 @@ const DB = mysql.createConnection({
 	user: 'root',
 	password: process.env.PASSWORD,
 	database: process.env.DB_NAME,
+})
+
+const verifyUser = (req, res, next) => {
+	const token = req.cookies.token
+	if (!token) {
+		return res.json({ Error: 'Вы не прошли проверку авторизации' })
+	} else {
+		jwt.verify(token, 'jwt-secret_key', (err, decoded) => {
+			if (err) {
+				return res.json({ Error: 'Вы не прошли проверку токена' })
+			} else {
+				req.Login = decoded.Login
+				req.UserName = decoded.UserName
+				next()
+			}
+		})
+	}
+}
+
+app.get('/', verifyUser, (req, res) => {
+	return res.json({ Status: 'Success', UserName: req.UserName })
+})
+
+app.post('/login', (req, res) => {
+	const sql = 'SELECT * FROM users WHERE `Login` = ?'
+	DB.query(sql, [req.body.Login], (err, data) => {
+		if (err) {
+			return res.json({ Error: 'Неверный логин' })
+		}
+		if (data.length > 0) {
+			bcrypt.compare(
+				req.body.Password.toString(),
+				data[0].Password,
+				(err, response) => {
+					if (err) return res.json({ Error: 'Ошибка при сравнение паролей' })
+					if (response) {
+						const Login = data[0].Login
+						const UserName = data[0].NameUser
+						const token = jwt.sign({ Login, UserName }, 'jwt-secret_key', {
+							expiresIn: '1d',
+						})
+						res.cookie('token', token)
+						return res.json({ Status: 'Success' })
+					} else {
+						return res.json({ Error: 'Неверный пароль' })
+					}
+				},
+			)
+		} else {
+			return res.json('Не удалось войти')
+		}
+	})
+})
+app.get('/logout', (req, res) => {
+	res.clearCookie('token')
+	return res.json({ Status: 'Success' })
+})
+
+app.post('/signup', (req, res) => {
+	const sql = 'INSERT INTO users ( `NameUser`,`Login`, `Password`) VALUES (?)'
+	bcrypt.hash(req.body.Password.toString(), salt, (err, hash) => {
+		if (err) return res.json({ Error: 'Invalid password' })
+		const values = [req.body.NameUser, req.body.Login, hash]
+		DB.query(sql, [values], (err, data) => {
+			if (err) {
+				return res.json(err)
+			} else {
+				return res.json({ Status: 'Success' })
+			}
+		})
+	})
 })
 
 app.get('/Contact', (req, res) => {
@@ -125,10 +201,19 @@ app.post('/ParametersUpdate', (req, res) => {
 })
 
 app.get('/Cities', (req, res) => {
-	const sql = 'SELECT * FROM cities'
+	const sql = 'SELECT * FROM cities ORDER BY Name ASC'
 	DB.query(sql, (err, data) => {
 		if (err) return res.json(err)
 		return res.json(data)
+	})
+})
+
+app.post('/CitiesUpdate', (req, res) => {
+	const sql = 'UPDATE cities SET Distance = ? WHERE id = ?'
+	const value = [req.body.Distance, req.body.id]
+	DB.query(sql, value, (err, data) => {
+		if (err) return res.json(err)
+		return res.json({ Status: 'Success' })
 	})
 })
 

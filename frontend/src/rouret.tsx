@@ -5,6 +5,7 @@ import Error404 from './page/404/404'
 import About from './page/About/About'
 import AdminPanel from './page/Administrator/Administrator'
 import AdminHome from './page/Administrator/DataPage/AdminHome'
+import Authorization from './page/Administrator/DataPage/Authorization'
 import Apartment from './page/Administrator/DataPage/Cleaning/Apartment'
 import Office from './page/Administrator/DataPage/Cleaning/Office'
 import SettingAll from './page/Administrator/DataPage/Cleaning/SettingAll'
@@ -54,6 +55,11 @@ export const router = createBrowserRouter([
 	{
 		path: ROUTES.PersonalDataPolicy,
 		element: <PersonalDataPolis />,
+	},
+	{
+		path: ROUTES.AuthorizationAdmin,
+		element: <Authorization />,
+		errorElement: <Error404 />,
 	},
 	{
 		Component: AdminPanel,

@@ -2,16 +2,19 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router'
 import {
+	TCitiesDistancePrice,
 	TParametersBD,
 	TPriceBD,
 } from '../../../../components/type/Services.type'
 import { ROUTES } from '../../../../model/routes'
+import CitiesItem from './SettingItem/SettingCitiesItem'
 import MinimalPrice from './SettingItem/SettingMinPrice'
 import SettingParamItem from './SettingItem/SettingParamItem'
 
 const SettingAll = () => {
 	const [AllPriceSetting, setAllPriceSetting] = useState<TPriceBD[]>([])
 	const [Parameters, setParameters] = useState<TParametersBD[]>([])
+	const [AllListCities, setAllListCities] = useState<TCitiesDistancePrice[]>([])
 
 	useEffect(() => {
 		const AllPrice = async () => {
@@ -32,6 +35,16 @@ const SettingAll = () => {
 		}
 		AllParam()
 	}, [setParameters])
+	console.log(AllListCities)
+	useEffect(() => {
+		const AllListCities = async () => {
+			await axios
+				.get<TCitiesDistancePrice[]>(`${process.env.REACT_APP_SERVER}/Cities`)
+				.then(res => setAllListCities(res.data))
+				.catch(err => console.log(err))
+		}
+		AllListCities()
+	}, [setAllListCities])
 
 	return (
 		<div className='Setting'>
@@ -176,6 +189,19 @@ const SettingAll = () => {
 								/>
 							),
 					)}
+				</div>
+				<h1>Города выезда</h1>
+				<div className='Setting_content--CitiesAll'>
+					{AllListCities.map((data, i) => (
+						<CitiesItem
+							key={i}
+							id={data.id}
+							Name={data.Name}
+							Distance={data.Distance}
+							AllListCities={AllListCities}
+							setAllListCities={setAllListCities}
+						/>
+					))}
 				</div>
 			</div>
 		</div>
