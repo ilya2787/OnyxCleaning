@@ -78,6 +78,12 @@ const Footer = () => {
 						{IconList.Copyright} Onyx cleaning, 2025
 					</p>
 				</div>
+				<div className='content-infoText'>
+					<p>
+						Вся предоставленная на сайте информация носит информационный
+						характер и ни при каких условиях не является публичной офертой.
+					</p>
+				</div>
 			</div>
 		</footer>
 	)

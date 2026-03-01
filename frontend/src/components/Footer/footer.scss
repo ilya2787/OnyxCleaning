@@ -120,5 +120,16 @@ footer {
 				color: CS.$ColorFon;
 			}
 		}
+		&-infoText {
+			position: absolute;
+			bottom: 5px;
+			color: CS.$ColorFon;
+			width: clamp(500px, 70vw, 1200px);
+			@media (max-width: 1050px) {
+				position: relative;
+				text-align: center;
+				width: 800px;
+			}
+		}
 	}
 }
