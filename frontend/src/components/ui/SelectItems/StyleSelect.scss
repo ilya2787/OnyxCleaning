@@ -7,6 +7,7 @@
 		box-shadow: none !important;
 		&--menu-is-open {
 			border-color: CS.$ColorAccent !important;
+
 			.custom-select__indicator {
 				svg {
 					transform: rotate(180deg);

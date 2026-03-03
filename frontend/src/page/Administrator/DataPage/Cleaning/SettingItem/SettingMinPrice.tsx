@@ -23,8 +23,12 @@ const MinimalPrice: FC<Props> = ({
 	setAllPriceSetting,
 }) => {
 	const [Edit, setEdit] = useState<boolean>(false)
-	const [ValueMinPrice, setValueMinPrice] = useState<number>(Number(minPrice))
-	const [ValuePrice, setValuePrice] = useState<number>(Number(price))
+	const [ValueMinPrice, setValueMinPrice] = useState<number | undefined>(
+		minPrice ? Number(minPrice) : undefined,
+	)
+	const [ValuePrice, setValuePrice] = useState<number | undefined>(
+		price ? Number(price) : undefined,
+	)
 
 	const UpdateData = () => {
 		const value = {
@@ -49,8 +53,8 @@ const MinimalPrice: FC<Props> = ({
 		const itemsIndex = AllPriceSetting.findIndex(value => value.id === id)
 		const NewItem = {
 			...AllPriceSetting[itemsIndex],
-			MinPrice: ValueMinPrice,
-			price: ValuePrice,
+			MinPrice: ValueMinPrice ? ValueMinPrice : 0,
+			price: ValuePrice ? ValuePrice : 0,
 		}
 		const newCard = AllPriceSetting.slice()
 		newCard.splice(itemsIndex, 1, NewItem)
@@ -65,7 +69,7 @@ const MinimalPrice: FC<Props> = ({
 					<div className='MinimalPrice--item--content--MinPrice'>
 						<p>Минимальная цена: </p>
 						{!Edit ? (
-							<span>{PriceFormat(ValueMinPrice)}</span>
+							<span>{ValueMinPrice && PriceFormat(ValueMinPrice)}</span>
 						) : (
 							<>
 								<input
@@ -84,7 +88,7 @@ const MinimalPrice: FC<Props> = ({
 					<div className='MinimalPrice--item--content--price'>
 						<p>{`${TitleItem}: `}</p>
 						{!Edit ? (
-							<span>{PriceFormat(ValuePrice)}</span>
+							<span>{ValuePrice && PriceFormat(ValuePrice)}</span>
 						) : (
 							<>
 								<input

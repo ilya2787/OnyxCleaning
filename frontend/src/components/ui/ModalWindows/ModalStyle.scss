@@ -11,8 +11,8 @@
 	left: 0;
 	overflow: hidden;
 	top: 0;
-	width: 100vw;
-	height: 100vh;
+	// width: 100vw;
+	height: 100%;
 	z-index: 99;
 	background-color: rgba($color: #333333, $alpha: 0.5);
 	@media (max-width: 600px) {

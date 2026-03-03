@@ -35,7 +35,7 @@ const SettingAll = () => {
 		}
 		AllParam()
 	}, [setParameters])
-	console.log(AllListCities)
+
 	useEffect(() => {
 		const AllListCities = async () => {
 			await axios

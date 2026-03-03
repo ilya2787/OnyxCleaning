@@ -107,7 +107,7 @@
 		align-items: center;
 		column-gap: 30px;
 		margin: 10px 0;
-		height: 50px;
+		min-height: 50px;
 		padding: 0 10px;
 		border-radius: 5px;
 		p {
@@ -427,6 +427,7 @@
 			background-color: #fff;
 			padding: 0 10px;
 			border-radius: 0 10px 10px 0;
+
 			@include MX.SettingBurger();
 		}
 		&_Logo {
