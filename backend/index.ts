@@ -1,10 +1,12 @@
-require('dotenv').config()
-const express = require('express')
-const mysql = require('mysql2')
-const cors = require('cors')
-const cookieParser = require('cookie-parser')
-const jwt = require('jsonwebtoken')
-const bcrypt = require('bcrypt')
+import bcrypt from 'bcrypt'
+import cookieParser from 'cookie-parser'
+import cors from 'cors'
+import dotenv from 'dotenv'
+import express, { NextFunction, Request, Response } from 'express'
+import jwt, { JwtPayload, VerifyErrors } from 'jsonwebtoken'
+import mysql from 'mysql2'
+dotenv.config()
+
 const salt = 10
 
 const app = express()
@@ -19,67 +21,76 @@ app.use(express.json())
 app.use(cookieParser())
 app.use(express.static('public'))
 
-const PORT = process.env.PORT || 3000
+// === Отдача React фронтенда ===
+// app.use(express.static(path.join(__dirname, '../frontend/build')))
+// app.get('*', (req, res) => {
+// 	res.sendFile(path.join(__dirname, '../frontend/build/index.html'))
+// })
+const PORT = parseInt(process.env.PORT || '3000', 10)
 
 const DB = mysql.createConnection({
-	host: 'localhost',
-	port: '3306',
-	user: 'root',
-	password: process.env.PASSWORD,
+	host: process.env.DB_HOST || 'localhost',
+	port: parseInt(process.env.DB_PORT || '3306', 10),
+	user: process.env.DB_USER || 'root',
+	password: process.env.DB_PASSWORD,
 	database: process.env.DB_NAME,
 })
+DB.connect(err => {
+	if (err) console.error('Ошибка подключения к базе данных:', err)
+	else console.log('Подключение к базе данных прошло успешно')
+})
 
-const verifyUser = (req, res, next) => {
-	const token = req.cookies.token
-	if (!token) {
-		return res.json({ Error: 'Вы не прошли проверку авторизации' })
-	} else {
-		jwt.verify(token, 'jwt-secret_key', (err, decoded) => {
-			if (err) {
-				return res.json({ Error: 'Вы не прошли проверку токена' })
-			} else {
-				req.Login = decoded.Login
-				req.UserName = decoded.UserName
-				next()
-			}
-		})
-	}
+interface AuthRequest extends Request {
+	cookies: { [key: string]: string }
+	Login?: string
+	UserName?: string
 }
 
-app.get('/', verifyUser, (req, res) => {
-	return res.json({ Status: 'Success', UserName: req.UserName })
+const verifyUser = (req: AuthRequest, res: Response, next: NextFunction) => {
+	const token = req.cookies.token
+	if (!token) return res.status(401).json({ error: 'Unauthorized' })
+
+	jwt.verify(
+		token,
+		process.env.JWT_SECRET || 'jwt-secret_key',
+		(err: VerifyErrors | null, decoded: string | JwtPayload | undefined) => {
+			if (err) return res.status(403).json({ error: 'Invalid token' })
+			if (decoded && typeof decoded !== 'string') {
+				req.Login = decoded.Login as string
+				req.UserName = decoded.UserName as string
+			}
+			next()
+		},
+	)
+}
+
+// Проверка авторизации
+app.get('/', verifyUser, (req: AuthRequest, res: Response) => {
+	return res.json({ Status: 'Success', userName: req.UserName })
 })
 
+// Login
 app.post('/login', (req, res) => {
-	const sql = 'SELECT * FROM users WHERE `Login` = ?'
-	DB.query(sql, [req.body.Login], (err, data) => {
-		if (err) {
-			return res.json({ Error: 'Неверный логин' })
-		}
-		if (data.length > 0) {
-			bcrypt.compare(
-				req.body.Password.toString(),
-				data[0].Password,
-				(err, response) => {
-					if (err) return res.json({ Error: 'Ошибка при сравнение паролей' })
-					if (response) {
-						const Login = data[0].Login
-						const UserName = data[0].NameUser
-						const token = jwt.sign({ Login, UserName }, 'jwt-secret_key', {
-							expiresIn: '1d',
-						})
-						res.cookie('token', token)
-						return res.json({ Status: 'Success' })
-					} else {
-						return res.json({ Error: 'Неверный пароль' })
-					}
-				},
+	const sql = 'SELECT * FROM users WHERE Login = ?'
+	DB.query(sql, [req.body.Login], (err, data: any) => {
+		if (err) return res.json({ error: 'DB error' })
+		if (data.length === 0) return res.json({ error: 'User not found' })
+
+		bcrypt.compare(req.body.Password, data[0].Password, (err, result) => {
+			if (err) return res.json({ error: 'Error comparing passwords' })
+			if (!result) return res.json({ error: 'Wrong password' })
+
+			const token = jwt.sign(
+				{ Login: data[0].Login, UserName: data[0].NameUser },
+				process.env.JWT_SECRET || 'jwt-secret_key',
+				{ expiresIn: '1d' },
 			)
-		} else {
-			return res.json('Не удалось войти')
-		}
+			res.cookie('token', token, { httpOnly: true, sameSite: 'lax' })
+			return res.json({ Status: 'Success' })
+		})
 	})
 })
+
 app.get('/logout', (req, res) => {
 	res.clearCookie('token')
 	return res.json({ Status: 'Success' })

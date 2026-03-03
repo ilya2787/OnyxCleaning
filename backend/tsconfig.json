@@ -1,9 +1,14 @@
 {
 	"compilerOptions": {
-		"module": "ESNext" // or ES2015, ES2020
+		"target": "es2019", // версия JS
+		"module": "commonjs", // CommonJS для Node.js
+		"rootDir": "./", // корень исходников
+		"outDir": "./dist", // куда компилировать JS
+		"strict": true, // строгая проверка типов
+		"esModuleInterop": true, // ✅ import из CommonJS
+		"forceConsistentCasingInFileNames": true,
+		"skipLibCheck": true // отключает проверку типов в node_modules
 	},
-	"ts-node": {
-		// Tell ts-node CLI to install the --loader automatically
-		"esm": true
-	}
+	"include": ["./**/*.ts"],
+	"exclude": ["node_modules", "dist"]
 }

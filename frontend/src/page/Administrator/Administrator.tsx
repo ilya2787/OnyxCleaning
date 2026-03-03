@@ -42,7 +42,6 @@ const AdminPanel = () => {
 	})
 	//
 	const [Auth, setAuth] = useState<boolean>(false)
-	const [Message, setMessage] = useState<string>('')
 	const [TitleName, setTitleName] = useState<string>('')
 	useEffect(() => {
 		async function Authorization() {
@@ -51,13 +50,14 @@ const AdminPanel = () => {
 				.then((res: any) => {
 					if (res.data.Status === 'Success') {
 						setAuth(true)
-						setTitleName(res.data.UserName)
+						setTitleName(res.data.userName)
 					} else {
 						setAuth(false)
-						setMessage('Вы не идентифицированы Пожалуйста пройдите авторизацию')
 					}
 				})
-				.catch(err => console.log(err))
+				.catch(err => {
+					console.log(err)
+				})
 		}
 		Authorization()
 	}, [setAuth])
@@ -126,7 +126,7 @@ const AdminPanel = () => {
 				</div>
 			) : (
 				<div className='ErrorAuthorization'>
-					<h3>{Message}</h3>
+					<h3>Вы не идентифицированы Пожалуйста пройдите авторизацию</h3>
 					<Link to={ROUTES.AdminPanel} className='ErrorAuthorization_button'>
 						Авторизоваться
 					</Link>
