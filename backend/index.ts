@@ -8,6 +8,8 @@ import mysql from 'mysql2'
 dotenv.config()
 
 const salt = 10
+const JWT_SECRET =
+	(process.env.JWT_SECRET as string) || 'CHANGE_ME_SECURE_JWT_SECRET'
 
 const app = express()
 app.use(
@@ -52,7 +54,7 @@ const verifyUser = (req: AuthRequest, res: Response, next: NextFunction) => {
 
 	jwt.verify(
 		token,
-		process.env.JWT_SECRET || 'jwt-secret_key',
+		JWT_SECRET as string,
 		(err: VerifyErrors | null, decoded: string | JwtPayload | undefined) => {
 			if (err) return res.status(403).json({ error: 'Invalid token' })
 			if (decoded && typeof decoded !== 'string') {
@@ -82,10 +84,15 @@ app.post('/login', (req, res) => {
 
 			const token = jwt.sign(
 				{ Login: data[0].Login, UserName: data[0].NameUser },
-				process.env.JWT_SECRET || 'jwt-secret_key',
+				JWT_SECRET as string,
 				{ expiresIn: '1d' },
 			)
-			res.cookie('token', token, { httpOnly: true, sameSite: 'lax' })
+			res.cookie('token', token, {
+				httpOnly: true,
+				secure: process.env.NODE_ENV === 'production',
+				sameSite: 'lax',
+				maxAge: 24 * 60 * 60 * 1000,
+			})
 			return res.json({ Status: 'Success' })
 		})
 	})
@@ -119,7 +126,7 @@ app.get('/Contact', (req, res) => {
 	})
 })
 
-app.post('/ContactUpdate', (req, res) => {
+app.post('/ContactUpdate', verifyUser, (req, res) => {
 	const sql = 'UPDATE Contact SET Value = ? WHERE id = ?'
 	const value = [req.body.Value, req.body.id]
 	DB.query(sql, value, (err, data) => {
@@ -168,7 +175,7 @@ app.get('/DegreeCleaning', (req, res) => {
 	})
 })
 
-app.post('/DegreeCleaningUpdate', (req, res) => {
+app.post('/DegreeCleaningUpdate', verifyUser, (req, res) => {
 	const sql = 'UPDATE Degree_cleaning SET price = ? WHERE id = ?'
 	const value = [req.body.price, req.body.id]
 	DB.query(sql, value, (err, data) => {
@@ -185,7 +192,7 @@ app.get('/PriceCleaning', (req, res) => {
 	})
 })
 
-app.post('/PriceCleaningUpdate', (req, res) => {
+app.post('/PriceCleaningUpdate', verifyUser, (req, res) => {
 	const sql = 'UPDATE price SET MinPrice = ?, price = ? WHERE id = ?'
 	const value = [req.body.MinPrice, req.body.price, req.body.id]
 	DB.query(sql, value, (err, data) => {
@@ -202,7 +209,7 @@ app.get('/Parameters', (req, res) => {
 	})
 })
 
-app.post('/ParametersUpdate', (req, res) => {
+app.post('/ParametersUpdate', verifyUser, (req, res) => {
 	const sql = 'UPDATE General_parameters SET Value = ? WHERE id = ?'
 	const value = [req.body.Value, req.body.id]
 	DB.query(sql, value, (err, data) => {
@@ -219,7 +226,7 @@ app.get('/Cities', (req, res) => {
 	})
 })
 
-app.post('/CitiesUpdate', (req, res) => {
+app.post('/CitiesUpdate', verifyUser, (req, res) => {
 	const sql = 'UPDATE cities SET Distance = ? WHERE id = ?'
 	const value = [req.body.Distance, req.body.id]
 	DB.query(sql, value, (err, data) => {
@@ -236,7 +243,7 @@ app.get('/ReviewsUser', (req, res) => {
 	})
 })
 
-app.post('/ReviewsUserUpdate', (req, res) => {
+app.post('/ReviewsUserUpdate', verifyUser, (req, res) => {
 	const sql =
 		'UPDATE Reviews SET Name = ?, QuantityStar = ?, Text = ?, Link = ?,Date = ?, LinkName = ? WHERE id = ?'
 	const value = [
@@ -254,7 +261,7 @@ app.post('/ReviewsUserUpdate', (req, res) => {
 	})
 })
 
-app.post('/DeleteReviews', (req, res) => {
+app.post('/DeleteReviews', verifyUser, (req, res) => {
 	const sql = 'DELETE FROM Reviews WHERE id= ?'
 	DB.query(sql, [req.body.id], (err, data) => {
 		if (err) return res.json(err)
@@ -262,7 +269,7 @@ app.post('/DeleteReviews', (req, res) => {
 	})
 })
 
-app.post('/AddReviews', (req, res) => {
+app.post('/AddReviews', verifyUser, (req, res) => {
 	const sql =
 		'INSERT INTO Reviews (Name, QuantityStar, Text, Link, Date, LinkName) VALUE (?)'
 	const value = [
@@ -279,7 +286,7 @@ app.post('/AddReviews', (req, res) => {
 	})
 })
 
-app.post('/AutoIncrReviews', (req, res) => {
+app.post('/AutoIncrReviews', verifyUser, (req, res) => {
 	const sql = 'ALTER TABLE Reviews AUTO_INCREMENT = ?'
 	DB.query(sql, [req.body.value], (err, data) => {
 		if (err) return res.json(err)
@@ -287,7 +294,7 @@ app.post('/AutoIncrReviews', (req, res) => {
 	})
 })
 
-app.get('/AllListUsers', (req, res) => {
+app.get('/AllListUsers', verifyUser, (req, res) => {
 	const sql = 'SELECT * FROM base'
 	DB.query(sql, (err, data) => {
 		if (err) return res.json(err)
@@ -295,7 +302,7 @@ app.get('/AllListUsers', (req, res) => {
 	})
 })
 
-app.post('/DeleteUser', (req, res) => {
+app.post('/DeleteUser', verifyUser, (req, res) => {
 	const sql = 'DELETE FROM base WHERE id= ?'
 	DB.query(sql, [req.body.id], (err, data) => {
 		if (err) return res.json(err)
@@ -311,7 +318,7 @@ app.post('/baseSearch', (req, res) => {
 	})
 })
 
-app.post('/baseUpdateOrder', (req, res) => {
+app.post('/baseUpdateOrder', verifyUser, (req, res) => {
 	const sql =
 		'UPDATE base SET Name = ?, OrderQuantity = ?, Name_cleaning = ?, Date = ? WHERE id = ?'
 	const value = [
@@ -344,7 +351,7 @@ app.post('/base', (req, res) => {
 })
 
 //Админка
-app.post('/UpdateStringBase', (req, res) => {
+app.post('/UpdateStringBase', verifyUser, (req, res) => {
 	const sql = 'UPDATE list_cleaning SET Text = ? WHERE id = ?'
 	const value = [req.body.list_cleaning, req.body.id]
 	DB.query(sql, value, (err, data) => {
@@ -353,7 +360,7 @@ app.post('/UpdateStringBase', (req, res) => {
 	})
 })
 
-app.post('/DeleteStringBase', (req, res) => {
+app.post('/DeleteStringBase', verifyUser, (req, res) => {
 	const sql = 'DELETE FROM list_cleaning WHERE id = ?'
 	DB.query(sql, [req.body.id], (err, data) => {
 		if (err) return res.json(err)
@@ -361,7 +368,7 @@ app.post('/DeleteStringBase', (req, res) => {
 	})
 })
 
-app.post('/AddStringBase', (req, res) => {
+app.post('/AddStringBase', verifyUser, (req, res) => {
 	const sql =
 		'INSERT INTO list_cleaning (Name_cleaning, Name_Room, Text) VALUE (?)'
 	const value = [req.body.Name_cleaning, req.body.Name_Room, req.body.Text]
@@ -371,7 +378,7 @@ app.post('/AddStringBase', (req, res) => {
 	})
 })
 
-app.post('/AutoIncr', (req, res) => {
+app.post('/AutoIncr', verifyUser, (req, res) => {
 	const sql = 'ALTER TABLE list_cleaning AUTO_INCREMENT = ?'
 	DB.query(sql, [req.body.value], (err, data) => {
 		if (err) return res.json(err)
@@ -379,7 +386,7 @@ app.post('/AutoIncr', (req, res) => {
 	})
 })
 
-app.post('/UpdateDopApartment', (req, res) => {
+app.post('/UpdateDopApartment', verifyUser, (req, res) => {
 	const sql =
 		'UPDATE DopServicesApartment SET text = ?, price = ?, unit = ? WHERE id = ?'
 	const value = [req.body.text, req.body.price, req.body.unit, req.body.id]
@@ -389,7 +396,7 @@ app.post('/UpdateDopApartment', (req, res) => {
 	})
 })
 
-app.post('/DeleteDopApartment', (req, res) => {
+app.post('/DeleteDopApartment', verifyUser, (req, res) => {
 	const sql = 'DELETE FROM DopServicesApartment WHERE id = ?'
 	DB.query(sql, [req.body.id], (err, data) => {
 		if (err) return res.json(err)
@@ -397,14 +404,14 @@ app.post('/DeleteDopApartment', (req, res) => {
 	})
 })
 
-app.post('/AutoIncrDopApartment', (req, res) => {
+app.post('/AutoIncrDopApartment', verifyUser, (req, res) => {
 	const sql = 'ALTER TABLE DopServicesApartment AUTO_INCREMENT = ?'
 	DB.query(sql, [req.body.value], (err, data) => {
 		if (err) return res.json(err)
 		return res.json(data)
 	})
 })
-app.post('/AddDopCleaningApartment', (req, res) => {
+app.post('/AddDopCleaningApartment', verifyUser, (req, res) => {
 	const sql =
 		'INSERT INTO DopServicesApartment (text, price, NameCatCleaning, NameCatRooms, unit) VALUE (?)'
 	const value = [
@@ -420,7 +427,7 @@ app.post('/AddDopCleaningApartment', (req, res) => {
 	})
 })
 
-app.post('/UpdateDopOffice', (req, res) => {
+app.post('/UpdateDopOffice', verifyUser, (req, res) => {
 	const sql =
 		'UPDATE DopServicesOffices SET text = ?, price = ?, unit = ? WHERE id = ?'
 	const value = [req.body.text, req.body.price, req.body.unit, req.body.id]
@@ -430,7 +437,7 @@ app.post('/UpdateDopOffice', (req, res) => {
 	})
 })
 
-app.post('/DeleteDopOffice', (req, res) => {
+app.post('/DeleteDopOffice', verifyUser, (req, res) => {
 	const sql = 'DELETE FROM DopServicesOffices WHERE id = ?'
 	DB.query(sql, [req.body.id], (err, data) => {
 		if (err) return res.json(err)
@@ -438,7 +445,7 @@ app.post('/DeleteDopOffice', (req, res) => {
 	})
 })
 
-app.post('/AutoIncrDopOffice', (req, res) => {
+app.post('/AutoIncrDopOffice', verifyUser, (req, res) => {
 	const sql = 'ALTER TABLE DopServicesOffices AUTO_INCREMENT = ?'
 	DB.query(sql, [req.body.value], (err, data) => {
 		if (err) return res.json(err)
@@ -446,7 +453,7 @@ app.post('/AutoIncrDopOffice', (req, res) => {
 	})
 })
 
-app.post('/AddDopCleaningOffice', (req, res) => {
+app.post('/AddDopCleaningOffice', verifyUser, (req, res) => {
 	const sql = 'INSERT INTO DopServicesOffices (text, price, unit) VALUE (?)'
 	const value = [req.body.text, req.body.price, req.body.unit]
 	DB.query(sql, [value], (err, data) => {
@@ -455,7 +462,7 @@ app.post('/AddDopCleaningOffice', (req, res) => {
 	})
 })
 
-app.post('/UpdateDopWindows', (req, res) => {
+app.post('/UpdateDopWindows', verifyUser, (req, res) => {
 	const sql =
 		'UPDATE DopServicesWindows SET text = ?, price = ?, unit = ? WHERE id = ?'
 	const value = [req.body.text, req.body.price, req.body.unit, req.body.id]
@@ -465,7 +472,7 @@ app.post('/UpdateDopWindows', (req, res) => {
 	})
 })
 
-app.post('/DeleteDopWindows', (req, res) => {
+app.post('/DeleteDopWindows', verifyUser, (req, res) => {
 	const sql = 'DELETE FROM DopServicesWindows WHERE id = ?'
 	DB.query(sql, [req.body.id], (err, data) => {
 		if (err) return res.json(err)
@@ -473,7 +480,7 @@ app.post('/DeleteDopWindows', (req, res) => {
 	})
 })
 
-app.post('/AutoIncrDopWindows', (req, res) => {
+app.post('/AutoIncrDopWindows', verifyUser, (req, res) => {
 	const sql = 'ALTER TABLE DopServicesWindows AUTO_INCREMENT = ?'
 	DB.query(sql, [req.body.value], (err, data) => {
 		if (err) return res.json(err)
@@ -481,7 +488,7 @@ app.post('/AutoIncrDopWindows', (req, res) => {
 	})
 })
 
-app.post('/AddDopCleaningWindows', (req, res) => {
+app.post('/AddDopCleaningWindows', verifyUser, (req, res) => {
 	const sql = 'INSERT INTO DopServicesWindows (text, price, unit) VALUE (?)'
 	const value = [req.body.text, req.body.price, req.body.unit]
 	DB.query(sql, [value], (err, data) => {
