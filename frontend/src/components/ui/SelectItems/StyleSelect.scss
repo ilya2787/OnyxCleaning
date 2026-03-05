@@ -7,7 +7,6 @@
 		box-shadow: none !important;
 		&--menu-is-open {
 			border-color: CS.$ColorAccent !important;
-
 			.custom-select__indicator {
 				svg {
 					transform: rotate(180deg);
@@ -33,6 +32,7 @@
 	&__menu {
 		border-radius: 5px !important;
 		animation: isOpenMenu 0.35s ease-in-out;
+		z-index: 10 !important;
 	}
 	&__option {
 		cursor: pointer !important;

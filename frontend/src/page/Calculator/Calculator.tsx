@@ -6,6 +6,7 @@ import React, {
 	lazy,
 	SetStateAction,
 	useEffect,
+	useRef,
 	useState,
 } from 'react'
 import { useParams } from 'react-router'
@@ -269,6 +270,13 @@ const Calculator = () => {
 			data.Name === 'DistancePrice' && setDistancePrice(data.Value)
 		})
 	}, [AllParametersBD])
+
+	useEffect(() => {
+		CurrentServicesSingle !== 'WindowsCleaning'
+			? setNumberArea(InitialQuadrature)
+			: setNumberArea(1)
+	}, [InitialQuadrature, CurrentServicesSingle])
+
 	///
 	const ArrayBDPrice = async () => {
 		await axios
@@ -585,6 +593,15 @@ const Calculator = () => {
 		})
 	}
 
+	const inputRange = useRef<HTMLInputElement>(null)
+	const NumberRange = useRef<HTMLSpanElement>(null)
+
+	useEffect(() => {
+		if (NumberRange.current) {
+			NumberRange.current.style.left = `${Number(inputRange.current?.value) / 10.5}%`
+		}
+	}, [inputRange.current?.value])
+
 	return (
 		<motion.div
 			className='Calculator'
@@ -632,17 +649,53 @@ const Calculator = () => {
 								? 'Квадратура помещения'
 								: 'Количество створок'}
 						</h2>
-						<NumberPlusMinus
-							CurrentServicesSingle={CurrentServicesSingle}
-							Num={NumberArea}
-							setNum={setNumberArea}
-							CalculatorPriceAndQuantity={CalculatorPriceAndQuantity}
-						/>
+
+						{CurrentServicesSingle === 'CleaningWindows' && (
+							<NumberPlusMinus
+								CurrentServicesSingle={CurrentServicesSingle}
+								Num={NumberArea}
+								setNum={setNumberArea}
+								CalculatorPriceAndQuantity={CalculatorPriceAndQuantity}
+							/>
+						)}
+						<div className='Calculator--content--BlockPosition--quadrature--RangeAndNumber'>
+							{CurrentServicesSingle !== 'CleaningWindows' && (
+								<div className='Calculator--content--BlockPosition--quadrature--RangeAndNumber--Range'>
+									<span ref={NumberRange}>{NumberArea}</span>
+									<input
+										ref={inputRange}
+										type='range'
+										name=''
+										id=''
+										min={InitialQuadrature}
+										max={999}
+										value={NumberArea}
+										onChange={e => setNumberArea(Number(e.target.value))}
+									/>
+								</div>
+							)}
+							{CurrentServicesSingle !== 'CleaningWindows' && (
+								<div className='Calculator--content--BlockPosition--quadrature--RangeAndNumber--Number'>
+									<InputMask
+										mask='___'
+										replacement={{ _: /\d/ }}
+										type='text'
+										value={NumberArea}
+										onChange={e => setNumberArea(Number(e.target.value))}
+										id='ValueQuadrature'
+										placeholder=''
+									/>
+
+									<label htmlFor='ValueQuadrature'>Ввести в ручную</label>
+								</div>
+							)}
+						</div>
+
 						{CurrentServicesSingle !== 'CleaningWindows' && (
 							<p>
 								<span>{IconList.Warning}</span> До {InitialQuadrature} m
 								<sup>2</sup> входит в минимальную стоимость, далее цена зависит
-								и выбранной услуги или типа уборки
+								от выбранной услуги или типа уборки
 							</p>
 						)}
 					</div>

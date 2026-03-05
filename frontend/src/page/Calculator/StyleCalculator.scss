@@ -155,6 +155,101 @@
 					line-height: 17px;
 					font-size: 15px;
 				}
+				&--RangeAndNumber {
+					display: flex;
+					flex-direction: row;
+					justify-content: space-between;
+					align-items: center;
+					flex-wrap: wrap;
+					column-gap: 40px;
+					row-gap: 20px;
+					width: 100%;
+					&--Range {
+						flex: 1 1 500px;
+						display: flex;
+						flex-direction: column;
+						justify-content: center;
+						align-items: center;
+						position: relative;
+						padding-top: 70px;
+						padding-bottom: 30px;
+						span {
+							display: flex;
+							flex-direction: column;
+							justify-content: center;
+							align-items: center;
+							color: CS.$ColorBlockMenu;
+							font-size: 20px;
+							padding: 0 5px;
+							top: 0;
+							width: 50px;
+							height: 50px;
+							position: absolute;
+							z-index: 2;
+							&:after {
+								content: '';
+								position: absolute;
+								z-index: -1;
+								transform: translateX(-50%) rotate(45deg);
+								left: 50%;
+								width: 50px;
+								height: 50px;
+								background-color: CS.$ColorBrownLithe;
+								border: 3px solid CS.$ColorFon;
+								border-top-left-radius: 50%;
+								border-top-right-radius: 50%;
+								border-bottom-left-radius: 50%;
+							}
+						}
+						input[type='range'] {
+							-webkit-appearance: none;
+							width: 100%;
+							height: 5px;
+							border-radius: 5px;
+							background: CS.$ColorFon;
+							outline: none;
+							&::-webkit-slider-thumb {
+								-webkit-appearance: none;
+								appearance: none;
+								width: 20px;
+								height: 20px;
+								border-radius: 50%;
+								background: CS.$ColorAccent;
+								cursor: pointer;
+								transition: all 0.3s ease;
+								&:hover {
+									background: #6c6c6c;
+								}
+							}
+						}
+					}
+					&--Number {
+						flex: 1 1 200px;
+						position: relative;
+						margin: 10px 0 20px 0;
+						input[type='text'] {
+							background-color: CS.$ColorFon;
+							padding: 5px 10px;
+							border-radius: 10px;
+							border: 1px solid #cccccc;
+							color: #333;
+							width: 100%;
+							height: 40px;
+							text-align: center;
+							font-size: 19px;
+						}
+						label {
+							position: absolute;
+							top: -32px;
+							left: 0;
+							width: 100%;
+							text-align: center;
+							font-size: 19px;
+							color: CS.$ColorBrownLithe;
+							transition: all 0.3s ease;
+						}
+					}
+				}
 			}
 			&--User {
 				@include H2Style();
