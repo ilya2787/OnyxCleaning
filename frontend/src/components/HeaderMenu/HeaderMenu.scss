@@ -180,7 +180,6 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		row-gap: 10px;
 		position: absolute;
 		top: 5%;
 		left: 0;
@@ -196,17 +195,15 @@
 			display: flex;
 			flex-direction: column;
 			justify-content: center;
-			align-items: center;
+			align-items: flex-start;
 			width: 100%;
 			font-size: 20px;
-			color: #272727;
-			background-color: rgba($color: #c7c7c7, $alpha: 0.3);
-			border-radius: 10px;
-			height: 50px;
+			color: #dedede;
+			padding: 0 10px;
+			height: 70px;
 			transition: all 0.3s ease;
 			&:hover {
-				filter: brightness(70%);
-				-webkit-filter: brightness(70%);
+				background-color: rgba(255, 255, 255, 0.2);
 			}
 		}
 		&.Active {
@@ -214,6 +211,12 @@
 		}
 		&.Close {
 			animation: CloseBlockMenu 1s forwards;
+		}
+		&-link:first-child {
+			border-radius: 10px 10px 0 0;
+		}
+		&-link:last-child {
+			border-radius: 0 0 10px 10px;
 		}
 	}
 	&_BlockMenu_Burger {
@@ -229,25 +232,21 @@
 		flex-direction: column;
 		justify-content: flex-start;
 		align-items: center;
-		row-gap: 20px;
 		padding: 30px 15px 18dvh 15px;
-
 		@include MX.GlassBackgroundBlack;
 		&-link {
 			display: flex;
 			flex-direction: column;
 			justify-content: center;
-			align-items: center;
+			align-items: flex-start;
 			width: 100%;
-			font-size: 20px;
-			color: #272727;
-			background-color: rgba($color: #c7c7c7, $alpha: 0.3);
-			border-radius: 10px;
-			height: 50px;
+			font-size: 25px;
+			color: #dedede;
+			padding: 0 10px;
+			height: 70px;
 			transition: all 0.3s ease;
 			&:hover {
-				filter: brightness(70%);
-				-webkit-filter: brightness(70%);
+				background-color: rgba(255, 255, 255, 0.2);
 			}
 		}
 		&.Active {
@@ -375,7 +374,7 @@
 		right: 10px;
 		height: 70px;
 		border-radius: 20px;
-		background: rgba(255, 255, 255, 0.18);
+		background: rgba(255, 255, 255, 0.5);
 		border: 2px solid rgba(255, 255, 255, 0.25);
 		box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 		z-index: 11;

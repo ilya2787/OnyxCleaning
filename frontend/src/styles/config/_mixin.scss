@@ -14,12 +14,12 @@
 }
 
 @mixin GlassBackground {
-	background-color: rgba($color: #ffffff, $alpha: 0.3);
+	background-color: rgba($color: #211e1b, $alpha: 0.9);
 	backdrop-filter: blur(10px);
 	-webkit-backdrop-filter: blur(10px);
 }
 @mixin GlassBackgroundBlack {
-	background-color: rgba($color: #4c4c4c, $alpha: 0.4);
+	background-color: rgba($color: #211e1b, $alpha: 0.9);
 	backdrop-filter: blur(6px);
 	-webkit-backdrop-filter: blur(6px);
 }
